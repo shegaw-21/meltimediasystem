@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multimedia Learning System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Multimedia Learning System</h1>
+        <p>Interactive Synchronization • Resource-Optimized Delivery • Multi-Modal Access</p>
+    </header>
+
+    <div class="dashboard-container">
+        <main class="video-section">
+            <div class="video-selector">
+                <label for="video-select">📹 Select Video:</label>
+                <select id="video-select">
+                    <option value="sample">Water Cycle (Sample)</option>
+                    <option value="datascience">Data Science Introduction</option>
+                </select>
+            </div>
+            <div class="video-wrapper">
+                <video id="video-player" controls>
+                    <source src="/api/video" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <div class="video-progress">
+                    <div id="progress-bar" class="progress-bar"></div>
+                </div>
+                <div class="time-display">
+                    <span id="current-time">0:00</span> / <span id="duration">0:00</span>
+                </div>
+            </div>
+            
+            <div class="audio-section">
+                <h3>🎧 Audio Summary</h3>
+                <audio id="audio-player" controls>
+                    <source src="/api/audio/stream" type="audio/mpeg">
+                    Your browser does not support the audio tag.
+                </audio>
+                <div class="audio-controls">
+                    <a href="/api/audio/download" class="btn-download">
+                        📥 Download Audio (.MP3)
+                    </a>
+                </div>
+            </div>
+        </main>
+
+        <aside class="transcript-section">
+            <h2>Interactive Transcript</h2>
+            <div class="search-container">
+                <input type="text" id="search-input" placeholder="Search transcript..." class="search-input">
+                <button id="search-btn" class="search-btn">🔍</button>
+            </div>
+            <div id="transcript-container"></div>
+            <div class="transcript-stats">
+                <span id="match-count"></span>
+            </div>
+        </aside>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

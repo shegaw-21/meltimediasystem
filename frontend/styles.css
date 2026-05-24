@@ -1,0 +1,253 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #1e1e2e;
+    color: #f5f5f5;
+    margin: 0;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+header h1 {
+    margin: 0 0 10px 0;
+    color: #00b4d8;
+}
+
+header p {
+    margin: 0;
+    color: #a0a0b0;
+    font-size: 0.9em;
+}
+
+.dashboard-container {
+    display: flex;
+    gap: 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.video-section {
+    flex: 2;
+    background: #252538;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.video-selector {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: #2a2a40;
+    border-radius: 8px;
+}
+
+.video-selector label {
+    color: #00b4d8;
+    font-weight: 600;
+    font-size: 1em;
+}
+
+.video-selector select {
+    flex: 1;
+    padding: 10px 15px;
+    border: 2px solid #3a3a50;
+    border-radius: 6px;
+    background: #1e1e2e;
+    color: #f5f5f5;
+    font-size: 0.95em;
+    cursor: pointer;
+    transition: border-color 0.2s;
+}
+
+.video-selector select:focus {
+    outline: none;
+    border-color: #00b4d8;
+}
+
+.video-selector select:hover {
+    border-color: #4a4a60;
+}
+
+.video-wrapper {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+video {
+    width: 100%;
+    border-radius: 8px;
+    background: #000;
+}
+
+.video-progress {
+    width: 100%;
+    height: 6px;
+    background: #3a3a50;
+    border-radius: 3px;
+    margin-top: 10px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #00b4d8, #0096c7);
+    width: 0%;
+    transition: width 0.1s linear;
+}
+
+.time-display {
+    text-align: center;
+    margin-top: 8px;
+    font-size: 0.9em;
+    color: #a0a0b0;
+}
+
+.audio-section {
+    background: #2a2a40;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+.audio-section h3 {
+    margin: 0 0 10px 0;
+    color: #00b4d8;
+    font-size: 1.1em;
+}
+
+audio {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.audio-controls {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-download {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #00b4d8;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: background 0.2s;
+}
+
+.btn-download:hover {
+    background-color: #0096c7;
+}
+
+.transcript-section {
+    flex: 1;
+    background: #252538;
+    padding: 20px;
+    border-radius: 12px;
+    height: 600px;
+    overflow-y: auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.transcript-section h2 {
+    margin: 0 0 15px 0;
+    color: #00b4d8;
+    font-size: 1.3em;
+}
+
+.search-container {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 15px;
+}
+
+.search-input {
+    flex: 1;
+    padding: 10px 12px;
+    border: 2px solid #3a3a50;
+    border-radius: 6px;
+    background: #1e1e2e;
+    color: #f5f5f5;
+    font-size: 0.95em;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #00b4d8;
+}
+
+.search-btn {
+    padding: 10px 15px;
+    background: #00b4d8;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.1em;
+    transition: background 0.2s;
+}
+
+.search-btn:hover {
+    background: #0096c7;
+}
+
+.transcript-line {
+    padding: 12px;
+    margin: 8px 0;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.2s;
+    border-left: 3px solid transparent;
+}
+
+.transcript-line:hover {
+    background: #3a3a50;
+    border-left-color: #00b4d8;
+}
+
+.transcript-line.highlight {
+    background: linear-gradient(135deg, #00b4d8, #0096c7);
+    color: #1e1e2e;
+    font-weight: 600;
+    border-left-color: #fff;
+    transform: translateX(4px);
+}
+
+.transcript-line.search-match {
+    background: #ffd700;
+    color: #1e1e2e;
+    font-weight: 600;
+}
+
+.transcript-stats {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #3a3a50;
+    color: #a0a0b0;
+    font-size: 0.9em;
+}
+
+/* Scrollbar styling */
+.transcript-section::-webkit-scrollbar {
+    width: 8px;
+}
+
+.transcript-section::-webkit-scrollbar-track {
+    background: #1e1e2e;
+    border-radius: 4px;
+}
+
+.transcript-section::-webkit-scrollbar-thumb {
+    background: #3a3a50;
+    border-radius: 4px;
+}
+
+.transcript-section::-webkit-scrollbar-thumb:hover {
+    background: #4a4a60;
+}

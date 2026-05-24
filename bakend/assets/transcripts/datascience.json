@@ -1,0 +1,126 @@
+[
+  {
+    "time": 0,
+    "text": "Welcome back. In this video, we're going to dive into an overview of PySpark's Machine Learning Library, commonly known as MLlib..."
+  },
+  {
+    "time": 12,
+    "text": "...which is an essential part of the big data ecosystem when working with Spark."
+  },
+  {
+    "time": 17,
+    "text": "Before we talk about the library itself, let's briefly recall what machine learning is."
+  },
+  {
+    "time": 23,
+    "text": "Machine learning is a scientific discipline that explores the construction and study of algorithms that can learn from data."
+  },
+  {
+    "time": 34,
+    "text": "Apache Spark provides a dedicated component for machine learning called MLlib."
+  },
+  {
+    "time": 44,
+    "text": "MLlib is packed with high-quality tools. This includes various machine learning algorithms..."
+  },
+  {
+    "time": 51,
+    "text": "...such as collaborative filtering, classification, and clustering."
+  },
+  {
+    "time": 57,
+    "text": "It also provides featurization tools such as feature extraction, transformation, dimensionality reduction, and selection."
+  },
+  {
+    "time": 68,
+    "text": "Finally, it includes tools for constructing, evaluating, and tuning ML pipelines."
+  },
+  {
+    "time": 112,
+    "text": "Now, you might be wondering, why do we need MLlib when we already have machine learning tools available in Python?"
+  },
+  {
+    "time": 123,
+    "text": "Scikit-learn is a popular Python library for data mining and machine learning."
+  },
+  {
+    "time": 129,
+    "text": "However, Scikit-learn algorithms only work for small datasets on a single machine."
+  },
+  {
+    "time": 136,
+    "text": "This is where PySpark MLlib comes in. Spark's MLlib algorithms are designed for parallel processing on a cluster."
+  },
+  {
+    "time": 148,
+    "text": "Furthermore, it supports languages such as Scala, Java, and R, not just Python."
+  },
+  {
+    "time": 157,
+    "text": "It also provides a high-level API to build machine learning pipelines."
+  },
+  {
+    "time": 206,
+    "text": "Let's look closer at the actual algorithms available within PySpark MLlib."
+  },
+  {
+    "time": 211,
+    "text": "For classification—both binary and multiclass—and regression tasks, MLlib offers Linear SVMs, logistic regression..."
+  },
+  {
+    "time": 222,
+    "text": "...decision trees, random forests, gradient-boosted trees, naive Bayes, linear least squares, Lasso, ridge regression, and isotonic regression."
+  },
+  {
+    "time": 237,
+    "text": "For recommendation systems, MLlib supports collaborative filtering using Alternating Least Squares, or ALS."
+  },
+  {
+    "time": 248,
+    "text": "When it comes to clustering, MLlib includes K-means, Gaussian mixture, Bisecting K-means, and Streaming K-means."
+  },
+  {
+    "time": 300,
+    "text": "To simplify things, you can remember the core focus areas of MLlib as 'The Three C's' of machine learning in PySpark MLlib."
+  },
+  {
+    "time": 311,
+    "text": "First, Collaborative Filtering, which produces recommendations."
+  },
+  {
+    "time": 318,
+    "text": "Second, Classification, which is used for identifying to which of a set of categories a new observation belongs."
+  },
+  {
+    "time": 329,
+    "text": "And third, Clustering, which groups data based on similar characteristics."
+  },
+  {
+    "time": 338,
+    "text": "Let's see how easy it is to import these tools into your Python environment."
+  },
+  {
+    "time": 344,
+    "text": "If you want to use collaborative filtering, you simply import ALS from pyspark.mllib.recommendation."
+  },
+  {
+    "time": 352,
+    "text": "Similarly, if you want to perform a classification task using logistic regression..."
+  },
+  {
+    "time": 356,
+    "text": "...you can import LogisticRegressionWithLBFGS directly from pyspark.mllib.classification."
+  },
+  {
+    "time": 402,
+    "text": "Lastly, if you're looking to run a clustering analysis, you can import the KMeans class straight out of pyspark.mllib.clustering."
+  },
+  {
+    "time": 424,
+    "text": "Now that you have a high-level understanding of what PySpark MLlib has to offer and why it is so valuable for scaling your models..."
+  },
+  {
+    "time": 431,
+    "text": "...let's head over to some exercises and put this knowledge into practice!"
+  }
+]

@@ -1,0 +1,85 @@
+WEBVTT
+
+00:00.000 --> 00:15.320
+Welcome back. In this video, we're going to dive into an overview of PySpark's Machine Learning Library, commonly known as MLlib, which is an essential part of the big data ecosystem when working with Spark.
+
+00:15.320 --> 00:22.080
+Before we talk about the library itself, let's briefly recall what machine learning is.
+
+00:22.080 --> 00:32.960
+Machine learning is a scientific discipline that explores the construction and study of algorithms that can learn from data.
+
+00:32.960 --> 00:35.840
+Apache Spark provides a dedicated component for machine learning called MLlib.
+
+00:35.840 --> 00:40.640
+MLlib is packed with high-quality tools.
+
+00:40.640 --> 00:52.040
+This includes various machine learning algorithms such as collaborative filtering, classification, and clustering.
+
+00:52.040 --> 00:58.480
+It also provides featurization tools such as feature extraction, transformation, dimensionality reduction, and selection.
+
+00:58.480 --> 01:04.280
+Finally, it includes tools for constructing, evaluating, and tuning ML pipelines.
+
+01:04.280 --> 01:12.120
+Now, you might be wondering, why do we need MLlib when we already have machine learning tools available in Python?
+
+01:12.120 --> 01:23.040
+Scikit-learn is a popular Python library for data mining and machine learning.
+
+01:23.040 --> 01:34.640
+However, Scikit-learn algorithms only work for small datasets on a single machine.
+
+01:34.640 --> 01:40.640
+This is where PySpark MLlib comes in.
+
+01:40.640 --> 01:44.200
+Spark's MLlib algorithms are designed for parallel processing on a cluster.
+
+01:44.200 --> 01:53.760
+Furthermore, it supports languages such as Scala, Java, and R, not just Python.
+
+01:53.760 --> 01:58.720
+It also provides a high-level API to build machine learning pipelines.
+
+01:58.720 --> 02:05.040
+Let's look closer at the actual algorithms available within PySpark MLlib.
+
+02:05.040 --> 02:37.160
+For classification—both binary and multiclass—and regression tasks, MLlib offers Linear SVMs, logistic regression, decision trees, random forests, gradient-boosted trees, naive Bayes, linear least squares, Lasso, ridge regression, and isotonic regression.
+
+02:37.160 --> 02:48.240
+For recommendation systems, MLlib supports collaborative filtering using Alternating Least Squares, or ALS.
+
+02:48.240 --> 02:57.320
+When it comes to clustering, MLlib includes K-means, Gaussian mixture, Bisecting K-means, and Streaming K-means.
+
+02:57.320 --> 03:02.240
+To simplify things, you can remember the core focus areas of MLlib as 'The Three C's' of machine learning in PySpark MLlib.
+
+03:02.240 --> 03:11.160
+First, Collaborative Filtering, which produces recommendations.
+
+03:11.160 --> 03:20.320
+Second, Classification, which is used for identifying to which of a set of categories a new observation belongs.
+
+03:20.320 --> 03:36.160
+And third, Clustering, which groups data based on similar characteristics.
+
+03:36.160 --> 03:40.400
+Let's see how easy it is to import these tools into your Python environment.
+
+03:40.400 --> 03:53.040
+If you want to use collaborative filtering, you simply import ALS from pyspark.mllib.recommendation.
+
+03:53.040 --> 04:06.720
+Similarly, if you want to perform a classification task using logistic regression, you can import LogisticRegressionWithLBFGS directly from pyspark.mllib.classification.
+
+04:06.720 --> 04:23.960
+Lastly, if you're looking to run a clustering analysis, you can import the KMeans class straight out of pyspark.mllib.clustering.
+
+04:23.960 --> 04:28.470
+Now that you have a high-level understanding of what PySpark MLlib has to offer and why it is so valuable for scaling your models, let's head over to some exercises and put this knowledge into practice!
