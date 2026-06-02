@@ -1,0 +1,134 @@
+[
+  {
+    "time": 0,
+    "text": "1. Choosing the Algorithm"
+  },
+  {
+    "time": 5,
+    "text": "00:00 - 00:12"
+  },
+  {
+    "time": 10,
+    "text": "PySpark has many different machine learning algorithms to choose from. While this makes our ability to predict, classify or cluster on enormous data sets easier, the onus is on us to choose the correct one."
+  },
+  {
+    "time": 15,
+    "text": "2. Spark ML Landscape"
+  },
+  {
+    "time": 20,
+    "text": "00:12 - 00:20"
+  },
+  {
+    "time": 25,
+    "text": "This flowchart can help us navigate what's available in PySpark's machine learning library for dataframes, ML."
+  },
+  {
+    "time": 30,
+    "text": "3. Spark ML Landscape"
+  },
+  {
+    "time": 35,
+    "text": "00:20 - 00:28"
+  },
+  {
+    "time": 40,
+    "text": "Recall we are going to predict the price of a home. This price is a quantity, in this case of dollars and is continuous."
+  },
+  {
+    "time": 45,
+    "text": "4. Spark ML Landscape"
+  },
+  {
+    "time": 50,
+    "text": "00:28 - 00:33"
+  },
+  {
+    "time": 55,
+    "text": "That takes us to the Regression archetype, which predicts continuous values."
+  },
+  {
+    "time": 60,
+    "text": "5. Spark ML Landscape"
+  },
+  {
+    "time": 65,
+    "text": "00:33 - 00:40"
+  },
+  {
+    "time": 70,
+    "text": "Lastly, we can see algorithms for solving our problem can be found in the ml regression module."
+  },
+  {
+    "time": 75,
+    "text": "6. PySpark Regression Methods"
+  },
+  {
+    "time": 80,
+    "text": "00:40 - 01:23"
+  },
+  {
+    "time": 85,
+    "text": "ml regression provides us with many different algorithms we could use. These first methods differ mostly in how they regularize, which means how they prevent themselves from finding overly complex solutions that are likely to overfit the data. While these methods can be powerful if used correctly, they require a lot of upfront work to ensure their assumptions are met. ml regression also contains tree-based methods which have the ability to easily handle things like missing and categorical values right out of the box. Decision Trees are easy to interpret but a lot of work needs to go in to prevent overfitting. So now we are down to two algorithms, RandomForest, and GBTRegression which differ in how they handle the error reduction."
+  },
+  {
+    "time": 90,
+    "text": "7. PySpark Regression Methods"
+  },
+  {
+    "time": 95,
+    "text": "01:23 - 01:32"
+  },
+  {
+    "time": 100,
+    "text": "We will choose to evaluate both Random Forest as well as Gradient Boosted Trees, or GBTRegression."
+  },
+  {
+    "time": 105,
+    "text": "8. Intro to Random Forest Regression"
+  },
+  {
+    "time": 110,
+    "text": "01:32 - 01:56"
+  },
+  {
+    "time": 115,
+    "text": "Both Random Forest and Gradient Boosted Trees models are examples of ensemble models. They combine many smaller models together to create a more powerful model. In the diagram you can see that we have many decision trees, each only trained on a sample of the data to prevent overfitting. When it comes time to predict a new value it runs through decision trees and they merge their answers together to create a prediction."
+  },
+  {
+    "time": 120,
+    "text": "9. Test and Train Splits for Time Series"
+  },
+  {
+    "time": 125,
+    "text": "01:56 - 02:31"
+  },
+  {
+    "time": 130,
+    "text": "If you've had some exposure to machine learning you may have seen the crucial step of splitting your data into test and training sets, which needs to be done before applying feature transformations. Commonly data is split randomly. Ours contains a time component so splitting randomly would leak information about what happens in the future. To prevent this you can split your data sequentially and train your model on the first sequences and then test it with the last. The size of your sets depends on how far out you need to forecast. Doing incremental testing is called step-forward optimization."
+  },
+  {
+    "time": 135,
+    "text": "10. Test and Train Splits for Time Series"
+  },
+  {
+    "time": 140,
+    "text": "02:31 - 03:20"
+  },
+  {
+    "time": 145,
+    "text": "Here, we'll create just one of the sequential test/train splits, with some added logic you could build out walk-forward optimization seen previously. First, we'll dynamically set our time variables, its important as when your dataset refreshes; you don't have to remember to change them! To start we'll calculate the min and max OFFMKTDATE dates. Then we can put in them in our datediff function to get the number of days our data spans. To create an 80-20 split we can multiply it by point-8 and add it to our min_date with date_add to get the date value. We can create our train and test sets by using a where function on df OFFMKTDATE to filter them. An extra where is needed on LISTDATE to ensure it contains items listed as of the split_date."
+  },
+  {
+    "time": 150,
+    "text": "11. Time to practice!"
+  },
+  {
+    "time": 155,
+    "text": "03:20 - 03:35"
+  },
+  {
+    "time": 160,
+    "text": "In this video, we saw how to navigate Pyspark ML and a few considerations in the algorithm selection process. Lastly, you learned how to create test and training sets for time-series. Let's see you try!"
+  }
+]

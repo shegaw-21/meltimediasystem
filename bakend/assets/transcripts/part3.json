@@ -1,0 +1,98 @@
+[
+  {
+    "time": 0,
+    "text": "1. Resilient distributed datasets in PySpark"
+  },
+  {
+    "time": 5,
+    "text": "00:00 - 00:10"
+  },
+  {
+    "time": 10,
+    "text": "Let's explore the foundational components of PySpark: Resilient Distributed Datasets (RDDs)."
+  },
+  {
+    "time": 15,
+    "text": "2. What is parallelization in PySpark?"
+  },
+  {
+    "time": 20,
+    "text": "00:10 - 00:55"
+  },
+  {
+    "time": 25,
+    "text": "One of PySpark's greatest strengths is its ability to handle large-scale data processing through parallelization, which splits data and computations across multiple nodes in a cluster. Operations defined in Spark are automatically distributed, enabling efficient processing of large datasets. Tasks are assigned to worker nodes that process data in parallel, with results combined at the end. This approach allows for efficient processing at scale, accommodating gigabytes or even terabytes of data."
+  },
+  {
+    "time": 30,
+    "text": "3. Understanding RDDs"
+  },
+  {
+    "time": 35,
+    "text": "00:55 - 01:39"
+  },
+  {
+    "time": 40,
+    "text": "RDDs are the core building blocks of Spark, representing distributed collections of data across a cluster. While RDDs enable fast data access and analysis, DataFrames offer greater user-friendliness due to their simpler syntax, although they can be slower. RDDs are immutable, meaning once created, it cannot be changed, but a new RDD can be created using operations like `map()` and `filter()`. They also support actions like `collect()`, which retrieves the results of RDD operations."
+  },
+  {
+    "time": 45,
+    "text": "4. Creating an RDD"
+  },
+  {
+    "time": 50,
+    "text": "01:39 - 02:10"
+  },
+  {
+    "time": 55,
+    "text": "Let’s create an RDD using a csv. We'll load the DataFrame from the csv and then use the `.rdd()` method to convert it to an RDD. The data is distributed across the cluster when the RDD is created. Here, we create an RDD from a csv file and use the `collect()` action to retrieve and display the data."
+  },
+  {
+    "time": 60,
+    "text": "5. Showing Collect"
+  },
+  {
+    "time": 65,
+    "text": "02:10 - 02:24"
+  },
+  {
+    "time": 70,
+    "text": "As you can see, `collect()` shows a summary of the processes that were done. It is also rather verbose to do a print statement!"
+  },
+  {
+    "time": 75,
+    "text": "6. RDDs vs DataFrames"
+  },
+  {
+    "time": 80,
+    "text": "02:24 - 04:10"
+  },
+  {
+    "time": 85,
+    "text": "RDDs offer a low-level interface, providing maximum flexibility. You can manipulate data at a granular level, but this flexibility comes at the cost of requiring more lines of code for even moderately complex operations. One strength of RDDs is their ability to preserve data types across operations. However, they lack the schema-aware optimizations of DataFrames, which means operations on structured data are less efficient and harder to express.While RDDs can scale to handle large datasets, they’re not as optimized for analytics as DataFrames. DataFrames are optimized for ease of use, providing a high-level abstraction for working with data. They encapsulate complex computations, making it easier to achieve our objectives with less code and fewer errors. One of the standout features of DataFrames is their SQL-like functionality. With SQL syntax, even complex transformations and analyses can be performed in just a few lines of code. DataFrames come with built-in schema awareness, meaning they contain column names and data types, just like a structured table in SQL."
+  },
+  {
+    "time": 90,
+    "text": "7. Some useful functions and methods"
+  },
+  {
+    "time": 95,
+    "text": "04:10 - 04:35"
+  },
+  {
+    "time": 100,
+    "text": "Here are a handful of useful functions you'll be seeing in the following exercises! `map()` is useful for apply a function to an RDD. This can include a lambda function or any other function defined or imported elsewhere `collect()` gathers data across the cluster, using the parallelization of PySpark."
+  },
+  {
+    "time": 105,
+    "text": "8. Let's practice!"
+  },
+  {
+    "time": 110,
+    "text": "04:35 - 04:43"
+  },
+  {
+    "time": 115,
+    "text": "Let's go look at RDDs and DataFrames in practice!"
+  }
+]

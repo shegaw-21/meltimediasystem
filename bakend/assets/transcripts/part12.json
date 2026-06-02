@@ -1,0 +1,86 @@
+[
+  {
+    "time": 0,
+    "text": "1. Where to Begin"
+  },
+  {
+    "time": 5,
+    "text": "00:00 - 00:22"
+  },
+  {
+    "time": 10,
+    "text": "Hi, I'm John Hogue and welcome to Feature Engineering with PySpark. Easily one of the most important aspects of applied machine learning is feature engineering. It is the process of using domain knowledge to create new features to help our models perform better. In this course, we will look at a real data set and work our way to building a Regression Model in PySpark."
+  },
+  {
+    "time": 15,
+    "text": "2. Diving Straight to Analysis"
+  },
+  {
+    "time": 20,
+    "text": "00:22 - 01:05"
+  },
+  {
+    "time": 25,
+    "text": "Before we dive in its important to note that while the techniques you'll learn in this course are invaluable, that data science cannot be applied as a cookie cutter. You will need to research your data and become your own expert. There is much to be said of the dangers of not understanding your data, especially where our outputs are increasingly being used to make decisions and inform policies. Before you dive into modeling, spend time to define what your goals are and how the output might be used. Take the time to research your data and its limitations. Often times you may be tasked with explaining what is and isn't possible. Lastly, remember that data science is all about being curious, asking questions and applying new ways to solve problems!"
+  },
+  {
+    "time": 30,
+    "text": "3. The Data Science Process"
+  },
+  {
+    "time": 35,
+    "text": "01:05 - 01:32"
+  },
+  {
+    "time": 40,
+    "text": "Every project and data set is different. Data Science is an iterative process that requires comfort with uncertainty as at any point you may have to go backward or even start over. A good project may inspire further questions that set the goals for the next project! As we progress through this process, this course will have extra emphasis on a lot of the 'art' sides of data science, exploring data, cleaning it and engineering it for use in a model."
+  },
+  {
+    "time": 45,
+    "text": "4. Spark changes fast and frequently"
+  },
+  {
+    "time": 50,
+    "text": "01:32 - 02:00"
+  },
+  {
+    "time": 55,
+    "text": "Before we get started, as a cutting-edge technology, Spark changes fast and frequently. Make sure you are looking at the right version! You can always go to the latest URL by using slash latest or put the version number, major, minor and patch to get a specific version. Programmatically you can check your version of Spark with these commands. That way you can ensure you are looking at the right documentation and not using deprecated methods!"
+  },
+  {
+    "time": 60,
+    "text": "5. Data Formats: Parquet"
+  },
+  {
+    "time": 65,
+    "text": "02:00 - 02:49"
+  },
+  {
+    "time": 70,
+    "text": "For this course, we will be using a Parquet file. Like most data in Hadoop, the platform that Spark runs on, it is a write once, read many times format. Parquet data is columnar, meaning that it is organized by columns, an important feature for huge data sets as it is blazingly fast to read in ONLY the data you need. CSVs, on the other hand, have to read and parse the whole data set to read a single field. Another difference is Parquet fields are defined and typed, saving users from defining data types, like dates, booleans, or strings. For this reason, parquet is relatively slow to write. Since it's not delimited by characters it's less likely to be read in wrong if those characters exist in the data. These are just a few advantages that are causing the industry to adopt Parquet quickly."
+  },
+  {
+    "time": 75,
+    "text": "6. Getting the Data to Spark"
+  },
+  {
+    "time": 80,
+    "text": "02:49 - 03:02"
+  },
+  {
+    "time": 85,
+    "text": "We have many format readers to choose from for converting various file types to a PySpark DataFrame. Here we will use spark read parquet and put the results into the variable df representing a dataframe."
+  },
+  {
+    "time": 90,
+    "text": "7. Let's Practice!"
+  },
+  {
+    "time": 95,
+    "text": "03:02 - 03:20"
+  },
+  {
+    "time": 100,
+    "text": "In this video, we covered off on some important considerations when starting any data science project. We also learned about parquet and how to load it to a spark dataframe. In the exercises, you'll verify the versioning of PySpark and Python and finally, you'll load the data yourself!"
+  }
+]

@@ -1,0 +1,62 @@
+[
+  {
+    "time": 0,
+    "text": "1. Introduction to Data Pipelines"
+  },
+  {
+    "time": 5,
+    "text": "00:00 - 00:14"
+  },
+  {
+    "time": 10,
+    "text": "We've spent most of this course working with individual transformations and actions to clean data in Spark. But data is rarely so simple that a couple transformations or actions can prepare it for real analysis. Let's look now at data pipelines."
+  },
+  {
+    "time": 15,
+    "text": "2. What is a data pipeline?"
+  },
+  {
+    "time": 20,
+    "text": "00:14 - 00:38"
+  },
+  {
+    "time": 25,
+    "text": "Data pipelines are simply the set of steps needed to move from an input data source, or sources, and convert it to the desired output. A data pipeline can consist of any number of steps or components, and can span many systems. For our purposes, we’ll be setting up a data pipeline within Spark, but realize that a full production data pipeline will likely communicate with many systems."
+  },
+  {
+    "time": 30,
+    "text": "3. What does a data pipeline look like?"
+  },
+  {
+    "time": 35,
+    "text": "00:38 - 02:16"
+  },
+  {
+    "time": 40,
+    "text": "Much like Spark in general, a data pipeline typically consists of inputs, transformations, and the outputs of those steps. In addition, there is often validation and analysis steps before delivery of the data to the next user. An input can be any of the data types we've looked at so far, including CSV, JSON, text, etc. It could be from the local file system, or from web services, APIs, databases, and so on. The basic idea is to read the data into a DataFrame as we've done previously. Once we have the data in a DataFrame, we need to transform it in some fashion. You’ve done the individual steps several times throughout this course - adding columns, filtering rows, performing calculations as needed. In our previous examples, we’ve only done one or two of these steps at a time but a pipeline can consist of as many of these steps as needed so we can format the data into our desired output. After we’ve defined our transformations we need to output the data into a usable form. You’ve already written files out to CSV or Parquet format, but it could include multiple copies with various formats, or instead write the output to a database, a web service, etc. The last two steps vary greatly depending on your needs. We'll discuss validation in a later lesson, but the idea is to run some form of testing on the data to verify it is as expected. Analysis is often the final step before handing the data off to the next user. This can include things such as row counts, specific calculations, or pretty much anything that makes it easier for the user to consume the dataset."
+  },
+  {
+    "time": 45,
+    "text": "4. Pipeline details"
+  },
+  {
+    "time": 50,
+    "text": "02:16 - 02:50"
+  },
+  {
+    "time": 55,
+    "text": "It's important to note that in Spark, a data pipeline is not a formally defined object, but rather a concept. This is different than if you've used the Pipeline object in Spark.ML (If you haven't, you don't worry, it's not needed for this course). For our purposes, a Spark pipeline is all normal code required to complete a task. In this example, we're doing the various tasks required to define a schema, read a datafile, add an ID, then write out two separate data types. The task could be much more complex, but the concept is usually the same."
+  },
+  {
+    "time": 60,
+    "text": "5. Let's Practice!"
+  },
+  {
+    "time": 65,
+    "text": "02:50 - 03:01"
+  },
+  {
+    "time": 70,
+    "text": "When you look at the components, a data pipeline in Spark is fairly simple, but can be very powerful. Let's start working on a more elaborate data pipeline now."
+  }
+]

@@ -1,0 +1,90 @@
+[
+  {
+    "time": 0,
+    "text": "1. Overview of PySpark MLlib"
+  },
+  {
+    "time": 5,
+    "text": "00:00 - 00:17"
+  },
+  {
+    "time": 10,
+    "text": "In the last chapter, you learned about PySpark SQL which is one of the high-level API built on top of Spark Core for structured data. In this chapter, you'll learn about PySpark MLlib which is a built-in library for scalable machine learning."
+  },
+  {
+    "time": 15,
+    "text": "2. What is PySpark MLlib?"
+  },
+  {
+    "time": 20,
+    "text": "00:17 - 01:11"
+  },
+  {
+    "time": 25,
+    "text": "Before diving deep into PySpark MLlib, let's quickly define what machine learning is. According to Wikipedia, Machine learning is a scientific discipline that explores the construction and study of algorithms that can learn from data. PySpark MLlib is a machine-learning library. Its goal is to make practical machine learning scalable and easy. At a high level, PySpark MLlib provides tools such as: Machine learning algorithms which include collaborative filtering, classification, and clustering. Featurization which include feature extraction, transformation, dimensionality reduction, and selection. Pipelines which include constructing, evaluating, and tuning ML Pipelines. In this chapter, we will explore Machine Learning algorithms - collaborative filtering, classification, and clustering."
+  },
+  {
+    "time": 30,
+    "text": "1 https://en.wikipedia.org/wiki/Machine_learning"
+  },
+  {
+    "time": 35,
+    "text": "3. Why PySpark MLlib?"
+  },
+  {
+    "time": 40,
+    "text": "01:11 - 02:05"
+  },
+  {
+    "time": 45,
+    "text": "Many of you have heard about Scikit-learn, which is a very popular and easy to use Python library for machine learning. Then what is the need for PySpark MLlib? Scikit-learn algorithms work well for small to medium-sized datasets that can be processed on a single machine, but not for large datasets that require the power of parallel processing. On the other hand, PySpark MLlib only contains algorithms in which operations can be applied in parallel across nodes in a cluster. Unlike Scikit-learn, MLlib supports several other higher languages such as Scala, Java, and R in addition to Python. MLlib also provides a high-level API to build machine-learning pipelines. A machine learning pipeline is a complete workflow combining multiple machine learning algorithms together. PySpark is good"
+  },
+  {
+    "time": 50,
+    "text": "4. PySpark MLlib Algorithms"
+  },
+  {
+    "time": 55,
+    "text": "02:05 - 02:59"
+  },
+  {
+    "time": 60,
+    "text": "for iterative algorithms and using iterative algorithms, many machine-learning algorithms have been implemented in PySpark MLlib. PySpark MLlib currently supports various methods for binary classification, multiclass classification, and regression analysis. Some of the algorithms include linear SVMs, logistic regression, decision trees, random forests, gradient-boosted trees, naive Bayes, linear least squares, Lasso, ridge regression, isotonic regression. Collaborative filtering is commonly used for recommender systems and PySpark MLlib uses the alternating least squares (ALS) algorithm for collaborative filtering. Clustering algorithms consist of k-means, gaussian mixture, Power iteration clustering, Bisecting k-means and Streaming k-means. While PySpark MLlib includes several machine"
+  },
+  {
+    "time": 65,
+    "text": "5. The three C's of machine learning in PySpark MLlib"
+  },
+  {
+    "time": 70,
+    "text": "02:59 - 03:37"
+  },
+  {
+    "time": 75,
+    "text": "learning algorithms, we will specifically focus on the three key areas, often referred to as the three Cs of machine learning - Collaborative filtering, Classification, and Clustering. Collaborative filtering produces recommendations based on past behavior, preferences, or similarities to known entities/users. Classification is the problem of identifying to which of a set of categories a new observation belongs. Clustering is grouping of data into clusters based on similar characteristics. We'll go in more detail in the next few lessons. Now that you learned the 3 C's of the machine"
+  },
+  {
+    "time": 80,
+    "text": "6. PySpark MLlib imports"
+  },
+  {
+    "time": 85,
+    "text": "03:37 - 04:24"
+  },
+  {
+    "time": 90,
+    "text": "learning, let's quickly understand how we can import these PySpark MLlib libraries in the PySpark shell environment. Let's start with PySpark's collaborative filtering which is available in the pyspark-dot-mllib-dot-recommendation submodule. Here is how you import the ALS (Alternating Least Squares) class in PySpark shell. For binary classification, here is an example of how you import LogisticRegressionWithLBFGS class in the pyspark-dot-mllib-dot-classification submodule inside the PySpark shell. Similarly, for clustering, here is an example of importing the KMeans class in PySpark shell using the pyspark-dot-mllib-dot-clustering submodule. Let's practice"
+  },
+  {
+    "time": 95,
+    "text": "7. Let's practice"
+  },
+  {
+    "time": 100,
+    "text": "04:24 - 04:30"
+  },
+  {
+    "time": 105,
+    "text": "how well you understand the different Machine learning algorithms by importing them in PySpark shell."
+  }
+]

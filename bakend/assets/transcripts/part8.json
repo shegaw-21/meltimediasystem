@@ -1,0 +1,86 @@
+[
+  {
+    "time": 0,
+    "text": "1. Intro to data cleaning with Apache Spark"
+  },
+  {
+    "time": 5,
+    "text": "00:00 - 00:15"
+  },
+  {
+    "time": 10,
+    "text": "Welcome to Data Cleaning in Apache Spark with Python. My name is Mike Metzger, I am a Data Engineering Consultant, and I will be your instructor for this course. We will cover what data cleaning is, why it's important, and how to implement it with Spark and Python. Let's get started!"
+  },
+  {
+    "time": 15,
+    "text": "2. What is Data Cleaning?"
+  },
+  {
+    "time": 20,
+    "text": "00:15 - 00:46"
+  },
+  {
+    "time": 25,
+    "text": "In this course, we'll define \"data cleaning\" as preparing raw data for use in processing pipelines. We'll discuss what a pipeline is later on, but for now, it's sufficient to say that data cleaning is a necessary part of any production data system. If your data isn't \"clean\", it's not trustworthy and could cause problems later on. There are many tasks that could fall under the data cleaning umbrella. A few of these include reformatting or replacing text; performing calculations based on the data; and removing garbage or incomplete data."
+  },
+  {
+    "time": 30,
+    "text": "3. Why perform data cleaning with Spark?"
+  },
+  {
+    "time": 35,
+    "text": "00:46 - 01:28"
+  },
+  {
+    "time": 40,
+    "text": "Most data cleaning systems have two big problems: optimizing performance and organizing the flow of data. A typical programming language (such as Perl, C++, or even standard SQL) may be able to clean data when you have small quantities of data. But consider what happens when you have millions or even billions of pieces of data. Those languages wouldn't be able to process that amount of information in a timely manner. Spark lets you scale your data processing capacity as your requirements evolve. Beyond the performance issues, dealing with large quantities of data requires a process, or pipeline of steps. Spark allows management of many complex tasks within a single framework."
+  },
+  {
+    "time": 45,
+    "text": "4. Data cleaning example"
+  },
+  {
+    "time": 50,
+    "text": "01:28 - 01:54"
+  },
+  {
+    "time": 55,
+    "text": "Here's an example of cleaning a small data set. We're given a table of names, age in years, and a city. Our requirements are for a DataFrame with first and last name in separate columns, the age in months, and which state the city is in. We also want to remove any rows where the data is out of the ordinary. Using Spark transformations, we can create a DataFrame with these properties and continue processing afterwards."
+  },
+  {
+    "time": 60,
+    "text": "5. Spark Schemas"
+  },
+  {
+    "time": 65,
+    "text": "01:54 - 02:45"
+  },
+  {
+    "time": 70,
+    "text": "A primary function of data cleaning is to verify all data is in the expected format. Spark provides a built-in ability to validate datasets with schemas. You may have used schemas before with databases or XML; Spark is similar. A schema defines and validates the number and types of columns for a given DataFrame. A schema can contain many different types of fields - integers, floats, dates, strings, and even arrays or mapping structures. A defined schema allows Spark to filter out data that doesn't conform during read, ensuring expected correctness. In addition, schemas also have performance benefits. Normally a data import will try to infer a schema on read - this requires reading the data twice. Defining a schema limits this to a single read operation."
+  },
+  {
+    "time": 75,
+    "text": "6. Example Spark Schema"
+  },
+  {
+    "time": 80,
+    "text": "02:45 - 03:21"
+  },
+  {
+    "time": 85,
+    "text": "Here is an example schema to the import data from our previous example. First we'll import the pyspark.sql.types library. Next we define the actual StructType list of StructFields, containing an entry for each field in the data. Each StructField consists of a field name, dataType, and whether the data can be null. Once our schema is defined, we can add it into our spark.read.format.load call and process it against our data. The load() method takes two arguments - the filename and a schema. This is where we apply our schema to the data being loaded."
+  },
+  {
+    "time": 90,
+    "text": "7. Let's practice!"
+  },
+  {
+    "time": 95,
+    "text": "03:21 - 03:31"
+  },
+  {
+    "time": 100,
+    "text": "We've gone over a lot of information regarding data cleaning and the importance of dataframe schemas. Let's put that information to use and practice!"
+  }
+]

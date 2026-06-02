@@ -6,11 +6,19 @@ const currentTimeDisplay = document.getElementById('current-time');
 const durationDisplay = document.getElementById('duration');
 const videoSelect = document.getElementById('video-select');
 const downloadBtn = document.querySelector('.btn-download');
+const downloadJsonBtn = document.getElementById('download-json');
+const downloadPdfBtn = document.getElementById('download-pdf');
 let transcriptData = [];
-let currentVideo = 'sample';
+let currentVideo = 'part1';
+
+function cleanTranscriptText(text) {
+    return text
+        .replace(/^\s*\d{1,2}:\d{2}\s*[-–]\s*\d{1,2}:\d{2}\s*/u, '')
+        .trim();
+}
 
 // Fetch the clean JSON array from our backend route
-async function loadTranscript(videoName = 'sample') {
+async function loadTranscript(videoName = 'part1') {
     try {
         const response = await fetch(`/api/transcript?video=${videoName}`);
         transcriptData = await response.json();
@@ -19,11 +27,14 @@ async function loadTranscript(videoName = 'sample') {
 
         // Map and render clickable paragraphs dynamically
         transcriptData.forEach((item, index) => {
+            const cleanedText = cleanTranscriptText(item.text);
+            if (!cleanedText) return;
+
             const paragraph = document.createElement('p');
             paragraph.className = 'transcript-line';
             paragraph.setAttribute('data-time', item.time);
             paragraph.setAttribute('data-index', index);
-            paragraph.innerText = item.text;
+            paragraph.innerText = cleanedText;
 
             // Media control feature: user clicks line -> video jumps to frame with smooth seeking
             paragraph.addEventListener('click', () => {
@@ -52,8 +63,12 @@ function switchVideo(videoName) {
     audio.src = `/api/audio/stream?video=${videoName}`;
     audio.load();
 
-    // Update download link
+    // Update audio download link
     downloadBtn.href = `/api/audio/download?video=${videoName}`;
+
+    // Update transcript download links
+    downloadJsonBtn.href = `/api/transcript/download/json?video=${videoName}`;
+    downloadPdfBtn.href = `/api/transcript/download/pdf?video=${videoName}`;
 
     // Reset progress bar and time displays
     progressBar.style.width = '0%';
@@ -213,4 +228,4 @@ searchInput.addEventListener('input', () => {
 });
 
 // Boot script immediately upon document ready state
-loadTranscript();
+loadTranscript('part1');

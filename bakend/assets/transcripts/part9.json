@@ -1,0 +1,86 @@
+[
+  {
+    "time": 0,
+    "text": "1. DataFrame column operations"
+  },
+  {
+    "time": 5,
+    "text": "00:00 - 00:11"
+  },
+  {
+    "time": 10,
+    "text": "Welcome back! In the first chapter, we've spent some time discussing the basics of Spark data and file handling. Let's now take a look at how to use Spark column operations to clean data."
+  },
+  {
+    "time": 15,
+    "text": "2. DataFrame refresher"
+  },
+  {
+    "time": 20,
+    "text": "00:11 - 00:46"
+  },
+  {
+    "time": 25,
+    "text": "Before we discuss manipulating DataFrames in depth, let's talk about some of their features. DataFrames are made up of rows & columns and are generally analogous to a database table. DataFrames are immutable: any change to the structure or content of the data creates a new DataFrame. DataFrames are modified through the use of transformations. An example is The .filter() command to only return rows where the name starts with the letter 'M'. Another operation is .select(), in this case returning only the name and position fields."
+  },
+  {
+    "time": 30,
+    "text": "3. Common DataFrame transformations"
+  },
+  {
+    "time": 35,
+    "text": "00:46 - 01:44"
+  },
+  {
+    "time": 40,
+    "text": "There are many different transformations for use on a DataFrame. They vary depending on what you'd like to do. Some common transformations include: The .filter() clause, which includes only rows that satisfy the requirements defined in the argument. This is analogous to the WHERE clause in SQL. Spark includes a .where() alias which you can use in place of .filter() if desired. This call returns only rows where the vote occurred after 1/1/2019. Another common option is the .select() method which returns the columns requested from the DataFrame. The .withColumn() method creates a new column in the DataFrame. The first argument is the name of the column, and the second is the command(s) to create it. In this case, we create a column called 'year' with just the year information. We also can use the .drop() method to remove a column from a DataFrame."
+  },
+  {
+    "time": 45,
+    "text": "4. Filtering data"
+  },
+  {
+    "time": 50,
+    "text": "01:44 - 02:25"
+  },
+  {
+    "time": 55,
+    "text": "Among the most common operations used when cleaning a DataFrame, filtering lets us use only the data matching our desired result. We can use .filter() for many tasks, such as: Removing null values. Removing odd entries, anything that doesn't fit our desired format. We can also split a DataFrame containing combined data (such as a syslog file). As mentioned previously, use the .filter() method to return only rows that meet the specified criteria. The .contains() function takes a string argument that the column must have to return true. You can negate these results using the tile (~) character."
+  },
+  {
+    "time": 60,
+    "text": "5. Column string transformations"
+  },
+  {
+    "time": 65,
+    "text": "02:25 - 03:27"
+  },
+  {
+    "time": 70,
+    "text": "Some of the most common operations used in data cleaning are modifying and converting strings. You will typically apply these to each column as a transformation. Many of these functions are in the pyspark.sql.functions library. For brevity, we'll import it as the alias 'F'. We use the .withColumn() function to create a new column called \"upper\" using pyspark.sql.functions.upper() on the name column. The \"upper\" column will contain uppercase versions of all names. We can create intermediary columns that are only for processing. This is useful to clarify complex transformations requiring multiple steps. In this instance, we call the .split() function with the name of the column and the space character to split on. This returns a list of words in a column called splits. A very common operation is converting string data to a different type, such as converting a string column to an integer. We use the .cast() function to perform the conversion to an IntegerType()."
+  },
+  {
+    "time": 75,
+    "text": "6. ArrayType() column functions"
+  },
+  {
+    "time": 80,
+    "text": "03:27 - 04:04"
+  },
+  {
+    "time": 85,
+    "text": "While performing data cleaning with Spark, you may need to interact with ArrayType() columns. These are analogous to lists in normal python environments. One function we will use is .size(), which returns the number of items present in the specified ArrayType() argument. Another commonly used function for ArrayTypes is .getItem(). It takes an index argument and returns the item present at that index in the list column. Spark has many more transformations and utility functions available. When using Spark in production, make sure to reference the documentation for available options."
+  },
+  {
+    "time": 90,
+    "text": "7. Let's practice!"
+  },
+  {
+    "time": 95,
+    "text": "04:04 - 04:13"
+  },
+  {
+    "time": 100,
+    "text": "We've discussed some of the common operations used on Spark DataFrame columns. Let's practice some of these now."
+  }
+]

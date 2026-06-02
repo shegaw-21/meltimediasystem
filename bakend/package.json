@@ -1,8 +1,12 @@
 {
-  "name": "bakend",
-  "version": "1.0.0",
-  "main": "server.js",
-  "dependencies": {
-    "express": "^4.21.2"
-  }
+    "name": "bakend",
+    "version": "1.0.0",
+    "main": "server.js",
+    "dependencies": {
+        "express": "^4.21.2",
+        "mammoth": "^1.4.22"
+    },
+    "scripts": {
+        "convert-docx": "node convert-docx-to-json.js"
+    }
 }

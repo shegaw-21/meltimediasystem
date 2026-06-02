@@ -1,0 +1,134 @@
+[
+  {
+    "time": 0,
+    "text": "1. Dropping Data"
+  },
+  {
+    "time": 5,
+    "text": "00:00 - 00:08"
+  },
+  {
+    "time": 10,
+    "text": "More data is better right? Not if its bad data! The saying \"garbage in, garbage out\" is doubly true in data science!"
+  },
+  {
+    "time": 15,
+    "text": "2. Where can data go bad?"
+  },
+  {
+    "time": 20,
+    "text": "00:08 - 00:38"
+  },
+  {
+    "time": 25,
+    "text": "Data has a lot of places where it can get messed up. Data may be recorded incorrectly or contain extreme events. Inconsistent formatting such as mixing numeric and text data can make a field hard to use. Duplications can add redundant observations. Missing data can cause your analysis to have blind spots. Lastly, sometimes the data is just not relevant to the analysis. Failure to account for bad data can set your analysis up to fail. Please be careful!"
+  },
+  {
+    "time": 30,
+    "text": "3. Dropping Columns"
+  },
+  {
+    "time": 35,
+    "text": "00:38 - 00:51"
+  },
+  {
+    "time": 40,
+    "text": "Inspecting our data we can see there are some columns that are not worth including in our analysis. NO is just the record number, UNITNUMBER is the apartment or house number, and CLASS is completely constant."
+  },
+  {
+    "time": 45,
+    "text": "4. Dropping Columns"
+  },
+  {
+    "time": 50,
+    "text": "00:51 - 01:09"
+  },
+  {
+    "time": 55,
+    "text": "Dropping the columns requires entering a single column name or passing a list of columns to drop. Here we pass a list called cols_to_drop to the function and then drop them. Please note the star, which tells the function to unpack the list and feed them to the function one by one."
+  },
+  {
+    "time": 60,
+    "text": "5. Text Filtering"
+  },
+  {
+    "time": 65,
+    "text": "01:09 - 01:36"
+  },
+  {
+    "time": 70,
+    "text": "A common task in cleaning your data will be filtering it. Here we will filter records that contain specific text values. Where applies the filter to the dataframe records. Like creates a True/False condition for the records. The Tilde provides a way to take the opposite, or a NOT. The PySpark code reads: Filter the dataframe where the POTENTIALSHORTSALE field is NOT like the string 'Not Disclosed'"
+  },
+  {
+    "time": 75,
+    "text": "6. Outlier Filtering"
+  },
+  {
+    "time": 80,
+    "text": "01:36 - 01:58"
+  },
+  {
+    "time": 85,
+    "text": "For an initial pass at the model, it might be helpful to remove large outliers. One definition of an outlier for near normally distributed data is something that occurs more than 3 standard deviations from the mean, only 0-point-3% of data should be filtered. Remember outliers occur on both sides, so filter on both sides of the mean!"
+  },
+  {
+    "time": 90,
+    "text": "7. Value Filtering Example"
+  },
+  {
+    "time": 95,
+    "text": "01:58 - 02:27"
+  },
+  {
+    "time": 100,
+    "text": "Here we will filter extreme values from the LISTPRICE column. To start, we will use the aggregate functions standard deviation and mean. Then use collect to force the calculation to run and use the zero, zero index to access the values. Lastly we created a multi-conditional filter, which is just two boolean statements ANDed together. It reads, filter where the LISTPRICE is less than the hi_bound and more than the low_bound."
+  },
+  {
+    "time": 105,
+    "text": "8. Dropping NA's or NULLs"
+  },
+  {
+    "time": 110,
+    "text": "02:27 - 02:50"
+  },
+  {
+    "time": 115,
+    "text": "Dealing with missing data is something we will cover later as dropping data is usually a naive approach. Nevertheless, it is important to sometimes take shortcuts to quickly prove out the basis for further work. Dropna does what you'd expect it to do. In its basic form, it will remove a record where there is any null value in any column. You can get more specific as we'll see on the next slide."
+  },
+  {
+    "time": 120,
+    "text": "9. Dropping NA's or NULLs"
+  },
+  {
+    "time": 125,
+    "text": "02:50 - 03:11"
+  },
+  {
+    "time": 130,
+    "text": "In the first example, we drop any record contains a NULL value. The second example we will look at only two columns and if both are NULL then we will remove the record. Lastly, we can apply a threshold across all the columns and say if more than two columns contain NULL values, remove the entire record."
+  },
+  {
+    "time": 135,
+    "text": "10. Dropping Duplicates"
+  },
+  {
+    "time": 140,
+    "text": "03:11 - 03:39"
+  },
+  {
+    "time": 145,
+    "text": "Duplicates occur when two or more records contain the exact same information. Often this can happen after you drop columns or join datasets. dropDuplicates will drop the first duplicate it finds. Since Spark is distributed, which one it finds first may or may not be in the order of how your file was loaded. If you want to be more picky about where you are looking for duplicates you can specify a list of column names to look for them there specifically."
+  },
+  {
+    "time": 150,
+    "text": "11. Let's practice!"
+  },
+  {
+    "time": 155,
+    "text": "03:39 - 03:51"
+  },
+  {
+    "time": 160,
+    "text": "In this video, we learned why we might have bad data and several ways to remove it so it doesn't adversely impact our analysis. Let's see you take a shot at removing some data in the exercises!"
+  }
+]

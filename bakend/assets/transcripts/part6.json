@@ -1,0 +1,86 @@
+[
+  {
+    "time": 0,
+    "text": "1. Introduction to PySpark DataFrames"
+  },
+  {
+    "time": 5,
+    "text": "00:00 - 00:13"
+  },
+  {
+    "time": 10,
+    "text": "In the previous chapter, you looked at RDDs which is Spark’s core abstraction for working with data. In this chapter, we will explore PySpark SQL which is Spark's high level API for working with structured data."
+  },
+  {
+    "time": 15,
+    "text": "2. What are PySpark DataFrames?"
+  },
+  {
+    "time": 20,
+    "text": "00:13 - 01:06"
+  },
+  {
+    "time": 25,
+    "text": "PySpark SQL is a Spark library for structured data. Unlike the PySpark RDD API, PySpark SQL provides more information about the structure of data and the computation being performed. PySpark SQL provides a programming abstraction called DataFrames. A DataFrame is an immutable distributed collection of data with named columns. It is similar to a table in SQL. DataFrames are designed to process a large collection of structured data such as relational database and semi-structured data such as JSON (JavaScript Object Notation). DataFrame API currently supports several languages such as Python, R, Scala, and Java. DataFrames allows PySpark to query data using SQL, for example (SELECT * from table) or using the expression method for example (df-dot-select)."
+  },
+  {
+    "time": 30,
+    "text": "3. SparkSession - Entry point for DataFrame API"
+  },
+  {
+    "time": 35,
+    "text": "01:06 - 01:47"
+  },
+  {
+    "time": 40,
+    "text": "Previously you have learned about SparkContext which is the main entry point for creating RDDs. Similarly, SparkSession provides a single point of entry to interact with underlying Spark functionality and allows programming Spark with DataFrame API. The SparkSession does for DataFrames what the SparkContext does for RDDs. A SparkSession can be used to create DataFrame, register DataFrame as tables, execute SQL over tables, cache tables etc., Similar to SparkContext, SparkSession is exposed to the PySpark shell as variable spark. DataFrames in"
+  },
+  {
+    "time": 45,
+    "text": "4. Creating DataFrames in PySpark"
+  },
+  {
+    "time": 50,
+    "text": "01:47 - 02:27"
+  },
+  {
+    "time": 55,
+    "text": "Pyspark can be created in two main ways. From an existing RDD using SparkSession's createDataFrame method and From different data sources such as CSV, JSON, TXT using SparkSession's read method. Before going into the details of creating DataFrames, let's understand what schema is. Schema is the structure of data in DataFrame and helps Spark to optimize queries on the data more efficiently. A schema provides informational detail such as the column name, the type of data in that column, and whether null or empty values are allowed in the column. To create a DataFrame"
+  },
+  {
+    "time": 60,
+    "text": "5. Create a DataFrame from RDD"
+  },
+  {
+    "time": 65,
+    "text": "02:27 - 03:20"
+  },
+  {
+    "time": 70,
+    "text": "from an RDD we will need to pass an RDD and a schema into SparkSession's createDataFrame method. In this example, we will first create an RDD named iphones_RDD from a list of iphones using SparkContext's parallelize method. Next, we will create a DataFrame using SparkSession's createDataFrame method using iphones_RDD and the list of column names such as Model, Year, Height, Width and Weight as schema. The type of object created can be confirmed using type method, which shows that it is a PySpark DataFrame. A thing to note here is when the schema is a list of column names, the type of each column will be inferred from data as shown above. However when the schema is None, it will try to infer the schema from data. To create a"
+  },
+  {
+    "time": 75,
+    "text": "6. Create a DataFrame from reading a CSV/JSON/TXT"
+  },
+  {
+    "time": 80,
+    "text": "03:20 - 04:33"
+  },
+  {
+    "time": 85,
+    "text": "DataFrame from CSV/JSON/TXT files, we will make use of the SparkSession's spark-dot-read property. Here is an example of creating df_csv DataFrame from people-dot-csv file using spark-dot-read-dot-csv method. Similarly here is an example for creating df_json DataFrame from people-dot-json file using spark-dot-read-dot-json method. Finally here is an example for creating df_txt DataFrame from people-dot-txt file using spark-dot-read-dot-txt method. Irrespective of the file type, this method requires the path to the file and two optional parameters. The first optional parameter, header=True may be passed to make sure that the method treats the first row as column names. The second optional parameter, inferSchema=True may be passed to instruct the DataFrame reader to infer the schema from the data and by doing so, it will attempt to assign the right datatype to each column based on the content. Now let's"
+  },
+  {
+    "time": 90,
+    "text": "7. Let's practice"
+  },
+  {
+    "time": 95,
+    "text": "04:33 - 04:38"
+  },
+  {
+    "time": 100,
+    "text": "practice creating some DataFrames in PySpark shell."
+  }
+]

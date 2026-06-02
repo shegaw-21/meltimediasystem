@@ -1,0 +1,98 @@
+[
+  {
+    "time": 0,
+    "text": "1. Introduction to PySpark"
+  },
+  {
+    "time": 5,
+    "text": "00:00 - 00:30"
+  },
+  {
+    "time": 10,
+    "text": "Welcome! In this course, we’ll explore PySpark, a powerful tool for processing and analyzing big data. Designed for data engineers, data scientists, and machine learning enthusiasts, this course will teach you to work with large-scale datasets in distributed environments, transforming raw data into valuable insights."
+  },
+  {
+    "time": 15,
+    "text": "2. Meet your instructor"
+  },
+  {
+    "time": 20,
+    "text": "00:30 - 00:54"
+  },
+  {
+    "time": 25,
+    "text": "I'm Benjamin, your instructor for this course. I've been a data engineer for nearly a decade, working with Big Data solutions in PySpark for ETL pipelines, data cleaning, and machine learning. PySpark is one of the most versatile tools for data professionals."
+  },
+  {
+    "time": 30,
+    "text": "3. What is PySpark?"
+  },
+  {
+    "time": 35,
+    "text": "00:54 - 01:38"
+  },
+  {
+    "time": 40,
+    "text": "Apache Spark is an open-source, distributed computing system designed for fast processing of large-scale data. PySpark is the Python interface for Apache Spark. It handles large datasets efficiently with parallel computation in Python workflows, ideal for batch processing, real-time streaming, machine learning, data analytics, and SQL querying. PySpark supports industries like finance, healthcare, and e-commerce with speed and scalability."
+  },
+  {
+    "time": 45,
+    "text": "4. When would we use PySpark?"
+  },
+  {
+    "time": 50,
+    "text": "01:38 - 02:29"
+  },
+  {
+    "time": 55,
+    "text": "PySpark is ideal for handling large datasets that can’t be processed on a single machine. It excels in: Big Data Analytics through Distributed Data Processing, using Spark’s in-memory computation for faster processing. Machine Learning on Large Datasets leverages Spark’s MLlib for scalable model training and evaluation. ETL and ELT Pipelines transforms large volumes of raw data from sources into structured formats. PySpark is flexible, working with diverse data sources like CSVs, Parquet, and many more."
+  },
+  {
+    "time": 60,
+    "text": "5. Spark cluster"
+  },
+  {
+    "time": 65,
+    "text": "02:29 - 03:05"
+  },
+  {
+    "time": 70,
+    "text": "A key component of working with PySpark is clusters. A Spark cluster is a group of computers (nodes) that collaboratively process large datasets using Apache Spark, with a master node coordinating multiple worker nodes. This architecture enables distributed processing. The master node manages resources and tasks, while worker nodes execute assigned compute tasks."
+  },
+  {
+    "time": 75,
+    "text": "6. SparkSession"
+  },
+  {
+    "time": 80,
+    "text": "03:05 - 04:16"
+  },
+  {
+    "time": 85,
+    "text": "A SparkSession is the entry point into PySpark, enabling interaction with Apache Spark's core capabilities. It allows us to execute queries, process data, and manage resources in the Spark cluster. To create a SparkSession, run `from pyspark.sql import SparkSession`. We’ll create a session named MySparkApp using `SparkSession.builder`, stored as the variable spark. The `.builder()` method sets up the session, while `getOrCreate()` initiates a new session or retrieves an existing one. The `.appName()` method helps manage multiple PySpark applications. With our SparkSession ready, we can load data and apply transformations or actions. It’s best practice to use `SparkSession.builder.getOrCreate()`, which returns an existing session or creates a new one if necessary."
+  },
+  {
+    "time": 90,
+    "text": "7. PySpark DataFrames"
+  },
+  {
+    "time": 95,
+    "text": "04:16 - 05:12"
+  },
+  {
+    "time": 100,
+    "text": "PySpark DataFrames are distributed, table-like structures optimized for large-scale data processing. Their syntax is similar to Pandas, with the main difference being how data is managed at a low level. To create a PySpark DataFrame, use the `spark.read.csv()` function in the Spark Session with a csv file. For this example, we'll use a generalized data variable, representing any data source, and columns to define the schema. To see our DataFrame, we can use the `.show()` method. We’ll explore these concepts further throughout this course."
+  },
+  {
+    "time": 105,
+    "text": "8. Let's practice!"
+  },
+  {
+    "time": 110,
+    "text": "05:12 - 05:19"
+  },
+  {
+    "time": 115,
+    "text": "Let's go see these concepts in action."
+  }
+]

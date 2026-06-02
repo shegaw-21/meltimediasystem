@@ -1,0 +1,98 @@
+[
+  {
+    "time": 0,
+    "text": "1. Introduction to PySpark RDD"
+  },
+  {
+    "time": 5,
+    "text": "00:00 - 00:14"
+  },
+  {
+    "time": 10,
+    "text": "In the first chapter, you have learned about different components of Spark namely, Spark Core, Spark SQL, and Spark MLlib. In this chapter, we will start with RDDs which are Spark’s core abstraction for working with data."
+  },
+  {
+    "time": 15,
+    "text": "2. What is RDD?"
+  },
+  {
+    "time": 20,
+    "text": "00:14 - 00:40"
+  },
+  {
+    "time": 25,
+    "text": "Let's get started. RDD stands for Resilient Distributed Datasets. It is simply a collection of data distributed across the cluster. RDD is the fundamental and backbone data type in PySpark. When Spark starts processing data, it divides the data into partitions and distributes the data across cluster nodes, with each node containing a slice of data. Now, let's take a"
+  },
+  {
+    "time": 30,
+    "text": "3. Decomposing RDDs"
+  },
+  {
+    "time": 35,
+    "text": "00:40 - 01:06"
+  },
+  {
+    "time": 40,
+    "text": "look at the different features of RDD. The name RDD captures 3 important properties. Resilient, which means the ability to withstand failures and recompute missing or damaged partitions. Distributed, which means spanning the jobs across multiple nodes in the cluster for efficient computation. Datasets, which is a collection of partitioned data e.g. Arrays, Tables, Tuples or other objects. There are three different"
+  },
+  {
+    "time": 45,
+    "text": "4. Creating RDDs. How to do it?"
+  },
+  {
+    "time": 50,
+    "text": "01:06 - 01:48"
+  },
+  {
+    "time": 55,
+    "text": "methods for creating RDDs. You have already seen two methods in the previous chapter even though you are not aware that you are creating RDDs. The simplest method to create RDDs is to take an existing collection of objects (eg. a list, an array or a set) and pass it to SparkContext’s parallelize method. A more common way to create RDDs is to load data from external datasets such as files stored in HDFS or objects in Amazon S3 buckets or from lines in a text file stored locally and pass it to SparkContext's textFile method. Finally, RDDs can also be created from existing RDDs which we will see in the next video. In the first method,"
+  },
+  {
+    "time": 60,
+    "text": "5. Parallelized collection (parallelizing)"
+  },
+  {
+    "time": 65,
+    "text": "01:48 - 02:22"
+  },
+  {
+    "time": 70,
+    "text": "RDDs are created from a list or a set using the SparkContext’s parallelize method. Let's try and understand how RDDs are created using this method with a couple of examples. In the first example, an RDD named numRDD is created from a Python list containing numbers 1, 2, 3, and 4. In the second example, an RDD named helloRDD is created from the 'hello world' string. You can confirm the object created is RDD using Python's type method. Creating"
+  },
+  {
+    "time": 75,
+    "text": "6. From external datasets"
+  },
+  {
+    "time": 80,
+    "text": "02:22 - 02:49"
+  },
+  {
+    "time": 85,
+    "text": "RDDs from external datasets is by far the most common method in PySpark. In this method, RDDs are created using SparkContext’s textFile method. In this simple example, an RDD named fileRDD is created from the lines of a README-dot-md file stored locally on your computer. Similar to previous method, you can confirm the RDD using the type method. Data"
+  },
+  {
+    "time": 90,
+    "text": "7. Understanding Partitioning in PySpark"
+  },
+  {
+    "time": 95,
+    "text": "02:49 - 03:52"
+  },
+  {
+    "time": 100,
+    "text": "partitioning is an important concept in Spark and understanding how Spark deals with partitions allow one to control parallelism. A partition in Spark is the division of the large dataset with each part being stored in multiple locations across the cluster. By default Spark partitions the data at the time of creating RDD based on several factors such as available resources, external datasets etc, however, this behavior can be controlled by passing a second argument called minPartitions which defines the minimum number of partitions to be created for an RDD. In the first example, we create an RDD named numRDD from the list of 10 integers using SparkContext's parallelize method with 6 partitions. In the second example, we create another RDD named fileRDD using SparkContext's textFile method with 6 partitions. The number of partitions in an RDD can always be found by using the getNumPartitions method. In the next"
+  },
+  {
+    "time": 105,
+    "text": "8. Let's practice"
+  },
+  {
+    "time": 110,
+    "text": "03:52 - 04:00"
+  },
+  {
+    "time": 115,
+    "text": "video, you'll see the final method of creating RDDs, for now let's create some RDDs like you just learnt."
+  }
+]

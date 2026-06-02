@@ -1,0 +1,86 @@
+[
+  {
+    "time": 0,
+    "text": "1. Data manipulation with DataFrames"
+  },
+  {
+    "time": 5,
+    "text": "00:00 - 00:15"
+  },
+  {
+    "time": 10,
+    "text": "In this video, we'll cover essential techniques for handling missing data, managing DataFrame columns and rows, and using PySpark's built-in functions to clean and transform data."
+  },
+  {
+    "time": 15,
+    "text": "2. Handling missing data"
+  },
+  {
+    "time": 20,
+    "text": "00:15 - 01:21"
+  },
+  {
+    "time": 25,
+    "text": "Handling null values in PySpark is essential for accurate analysis. Nulls can skew results or cause errors. PySpark offers two primary methods to address this issue. The first approach is to drop rows with null values using `.na.drop()`, either across the entire DataFrame or in specific columns. This simplifies the dataset but may significantly reduce its size if nulls are common. For column-specific filtering, `.where()` and `isNotNull()` can be used. The second approach is to replace nulls with default values using `.na.fill()`. This method is ideal when nulls are sparse or when removing rows would result in data loss, ensuring the dataset remains complete and consistent."
+  },
+  {
+    "time": 30,
+    "text": "3. Column operations"
+  },
+  {
+    "time": 35,
+    "text": "01:21 - 02:26"
+  },
+  {
+    "time": 40,
+    "text": "PySpark simplifies creating new columns with the `.withColumn()` method, allowing users to define the column name and computation. This is useful for derived metrics or transformations. Renaming columns with `.withColumnRenamed()` improves clarity, making DataFrames easier to work with in collaborative settings. Clear, descriptive names reduce ambiguity and enhance documentation. Dropping columns with `.drop()` removes redundant or irrelevant data, focusing the DataFrame on essential points. This helps manage large datasets by reducing memory usage and improving efficiency. These operations enhance PySpark DataFrames' flexibility and clarity, tailoring them to specific analysis needs while maintaining a clean structure."
+  },
+  {
+    "time": 45,
+    "text": "4. Row operations"
+  },
+  {
+    "time": 50,
+    "text": "02:26 - 03:33"
+  },
+  {
+    "time": 55,
+    "text": "Row operations are central to data analysis. Filtering is essential for narrowing down a DataFrame to the most relevant data. By applying conditions to filter rows, we can isolate subsets that meet specific criteria, such as data from a particular time period, geographic region, or category. We use the `.filter()` method, providing the column name and the filter criteria. Grouping rows based on specific fields or categories allows us to organize the data by meaningful segments, such as by customer, product, or date. Grouping enables us to analyze patterns and trends within each category, offering insights that would be difficult to see in ungrouped data. We use the `.groupby()` method, and then the aggregation we are interested in with the columns we want to focus on."
+  },
+  {
+    "time": 60,
+    "text": "5. Row Operations Outomes"
+  },
+  {
+    "time": 65,
+    "text": "03:33 - 03:39"
+  },
+  {
+    "time": 70,
+    "text": "Here's what the code from the previous slide may look like!"
+  },
+  {
+    "time": 75,
+    "text": "6. CheatSheet"
+  },
+  {
+    "time": 80,
+    "text": "03:39 - 03:44"
+  },
+  {
+    "time": 85,
+    "text": "Here is a cheat sheet to help you going forward!"
+  },
+  {
+    "time": 90,
+    "text": "7. Let's practice!"
+  },
+  {
+    "time": 95,
+    "text": "03:44 - 03:51"
+  },
+  {
+    "time": 100,
+    "text": "Let's go practice our DataFrames work!"
+  }
+]

@@ -233,6 +233,28 @@ audio {
     font-size: 0.9em;
 }
 
+.transcript-downloads {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #3a3a50;
+}
+
+.transcript-downloads h3 {
+    margin: 0 0 12px 0;
+    color: #00b4d8;
+    font-size: 1em;
+}
+
+.download-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-small {
+    padding: 8px 16px;
+    font-size: 0.9em;
+}
+
 /* Scrollbar styling */
 .transcript-section::-webkit-scrollbar {
     width: 8px;

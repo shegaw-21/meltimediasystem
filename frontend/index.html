@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Multimedia Learning System</title>
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
     <header>
         <h1>Multimedia Learning System</h1>
@@ -17,8 +19,21 @@
             <div class="video-selector">
                 <label for="video-select">📹 Select Video:</label>
                 <select id="video-select">
-                    <option value="sample">Water Cycle (Sample)</option>
-                    <option value="datascience">Data Science Introduction</option>
+                    <option value="part1">Part 1</option>
+                    <option value="part2">Part 2</option>
+                    <option value="part3">Part 3</option>
+                    <option value="part4">Part 4</option>
+                    <option value="part5">Part 5</option>
+                    <option value="part6">Part 6</option>
+                    <option value="part7">Part 7</option>
+                    <option value="part8">Part 8</option>
+                    <option value="part9">Part 9</option>
+                    <option value="part10">Part 10</option>
+                    <option value="part11">Part 11</option>
+                    <option value="part12">Part 12</option>
+                    <option value="part13">Part 13</option>
+                    <option value="part14">Part 14</option>
+                    <option value="part15">Part 15</option>
                 </select>
             </div>
             <div class="video-wrapper">
@@ -33,7 +48,7 @@
                     <span id="current-time">0:00</span> / <span id="duration">0:00</span>
                 </div>
             </div>
-            
+
             <div class="audio-section">
                 <h3>🎧 Audio Summary</h3>
                 <audio id="audio-player" controls>
@@ -58,9 +73,21 @@
             <div class="transcript-stats">
                 <span id="match-count"></span>
             </div>
+            <div class="transcript-downloads">
+                <h3>📄 Download Transcript</h3>
+                <div class="download-buttons">
+                    <a href="/api/transcript/download/json" class="btn-download btn-small" id="download-json">
+                        📥 JSON
+                    </a>
+                    <a href="/api/transcript/download/pdf" class="btn-download btn-small" id="download-pdf">
+                        📥 PDF
+                    </a>
+                </div>
+            </div>
         </aside>
     </div>
 
     <script src="app.js"></script>
 </body>
+
 </html>

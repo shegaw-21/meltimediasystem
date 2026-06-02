@@ -1,0 +1,86 @@
+[
+  {
+    "time": 0,
+    "text": "1. Feature Generation"
+  },
+  {
+    "time": 5,
+    "text": "00:00 - 00:21"
+  },
+  {
+    "time": 10,
+    "text": "In this video, we will learn a lot about the nuts and bolts of feature engineering. Just because it's called 'machine learning' doesn't mean that it can figure everything out on its own. So we will use some tricks to help it out by creating new features that will better capture patterns in the data. This video will cover feature generation and show you how using the new features can improve a model."
+  },
+  {
+    "time": 15,
+    "text": "2. Why generate new features?"
+  },
+  {
+    "time": 20,
+    "text": "00:21 - 00:41"
+  },
+  {
+    "time": 25,
+    "text": "Why generate new features if the information is already available in the dataset? Combining features together can capture subtle dependent effects between them that impact the outcome variable. These can be represented by multiplying, summing, differencing or dividing two or more variables."
+  },
+  {
+    "time": 30,
+    "text": "3. Why generate new features?"
+  },
+  {
+    "time": 35,
+    "text": "00:41 - 00:58"
+  },
+  {
+    "time": 40,
+    "text": "To see the impact of generating these features let's suppose you have two attributes, length, and width and the price of single story home. If these are your only two features how can you best create a model to predict price? They certainly don't look to be very strong features as is."
+  },
+  {
+    "time": 45,
+    "text": "4. Combining Two Features"
+  },
+  {
+    "time": 50,
+    "text": "00:58 - 01:21"
+  },
+  {
+    "time": 55,
+    "text": "Taking the previous example a step further we can think about how a person might buy a home. If we use some intuition that people often consider the area of a home, we can create a new feature, Total Square Footage by multiplying the width and length. The results are much better with an R-squared of point-81! Applying your reasoning and understanding of the problem can help you build powerful predictors."
+  },
+  {
+    "time": 60,
+    "text": "5. Other Ways to Combine Two Features"
+  },
+  {
+    "time": 65,
+    "text": "01:21 - 02:13"
+  },
+  {
+    "time": 70,
+    "text": "Our dataset doesn't include WIDTH and LENGTH because no one would ever actually look for a house that way. However, we don't have Total Square Footage calculated but we can create it using withColumn and by adding SQFTBELOWGROUND and SQFTABOVEGROUND together. We can build another feature, PRICEPERTSQFT using our previous feature TSQFT. This is now the combination of three independent variables. There isn't a limit to how deep you can go but interpretability of what it means starts to become difficult after three. We can create DAYSONMARKET as a difference between LISTDATE and OFFMARKETDATE. We will cover how to get LISTDATE and OFFMARKETDATE into the datetime format in the next section but for now, know that new features can be generated many ways!"
+  },
+  {
+    "time": 75,
+    "text": "6. What's the limit?"
+  },
+  {
+    "time": 80,
+    "text": "02:13 - 02:54"
+  },
+  {
+    "time": 85,
+    "text": "There is a major push in the data science community to automate some of the generation of features. If this is of interest to you, I'd recommend you check out the Python libraries FeatureTools and TSFresh. I will caution you that simply multiplying each feature pairwise will square your number of features. This can cause an explosion of features that can be unwieldy to model or could potentially overfit your model by pure coincidence. Many of the features may convey similar information and won't be needed Lastly, there is no limit to how many features you can combine but the interpretability certainly takes a steep dive after three. Beyond this is the realm of deep feature generation, a topic for another course!"
+  },
+  {
+    "time": 90,
+    "text": "7. Go forth and combine!"
+  },
+  {
+    "time": 95,
+    "text": "02:54 - 03:15"
+  },
+  {
+    "time": 100,
+    "text": "In this video, you learned that you can generate new powerful features to represent complex relations between them. Lastly, you saw that features combinations are everywhere and many are already in our dataset. It's your turn to take what you learned to build and evaluate new features generated from what's available!"
+  }
+]

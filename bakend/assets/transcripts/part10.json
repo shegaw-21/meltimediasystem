@@ -1,0 +1,86 @@
+[
+  {
+    "time": 0,
+    "text": "1. Caching"
+  },
+  {
+    "time": 5,
+    "text": "00:00 - 00:08"
+  },
+  {
+    "time": 10,
+    "text": "Now that we've done some data cleaning tasks using Spark, let's look at how to improve the performance of running those tasks using caching."
+  },
+  {
+    "time": 15,
+    "text": "2. What is caching?"
+  },
+  {
+    "time": 20,
+    "text": "00:08 - 00:35"
+  },
+  {
+    "time": 25,
+    "text": "Caching in Spark refers to storing the results of a DataFrame in memory or on disk of the processing nodes in a cluster. Caching improves the speed for subsequent transformations or actions as the data likely no longer needs to be retrieved from the original data source. Using caching reduces the resource utilization of the cluster - there is less need to access the storage, networking, and CPU of the Spark nodes as the data is likely already present."
+  },
+  {
+    "time": 30,
+    "text": "3. Disadvantages of caching"
+  },
+  {
+    "time": 35,
+    "text": "00:35 - 01:17"
+  },
+  {
+    "time": 40,
+    "text": "There are a few disadvantages of caching you should be aware of. Very large data sets may not fit in the memory reserved for cached DataFrames. Depending on the later transformations requested, the cache may not do anything to help performance. If a data set does not stay cached in memory, it may be persisted to disk. Depending on the disk configuration of a Spark cluster, this may not be a large performance improvement. If you're reading from a local network resource and have slow local disk I/O, it may be better to avoid caching the objects. Finally, the lifetime of a cached object is not guaranteed. Spark handles regenerating DataFrames for you automatically, but this can cause delays in processing."
+  },
+  {
+    "time": 45,
+    "text": "4. Caching tips"
+  },
+  {
+    "time": 50,
+    "text": "01:17 - 02:22"
+  },
+  {
+    "time": 55,
+    "text": "Caching is incredibly useful, but only if you plan to use the DataFrame again. If you only need it for a single task, it's not worth caching. The best way to gauge performance with caching is to test various configurations. Try caching your DataFrames at various points in the processing cycle and check if it improves your processing time. Try to cache in memory or fast NVMe / SSD storage. While still slower than main memory modern SSD based storage is drastically faster than spinning disk. Local spinning hard drives can still be useful if you are processing large DataFrames that require a lot of steps to generate, or must be accessed over the Internet. Testing this is crucial. If normal caching doesn't seem to work, try creating intermediate Parquet representations like we did in Chapter 1. These can provide a checkpoint in case a job fails mid-task and can still be used with caching to further improve performance. Finally, you can manually stop caching a DataFrame when you're finished with it. This frees up cache resources for other DataFrames."
+  },
+  {
+    "time": 60,
+    "text": "5. Implementing caching"
+  },
+  {
+    "time": 65,
+    "text": "02:22 - 03:04"
+  },
+  {
+    "time": 70,
+    "text": "Implementing caching in Spark is simple. The primary way is to call the function .cache() on a DataFrame object prior to a given Action. It requires no arguments. One example is creating a DataFrame from some original CSV data. Prior to running a .count() on the data, we call .cache() to tell Spark to store it in cache. Another option is to call .cache() separately. Here we create an ID in one transformation. We then call .cache() on the DataFrame. When we call the .show() action, the voter_df DataFrame will be cached. If you're following closely, this means that .cache() is a Spark transformation - nothing is actually cached until an action is called."
+  },
+  {
+    "time": 75,
+    "text": "6. More cache operations"
+  },
+  {
+    "time": 80,
+    "text": "03:04 - 03:23"
+  },
+  {
+    "time": 85,
+    "text": "A couple other options are available with caching in Spark. To check if a DataFrame is cached, use the .is_cached boolean property which returns True (as in this case) or False. To un-cache a DataFrame, we call .unpersist() with no arguments. This removes the object from the cache."
+  },
+  {
+    "time": 90,
+    "text": "7. Let's Practice!"
+  },
+  {
+    "time": 95,
+    "text": "03:23 - 03:28"
+  },
+  {
+    "time": 100,
+    "text": "We've discussed caching in depth - let's practice how to use it!"
+  }
+]
