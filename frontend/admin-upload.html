@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Upload — Meltimedia</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="config.js"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -290,7 +291,7 @@
 
         async function checkAuth() {
             try {
-                const res = await fetch('/api/auth/status');
+                const res = await fetch(`${window.API_BASE || ''}/api/auth/status`);
                 const data = await res.json();
                 if (!data.authenticated) {
                     window.location.href = '/admin-login.html';
@@ -312,14 +313,14 @@
         checkAuth();
 
         logoutBtn.addEventListener('click', async () => {
-            await fetch('/api/logout', { method: 'POST', credentials: 'include' });
+            await fetch(`${window.API_BASE || ''}/api/logout`, { method: 'POST', credentials: 'include' });
             window.location.href = '/admin-login.html';
         });
 
         // ---- Load available parts ----
         async function loadParts() {
             try {
-                const res = await fetch('/api/parts');
+                const res = await fetch(`${window.API_BASE || ''}/api/parts`);
                 const parts = await res.json();
                 const container = document.getElementById('parts-list');
                 if (!parts.length) {
@@ -394,7 +395,7 @@
 
             // XHR for upload progress
             const xhr = new XMLHttpRequest();
-            xhr.open('POST', '/api/admin/upload');
+            xhr.open('POST', `${window.API_BASE || ''}/api/admin/upload`);
             xhr.withCredentials = true;
 
             xhr.upload.addEventListener('progress', (e) => {

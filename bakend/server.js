@@ -688,6 +688,32 @@ app.get('/api/audio/download', (req, res) => {
 // 5. Admin login endpoint
 app.use(express.json());
 
+// CORS — allow the frontend origin (Vercel or same origin in local/Render together deploys)
+app.use((req, res, next) => {
+    const allowedOrigins = (process.env.ALLOWED_ORIGINS || '')
+        .split(',')
+        .map(o => o.trim())
+        .filter(Boolean);
+
+    const origin = req.headers.origin;
+
+    if (!origin || allowedOrigins.length === 0 || allowedOrigins.includes(origin)) {
+        // Same-origin request or no restriction configured — allow everything
+        res.setHeader('Access-Control-Allow-Origin', origin || '*');
+    } else if (allowedOrigins.includes(origin)) {
+        res.setHeader('Access-Control-Allow-Origin', origin);
+    }
+
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+    res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type,Authorization');
+
+    if (req.method === 'OPTIONS') {
+        return res.sendStatus(204);
+    }
+    next();
+});
+
 app.post('/api/login', (req, res) => {
     const { username, password } = req.body;
     if (!username || !password) {

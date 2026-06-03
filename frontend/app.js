@@ -14,6 +14,11 @@ let transcriptData = [];
 let currentVideo = 'part1';
 let allVideoParts = [];
 
+// API base URL — empty string means same origin (works when frontend + backend are together).
+// Set window.API_BASE in a <script> tag before this file loads to point to a remote backend,
+// e.g. window.API_BASE = "https://meltimedia.onrender.com"  when deploying frontend separately.
+const API_BASE = (typeof window !== 'undefined' && window.API_BASE) ? window.API_BASE.replace(/\/$/, '') : '';
+
 function cleanTranscriptText(text) {
     return text
         .replace(/^\s*\d{1,2}:\d{2}\s*[-–]\s*\d{1,2}:\d{2}\s*/u, '')
@@ -22,7 +27,7 @@ function cleanTranscriptText(text) {
 
 async function populateVideoSelect() {
     try {
-        const response = await fetch('/api/parts');
+        const response = await fetch(`${API_BASE}/api/parts`);
         const parts = await response.json();
         if (Array.isArray(parts) && parts.length) {
             allVideoParts = parts;
@@ -77,7 +82,7 @@ function showTranscriptMessage(message, className = 'transcript-message') {
 // Fetch the clean JSON array from our backend route
 async function loadTranscript(videoName = 'part1') {
     try {
-        const response = await fetch(`/api/transcript?video=${videoName}`);
+        const response = await fetch(`${API_BASE}/api/transcript?video=${videoName}`);
         if (!response.ok) {
             let message = `No transcript found for "${videoName}".`;
             try {
@@ -163,19 +168,19 @@ function switchVideo(videoName) {
     currentVideo = videoName;
 
     // Update video source
-    video.src = `/api/video?video=${videoName}`;
+    video.src = `${API_BASE}/api/video?video=${videoName}`;
     video.load();
 
     // Update audio source
-    audio.src = `/api/audio/stream?video=${videoName}`;
+    audio.src = `${API_BASE}/api/audio/stream?video=${videoName}`;
     audio.load();
 
     // Update audio download link
-    downloadBtn.href = `/api/audio/download?video=${videoName}`;
+    downloadBtn.href = `${API_BASE}/api/audio/download?video=${videoName}`;
 
     // Update transcript download links
-    downloadJsonBtn.href = `/api/transcript/download/json?video=${videoName}`;
-    downloadPdfBtn.href = `/api/transcript/download/pdf?video=${videoName}`;
+    downloadJsonBtn.href = `${API_BASE}/api/transcript/download/json?video=${videoName}`;
+    downloadPdfBtn.href = `${API_BASE}/api/transcript/download/pdf?video=${videoName}`;
 
     // Reset progress bar and time displays
     progressBar.style.width = '0%';
@@ -367,7 +372,7 @@ function showAdminPanel(authenticated) {
 
 async function refreshAuthState() {
     try {
-        const response = await fetch('/api/auth/status');
+        const response = await fetch(`${API_BASE}/api/auth/status`);
         const data = await response.json();
         showAdminPanel(data.authenticated);
     } catch (error) {
@@ -385,7 +390,7 @@ if (adminLoginForm) {
 
         adminLoginStatus.textContent = 'Logging in...';
         try {
-            const response = await fetch('/api/login', {
+            const response = await fetch(`${API_BASE}/api/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -414,7 +419,7 @@ if (adminUploadForm) {
         adminUploadStatus.textContent = 'Uploading content...';
 
         try {
-            const response = await fetch('/api/admin/upload', {
+            const response = await fetch(`${API_BASE}/api/admin/upload`, {
                 method: 'POST',
                 body: formData,
                 credentials: 'include'
@@ -445,7 +450,7 @@ if (adminUploadForm) {
 if (adminLogoutBtn) {
     adminLogoutBtn.addEventListener('click', async () => {
         try {
-            await fetch('/api/logout', { method: 'POST', credentials: 'include' });
+            await fetch(`${API_BASE}/api/logout`, { method: 'POST', credentials: 'include' });
             showAdminPanel(false);
         } catch (error) {
             console.error('Logout failed:', error);
