@@ -492,7 +492,7 @@ app.get('/api/video', (req, res) => {
 });
 
 // 2. Dynamic JSON Transcript Endpoint
-app.get('/api/transcript', async(req, res) => {
+app.get('/api/transcript', async (req, res) => {
     const videoName = req.query.video || 'part1';
 
     try {
@@ -516,7 +516,7 @@ app.get('/api/transcript', async(req, res) => {
 });
 
 // 2b. JSON Transcript Download Endpoint
-app.get('/api/transcript/download/json', async(req, res) => {
+app.get('/api/transcript/download/json', async (req, res) => {
     const videoName = req.query.video || 'part1';
 
     try {
@@ -538,7 +538,7 @@ app.get('/api/transcript/download/json', async(req, res) => {
 });
 
 // 2c. PDF Transcript Download Endpoint
-app.get('/api/transcript/download/pdf', async(req, res) => {
+app.get('/api/transcript/download/pdf', async (req, res) => {
     const videoName = req.query.video || 'part1';
 
     let transcript;
@@ -720,7 +720,7 @@ app.post('/api/admin/upload', upload.fields([
     { name: 'videoFile', maxCount: 1 },
     { name: 'audioFile', maxCount: 1 },
     { name: 'transcriptFile', maxCount: 1 },
-]), requireAdminAuth, async(req, res) => {
+]), requireAdminAuth, async (req, res) => {
     const { partName } = req.body;
 
     if (!partName || !partName.trim()) {
@@ -851,9 +851,13 @@ app.post('/api/admin/upload', upload.fields([
 });
 
 // Serve frontend static assets after API routes
-app.use(express.static(path.join(__dirname, '../frontend')));
+// Support both local layout (bakend/../frontend) and flat deploy layout (./frontend)
+const frontendPath = fs.existsSync(path.join(__dirname, '../frontend'))
+    ? path.join(__dirname, '../frontend')
+    : path.join(__dirname, 'frontend');
+app.use(express.static(frontendPath));
 
-app.listen(PORT, async() => {
+app.listen(PORT, async () => {
     const url = `http://localhost:${PORT}/index.html`;
     console.log(`🚀 Multimedia backend engine running at ${url}`);
     console.log(`🌐 Open ${url} to view your dashboard!`);

@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: meltimedia
+    runtime: node
+    rootDir: bakend
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: USE_CLOUD_STORAGE
+        value: true
+      - key: ADMIN_USER
+        sync: false        # set manually in Render dashboard
+      - key: ADMIN_PASS
+        sync: false        # set manually in Render dashboard
+      - key: COOKIE_SECRET
+        generateValue: true
+      - key: CLOUD_VIDEOS_URL
+        sync: false        # paste your media host URL in Render dashboard
+      - key: CLOUD_AUDIO_URL
+        sync: false
+      - key: CLOUD_TRANSCRIPTS_URL
+        sync: false
+    healthCheckPath: /api/parts
