@@ -6,7 +6,8 @@ const currentTimeDisplay = document.getElementById('current-time');
 const durationDisplay = document.getElementById('duration');
 const videoSelect = document.getElementById('video-select');
 const videoSearch = document.getElementById('video-search');
-const downloadBtn = document.querySelector('.btn-download');
+// Audio download link — new Tailwind UI uses id="audio-download-link"
+const downloadBtn = document.getElementById('audio-download-link') || document.querySelector('.btn-download');
 const downloadJsonBtn = document.getElementById('download-json');
 const downloadPdfBtn = document.getElementById('download-pdf');
 let transcriptData = [];
@@ -335,20 +336,33 @@ searchInput.addEventListener('input', () => {
 
 const adminLoginForm = document.getElementById('admin-login-form');
 const adminLoginStatus = document.getElementById('admin-login-status');
+// Legacy sidebar elements (may not exist in new UI; guarded with ?. below)
 const adminUploadForm = document.getElementById('admin-upload-form');
 const adminUploadStatus = document.getElementById('admin-upload-status');
 const adminLoginSection = document.getElementById('admin-login-section');
 const adminUploadSection = document.getElementById('admin-upload-section');
 const adminLogoutBtn = document.getElementById('admin-logout-btn');
 
+// Header elements (new Tailwind UI)
+const headerLoginEl = document.getElementById('header-login');
+const headerAdminBar = document.getElementById('header-admin-bar');
+
 function showAdminPanel(authenticated) {
-    if (authenticated) {
-        adminLoginSection.style.display = 'none';
-        adminUploadSection.style.display = 'block';
-    } else {
-        adminLoginSection.style.display = 'block';
-        adminUploadSection.style.display = 'none';
+    // New header UI
+    if (headerLoginEl && headerAdminBar) {
+        if (authenticated) {
+            headerLoginEl.classList.add('hidden');
+            headerAdminBar.classList.remove('hidden');
+            headerAdminBar.classList.add('flex');
+        } else {
+            headerLoginEl.classList.remove('hidden');
+            headerAdminBar.classList.add('hidden');
+            headerAdminBar.classList.remove('flex');
+        }
     }
+    // Legacy sidebar fallback
+    if (adminLoginSection) adminLoginSection.style.display = 'none';
+    if (adminUploadSection) adminUploadSection.style.display = authenticated ? 'block' : 'none';
 }
 
 async function refreshAuthState() {
@@ -363,7 +377,7 @@ async function refreshAuthState() {
 }
 
 if (adminLoginForm) {
-    adminLoginForm.addEventListener('submit', async(e) => {
+    adminLoginForm.addEventListener('submit', async (e) => {
         e.preventDefault();
 
         const username = document.getElementById('admin-username').value;
@@ -393,7 +407,7 @@ if (adminLoginForm) {
 }
 
 if (adminUploadForm) {
-    adminUploadForm.addEventListener('submit', async(e) => {
+    adminUploadForm.addEventListener('submit', async (e) => {
         e.preventDefault();
 
         const formData = new FormData(adminUploadForm);
@@ -429,7 +443,7 @@ if (adminUploadForm) {
 }
 
 if (adminLogoutBtn) {
-    adminLogoutBtn.addEventListener('click', async() => {
+    adminLogoutBtn.addEventListener('click', async () => {
         try {
             await fetch('/api/logout', { method: 'POST', credentials: 'include' });
             showAdminPanel(false);
@@ -440,7 +454,7 @@ if (adminLogoutBtn) {
 }
 
 // Boot script immediately upon document ready state
-(async() => {
+(async () => {
     await refreshAuthState();
     await populateVideoSelect();
     loadTranscript(currentVideo);

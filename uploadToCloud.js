@@ -24,7 +24,8 @@ async function uploadFiles() {
     const connectionString = envConnectionString || `DefaultEndpointsProtocol=https;AccountName=${storageAccountName};AccountKey=${storageAccountKey};EndpointSuffix=core.windows.net`;
     const blobServiceClient = BlobServiceClient.fromConnectionString(connectionString);
 
-    const assetsDir = path.join(__dirname, '..', 'bakend', 'assets');
+    // uploadToCloud.js lives at project root; bakend/assets is a sibling folder
+    const assetsDir = path.join(__dirname, 'bakend', 'assets');
     const containerConfigs = [
         { dir: 'videos', container: 'videos' },
         { dir: 'audio', container: 'audio' },

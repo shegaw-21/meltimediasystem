@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Upload — Meltimedia</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            400: '#26cde8', 500: '#00b4d8', 600: '#0096c7', 700: '#0077b6',
+                        },
+                        surface: {
+                            900: '#0f1013', 800: '#161620', 700: '#1e1e2e',
+                            600: '#23232f', 500: '#252538', 400: '#2a2a40', 300: '#3a3a50',
+                        },
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+
+<body class="min-h-full bg-surface-700 text-slate-100">
+
+    <!-- Nav bar -->
+    <nav class="bg-surface-600 border-b border-white/5 sticky top-0 z-10">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <a href="/index.html" class="flex items-center gap-2 text-brand-500 hover:text-brand-400 transition-colors">
+                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span class="font-bold text-lg tracking-tight">Meltimedia</span>
+            </a>
+            <div class="flex items-center gap-3">
+                <span id="admin-badge" class="hidden items-center gap-1.5 bg-brand-700/30 text-brand-400 border border-brand-700/50
+                       text-xs font-semibold px-2.5 py-1 rounded-full">
+                    <span class="w-1.5 h-1.5 bg-brand-400 rounded-full animate-pulse"></span>
+                    Admin
+                </span>
+                <button id="logout-btn"
+                    class="hidden text-sm text-slate-400 hover:text-red-400 transition-colors font-medium">
+                    Sign Out
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page content -->
+    <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+
+        <!-- Page header -->
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-slate-50">Content Upload</h1>
+            <p class="mt-1 text-slate-400">Add or replace video, audio, and transcript files for a lesson part.</p>
+        </div>
+
+        <!-- Auth guard message (shown while checking) -->
+        <div id="auth-checking" class="text-center py-20 text-slate-500 text-sm">
+            Verifying session…
+        </div>
+
+        <!-- Upload form (hidden until auth confirmed) -->
+        <div id="upload-panel" class="hidden grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+            <!-- Left: upload form -->
+            <div class="lg:col-span-2 space-y-6">
+
+                <!-- Part name card -->
+                <div class="bg-surface-600 border border-white/5 rounded-2xl p-6">
+                    <h2 class="text-base font-semibold text-amber-300 mb-4 flex items-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+                        </svg>
+                        Step 1 — Name the Part
+                    </h2>
+                    <label for="part-name" class="block text-sm text-slate-300 mb-1.5">
+                        Part identifier <span class="text-red-400">*</span>
+                    </label>
+                    <input type="text" id="part-name" name="partName" placeholder="e.g. part16"
+                        class="w-full bg-surface-800 border border-surface-300 text-slate-100 placeholder-slate-500
+                           rounded-lg px-4 py-2.5 text-sm
+                           focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-colors">
+                    <p class="mt-1.5 text-xs text-slate-500">Lowercase letters, numbers, dash or underscore only.</p>
+                </div>
+
+                <!-- File uploads card -->
+                <div class="bg-surface-600 border border-white/5 rounded-2xl p-6 space-y-6">
+                    <h2 class="text-base font-semibold text-amber-300 flex items-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                        </svg>
+                        Step 2 — Choose Files
+                    </h2>
+
+                    <!-- Video -->
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300 mb-1.5">
+                            Video file <span class="text-slate-500 font-normal">(.mp4)</span>
+                        </label>
+                        <label for="video-file" class="flex flex-col items-center justify-center w-full h-28 border-2 border-dashed
+                               border-surface-300 hover:border-brand-600 rounded-xl cursor-pointer
+                               bg-surface-800 hover:bg-surface-700 transition-colors group">
+                            <svg class="w-8 h-8 text-slate-500 group-hover:text-brand-500 mb-2 transition-colors"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                    d="M15 10l4.553-2.069A1 1 0 0121 8.87v6.263a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                            </svg>
+                            <span id="video-label"
+                                class="text-sm text-slate-400 group-hover:text-slate-300 transition-colors">
+                                Click to select .mp4 file
+                            </span>
+                            <input type="file" id="video-file" name="videoFile" accept=".mp4" class="hidden">
+                        </label>
+                    </div>
+
+                    <!-- Audio -->
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300 mb-1.5">
+                            Audio summary <span class="text-slate-500 font-normal">(.mp3)</span>
+                        </label>
+                        <label for="audio-file" class="flex flex-col items-center justify-center w-full h-28 border-2 border-dashed
+                               border-surface-300 hover:border-brand-600 rounded-xl cursor-pointer
+                               bg-surface-800 hover:bg-surface-700 transition-colors group">
+                            <svg class="w-8 h-8 text-slate-500 group-hover:text-brand-500 mb-2 transition-colors"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                    d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
+                            </svg>
+                            <span id="audio-label"
+                                class="text-sm text-slate-400 group-hover:text-slate-300 transition-colors">
+                                Click to select .mp3 file
+                            </span>
+                            <input type="file" id="audio-file" name="audioFile" accept=".mp3" class="hidden">
+                        </label>
+                    </div>
+
+                    <!-- Transcript -->
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300 mb-1.5">
+                            Transcript <span class="text-slate-500 font-normal">(.docx, .doc, or .json)</span>
+                        </label>
+                        <label for="transcript-file" class="flex flex-col items-center justify-center w-full h-28 border-2 border-dashed
+                               border-surface-300 hover:border-brand-600 rounded-xl cursor-pointer
+                               bg-surface-800 hover:bg-surface-700 transition-colors group">
+                            <svg class="w-8 h-8 text-slate-500 group-hover:text-brand-500 mb-2 transition-colors"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            <span id="transcript-label"
+                                class="text-sm text-slate-400 group-hover:text-slate-300 transition-colors">
+                                Click to select transcript file
+                            </span>
+                            <input type="file" id="transcript-file" name="transcriptFile" accept=".json,.docx,.doc"
+                                class="hidden">
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Progress + submit -->
+                <div class="bg-surface-600 border border-white/5 rounded-2xl p-6">
+                    <h2 class="text-base font-semibold text-amber-300 mb-4 flex items-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        Step 3 — Upload
+                    </h2>
+
+                    <!-- Upload progress bar (hidden by default) -->
+                    <div id="progress-wrap" class="hidden mb-4">
+                        <div class="flex justify-between text-xs text-slate-400 mb-1">
+                            <span>Uploading…</span>
+                            <span id="progress-pct">0%</span>
+                        </div>
+                        <div class="w-full h-2 bg-surface-400 rounded-full overflow-hidden">
+                            <div id="progress-bar"
+                                class="h-full bg-gradient-to-r from-brand-500 to-brand-600 rounded-full transition-all duration-300"
+                                style="width:0%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Status message -->
+                    <div id="upload-status" role="alert" aria-live="polite"
+                        class="hidden mb-4 px-4 py-3 rounded-lg text-sm font-medium"></div>
+
+                    <button id="upload-btn" class="w-full bg-brand-500 hover:bg-brand-600 active:bg-brand-700
+                           text-white font-semibold rounded-lg px-4 py-3
+                           transition-colors focus:outline-none focus:ring-2 focus:ring-brand-400
+                           focus:ring-offset-2 focus:ring-offset-surface-600
+                           flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                        </svg>
+                        <span id="upload-btn-text">Upload Content</span>
+                        <svg id="upload-spinner" class="hidden w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
+                            </circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Right: info sidebar -->
+            <aside class="space-y-5">
+
+                <!-- Guidelines -->
+                <div class="bg-surface-600 border border-white/5 rounded-2xl p-5">
+                    <h3 class="text-sm font-semibold text-slate-200 mb-3 flex items-center gap-2">
+                        <svg class="w-4 h-4 text-brand-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        File Guidelines
+                    </h3>
+                    <ul class="space-y-2 text-xs text-slate-400">
+                        <li class="flex items-start gap-2">
+                            <span class="mt-0.5 w-4 h-4 text-brand-500 flex-shrink-0">🎬</span>
+                            <span><strong class="text-slate-300">Video:</strong> MP4 format only. H.264 encoding
+                                recommended for best browser compatibility.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="mt-0.5 w-4 h-4 text-brand-500 flex-shrink-0">🎵</span>
+                            <span><strong class="text-slate-300">Audio:</strong> MP3 format only. This is the summary
+                                audio displayed alongside the video.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="mt-0.5 w-4 h-4 text-brand-500 flex-shrink-0">📄</span>
+                            <span><strong class="text-slate-300">Transcript:</strong> Upload a .docx for best results.
+                                The server auto-converts it with estimated timestamps. JSON is also accepted.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Part name tips -->
+                <div class="bg-surface-600 border border-white/5 rounded-2xl p-5">
+                    <h3 class="text-sm font-semibold text-slate-200 mb-3 flex items-center gap-2">
+                        <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                        </svg>
+                        Part Naming
+                    </h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Use a consistent scheme like <code
+                            class="bg-surface-400 text-brand-400 px-1 rounded">part16</code>,
+                        <code class="bg-surface-400 text-brand-400 px-1 rounded">part17</code>, etc.
+                        Uploading a file with an existing part name will <strong class="text-slate-300">replace</strong>
+                        that content.
+                    </p>
+                </div>
+
+                <!-- Uploaded parts list -->
+                <div class="bg-surface-600 border border-white/5 rounded-2xl p-5">
+                    <h3 class="text-sm font-semibold text-slate-200 mb-3 flex items-center gap-2">
+                        <svg class="w-4 h-4 text-brand-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+                        </svg>
+                        Available Parts
+                    </h3>
+                    <div id="parts-list" class="flex flex-wrap gap-1.5">
+                        <span class="text-xs text-slate-500">Loading…</span>
+                    </div>
+                </div>
+
+            </aside>
+        </div><!-- /#upload-panel -->
+
+    </main>
+
+    <script>
+        // ---- Auth guard ----
+        const authChecking = document.getElementById('auth-checking');
+        const uploadPanel = document.getElementById('upload-panel');
+        const adminBadge = document.getElementById('admin-badge');
+        const logoutBtn = document.getElementById('logout-btn');
+
+        async function checkAuth() {
+            try {
+                const res = await fetch('/api/auth/status');
+                const data = await res.json();
+                if (!data.authenticated) {
+                    window.location.href = '/admin-login.html';
+                    return;
+                }
+            } catch (_) {
+                window.location.href = '/admin-login.html';
+                return;
+            }
+            authChecking.classList.add('hidden');
+            uploadPanel.classList.remove('hidden');
+            uploadPanel.classList.add('grid');
+            adminBadge.classList.remove('hidden');
+            adminBadge.classList.add('flex');
+            logoutBtn.classList.remove('hidden');
+            loadParts();
+        }
+
+        checkAuth();
+
+        logoutBtn.addEventListener('click', async () => {
+            await fetch('/api/logout', { method: 'POST', credentials: 'include' });
+            window.location.href = '/admin-login.html';
+        });
+
+        // ---- Load available parts ----
+        async function loadParts() {
+            try {
+                const res = await fetch('/api/parts');
+                const parts = await res.json();
+                const container = document.getElementById('parts-list');
+                if (!parts.length) {
+                    container.innerHTML = '<span class="text-xs text-slate-500">No parts found.</span>';
+                    return;
+                }
+                container.innerHTML = parts.map(p =>
+                    `<span class="bg-surface-400 text-brand-400 text-xs font-mono px-2 py-0.5 rounded">${p}</span>`
+                ).join('');
+            } catch (_) { }
+        }
+
+        // ---- File input labels ----
+        function bindFileLabel(inputId, labelId) {
+            document.getElementById(inputId).addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                document.getElementById(labelId).textContent = file ? file.name : `Click to select file`;
+            });
+        }
+        bindFileLabel('video-file', 'video-label');
+        bindFileLabel('audio-file', 'audio-label');
+        bindFileLabel('transcript-file', 'transcript-label');
+
+        // ---- Upload ----
+        const uploadBtn = document.getElementById('upload-btn');
+        const uploadBtnText = document.getElementById('upload-btn-text');
+        const uploadSpinner = document.getElementById('upload-spinner');
+        const statusEl = document.getElementById('upload-status');
+        const progressWrap = document.getElementById('progress-wrap');
+        const progressBar = document.getElementById('progress-bar');
+        const progressPct = document.getElementById('progress-pct');
+
+        function setStatus(message, type) {
+            // type: 'success' | 'error' | 'info'
+            const classes = {
+                success: 'bg-green-900/40 border border-green-700/50 text-green-300',
+                error: 'bg-red-900/40 border border-red-700/50 text-red-300',
+                info: 'bg-blue-900/40 border border-blue-700/50 text-blue-300',
+            };
+            statusEl.textContent = message;
+            statusEl.className = `mb-4 px-4 py-3 rounded-lg text-sm font-medium ${classes[type]}`;
+            statusEl.classList.remove('hidden');
+        }
+
+        function setLoading(loading) {
+            uploadBtn.disabled = loading;
+            uploadBtnText.textContent = loading ? 'Uploading…' : 'Upload Content';
+            uploadSpinner.classList.toggle('hidden', !loading);
+            progressWrap.classList.toggle('hidden', !loading);
+        }
+
+        uploadBtn.addEventListener('click', async () => {
+            const partName = document.getElementById('part-name').value.trim();
+            const videoFile = document.getElementById('video-file').files[0];
+            const audioFile = document.getElementById('audio-file').files[0];
+            const transcriptFile = document.getElementById('transcript-file').files[0];
+
+            if (!partName) { setStatus('Part name is required.', 'error'); return; }
+            if (!videoFile && !audioFile && !transcriptFile) {
+                setStatus('Select at least one file to upload.', 'error');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('partName', partName);
+            if (videoFile) formData.append('videoFile', videoFile);
+            if (audioFile) formData.append('audioFile', audioFile);
+            if (transcriptFile) formData.append('transcriptFile', transcriptFile);
+
+            setLoading(true);
+            statusEl.classList.add('hidden');
+
+            // XHR for upload progress
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', '/api/admin/upload');
+            xhr.withCredentials = true;
+
+            xhr.upload.addEventListener('progress', (e) => {
+                if (e.lengthComputable) {
+                    const pct = Math.round((e.loaded / e.total) * 100);
+                    progressBar.style.width = `${pct}%`;
+                    progressPct.textContent = `${pct}%`;
+                }
+            });
+
+            xhr.addEventListener('load', () => {
+                setLoading(false);
+                try {
+                    const data = JSON.parse(xhr.responseText);
+                    if (xhr.status >= 200 && xhr.status < 300) {
+                        setStatus(`✓ Upload successful: ${data.uploaded.join(', ')} for "${data.part}".`, 'success');
+                        loadParts();
+                    } else {
+                        setStatus(data.error || 'Upload failed.', 'error');
+                    }
+                } catch (_) {
+                    setStatus('Unexpected server response.', 'error');
+                }
+            });
+
+            xhr.addEventListener('error', () => {
+                setLoading(false);
+                setStatus('Network error. Check your connection and try again.', 'error');
+            });
+
+            xhr.send(formData);
+        });
+    </script>
+</body>
+
+</html>
