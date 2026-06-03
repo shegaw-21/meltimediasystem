@@ -7,8 +7,11 @@ body {
 }
 
 header {
-    text-align: center;
     margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
 }
 
 header h1 {
@@ -20,6 +23,56 @@ header p {
     margin: 0;
     color: #a0a0b0;
     font-size: 0.9em;
+}
+
+.header-left {
+    display: flex;
+    flex-direction: column;
+}
+
+.header-login {
+    min-width: 260px;
+    background: linear-gradient(180deg, #171722 0%, #23232f 100%);
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.header-login .header-row {
+    display: flex;
+    gap: 6px;
+}
+
+.header-login label {
+    display: none;
+    /* compact header, labels hidden */
+}
+
+.header-login input {
+    width: 100%;
+    padding: 8px 10px;
+    margin-bottom: 8px;
+    border-radius: 6px;
+    border: 1px solid #394052;
+    background: #0f1013;
+    color: #f5f7fa;
+}
+
+.header-login button.btn-download {
+    width: 100%;
+    padding: 8px 10px;
+    border-radius: 6px;
+}
+
+@media (max-width: 900px) {
+    .header-login {
+        min-width: auto;
+        width: 100%;
+    }
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
 }
 
 .dashboard-container {
@@ -225,6 +278,16 @@ audio {
     font-weight: 600;
 }
 
+.transcript-message {
+    padding: 12px;
+    margin: 8px 0;
+    border-radius: 6px;
+    background: #2a2a3d;
+    border-left: 4px solid #00b4d8;
+    color: #d8e8f0;
+    line-height: 1.5;
+}
+
 .transcript-stats {
     margin-top: 15px;
     padding-top: 15px;
@@ -255,7 +318,9 @@ audio {
     font-size: 0.9em;
 }
 
+
 /* Scrollbar styling */
+
 .transcript-section::-webkit-scrollbar {
     width: 8px;
 }
@@ -272,4 +337,101 @@ audio {
 
 .transcript-section::-webkit-scrollbar-thumb:hover {
     background: #4a4a60;
+}
+
+
+/* Admin login and upload specific styles */
+
+.admin-login-section,
+.admin-upload-section {
+    margin-top: 18px;
+    background: linear-gradient(180deg, #23232f 0%, #2a2a40 100%);
+    padding: 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.admin-login-section h3,
+.admin-upload-section h3 {
+    margin: 0 0 12px 0;
+    color: #ffd6a5;
+    font-size: 1.05em;
+}
+
+.admin-login-section .upload-row,
+.admin-upload-section .upload-row {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 12px;
+}
+
+.admin-login-section label,
+.admin-upload-section label {
+    color: #cbd5e1;
+    font-size: 0.9em;
+}
+
+.admin-login-section input[type="text"],
+.admin-login-section input[type="password"],
+.admin-upload-section input[type="text"],
+.admin-upload-section input[type="file"] {
+    padding: 10px 12px;
+    border-radius: 6px;
+    border: 1px solid #394052;
+    background: #161620;
+    color: #f5f7fa;
+    font-size: 0.95em;
+}
+
+.admin-login-section input:focus,
+.admin-upload-section input:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 180, 216, 0.10);
+    border-color: #00b4d8;
+}
+
+.admin-login-section .btn-download,
+.admin-upload-section .btn-download {
+    background: linear-gradient(90deg, #00b4d8, #0096c7);
+    color: #04121a;
+    padding: 10px 16px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.admin-login-section .btn-download:hover,
+.admin-upload-section .btn-download:hover {
+    filter: brightness(0.95);
+}
+
+#admin-login-status,
+#admin-upload-status {
+    margin-top: 10px;
+    color: #a8ffdf;
+    font-size: 0.9em;
+}
+
+.admin-note {
+    margin-top: 12px;
+    font-size: 0.85em;
+    color: #9aa3b2;
+}
+
+
+/* Make upload form inputs appear more compact on small screens */
+
+@media (max-width: 900px) {
+    .dashboard-container {
+        flex-direction: column;
+    }
+    .transcript-section {
+        height: auto;
+    }
+    .admin-login-section,
+    .admin-upload-section {
+        padding: 12px;
+    }
 }

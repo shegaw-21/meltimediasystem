@@ -1,0 +1,12 @@
+{
+    "name": "meltimedia",
+    "version": "1.0.0",
+    "private": true,
+    "dependencies": {
+        "@azure/storage-blob": "^12.17.0",
+        "dotenv": "^16.3.1"
+    },
+    "scripts": {
+        "upload:cloud": "node uploadToCloud.js"
+    }
+}

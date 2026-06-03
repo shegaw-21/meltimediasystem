@@ -10,14 +10,31 @@
 
 <body>
     <header>
-        <h1>Multimedia Learning System</h1>
-        <p>Interactive Synchronization • Resource-Optimized Delivery • Multi-Modal Access</p>
+        <div class="header-left">
+            <h1>Multimedia Learning System</h1>
+            <p>Interactive Synchronization • Resource-Optimized Delivery • Multi-Modal Access</p>
+        </div>
+        <div class="header-login" id="header-login">
+            <form id="admin-login-form">
+                <div class="upload-row header-row">
+                    <label for="admin-username">Username</label>
+                    <input type="text" id="admin-username" name="username" placeholder="admin" required>
+                </div>
+                <div class="upload-row header-row">
+                    <label for="admin-password">Password</label>
+                    <input type="password" id="admin-password" name="password" placeholder="password" required>
+                </div>
+                <button type="submit" class="btn-download">Log In</button>
+            </form>
+            <div id="admin-login-status"></div>
+        </div>
     </header>
 
     <div class="dashboard-container">
         <main class="video-section">
             <div class="video-selector">
                 <label for="video-select">📹 Select Video:</label>
+                <input type="search" id="video-search" placeholder="Search videos..." style="margin-left:12px; padding:6px; border-radius:4px;">
                 <select id="video-select">
                     <option value="part1">Part 1</option>
                     <option value="part2">Part 2</option>
@@ -83,6 +100,34 @@
                         📥 PDF
                     </a>
                 </div>
+            </div>
+            <div class="admin-login-section" id="admin-login-section" style="display:none;">
+                <!-- Login moved to header; keep this as fallback but hidden -->
+            </div>
+            <div class="admin-upload-section" id="admin-upload-section" style="display:none;">
+                <h3>🛠️ Admin Upload</h3>
+                <form id="admin-upload-form" enctype="multipart/form-data">
+                    <div class="upload-row">
+                        <label for="admin-part-name">Part Name</label>
+                        <input type="text" id="admin-part-name" name="partName" placeholder="part16" required>
+                    </div>
+                    <div class="upload-row">
+                        <label for="admin-video-file">Video File (.mp4)</label>
+                        <input type="file" id="admin-video-file" name="videoFile" accept=".mp4">
+                    </div>
+                    <div class="upload-row">
+                        <label for="admin-audio-file">Audio File (.mp3 only)</label>
+                        <input type="file" id="admin-audio-file" name="audioFile" accept=".mp3">
+                    </div>
+                    <div class="upload-row">
+                        <label for="admin-transcript-file">Transcript File (.docx, .doc, .json)</label>
+                        <input type="file" id="admin-transcript-file" name="transcriptFile" accept=".json,.docx,.doc">
+                    </div>
+                    <button type="submit" class="btn-download">Upload Content</button>
+                </form>
+                <button id="admin-logout-btn" class="btn-download btn-small">Log Out</button>
+                <div id="admin-upload-status"></div>
+                <p class="admin-note">Admin upload panel: use this to add or update video, audio, and transcript files for new content.</p>
             </div>
         </aside>
     </div>

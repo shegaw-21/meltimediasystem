@@ -5,11 +5,13 @@ const progressBar = document.getElementById('progress-bar');
 const currentTimeDisplay = document.getElementById('current-time');
 const durationDisplay = document.getElementById('duration');
 const videoSelect = document.getElementById('video-select');
+const videoSearch = document.getElementById('video-search');
 const downloadBtn = document.querySelector('.btn-download');
 const downloadJsonBtn = document.getElementById('download-json');
 const downloadPdfBtn = document.getElementById('download-pdf');
 let transcriptData = [];
 let currentVideo = 'part1';
+let allVideoParts = [];
 
 function cleanTranscriptText(text) {
     return text
@@ -17,30 +19,125 @@ function cleanTranscriptText(text) {
         .trim();
 }
 
+async function populateVideoSelect() {
+    try {
+        const response = await fetch('/api/parts');
+        const parts = await response.json();
+        if (Array.isArray(parts) && parts.length) {
+            allVideoParts = parts;
+            setVideoOptions(parts);
+            // set default if current not present
+            if (!parts.includes(currentVideo)) {
+                currentVideo = parts[0];
+            }
+            // if search field has text, apply filter
+            if (videoSearch && videoSearch.value) {
+                applyVideoFilter(videoSearch.value);
+            } else {
+                switchVideo(currentVideo);
+            }
+        }
+    } catch (err) {
+        console.error('Failed to load video list:', err);
+    }
+}
+
+function setVideoOptions(parts) {
+    videoSelect.innerHTML = '';
+    parts.forEach(part => {
+        const option = document.createElement('option');
+        option.value = part;
+        option.textContent = part.replace(/^part/i, match => match.toUpperCase());
+        videoSelect.appendChild(option);
+    });
+}
+
+function applyVideoFilter(query) {
+    if (!allVideoParts || !allVideoParts.length) return;
+    const q = (query || '').toLowerCase();
+    const filtered = allVideoParts.filter(p => p.toLowerCase().includes(q));
+    setVideoOptions(filtered.length ? filtered : allVideoParts);
+}
+
+if (videoSearch) {
+    videoSearch.addEventListener('input', (e) => {
+        applyVideoFilter(e.target.value);
+    });
+}
+
+function showTranscriptMessage(message, className = 'transcript-message') {
+    container.innerHTML = '';
+    const note = document.createElement('p');
+    note.className = className;
+    note.textContent = message;
+    container.appendChild(note);
+}
+
 // Fetch the clean JSON array from our backend route
 async function loadTranscript(videoName = 'part1') {
     try {
         const response = await fetch(`/api/transcript?video=${videoName}`);
+        if (!response.ok) {
+            let message = `No transcript found for "${videoName}".`;
+            try {
+                const errorData = await response.json();
+                if (errorData && errorData.error) {
+                    message = errorData.error;
+                }
+            } catch (parseErr) {
+                // ignore non-JSON error bodies
+            }
+            transcriptData = [];
+            showTranscriptMessage(`${message} Upload or place a matching ${videoName}.docx file in bakend/assets/transcripts/.`);
+            return;
+        }
+
         transcriptData = await response.json();
+        if (!Array.isArray(transcriptData) || !transcriptData.length) {
+            transcriptData = [];
+            showTranscriptMessage(`Transcript for "${videoName}" is empty. Re-upload a .docx file with the same name.`);
+            return;
+        }
 
         container.innerHTML = ''; // Wipe out old content placeholders
 
-        // Map and render clickable paragraphs dynamically
+        // Map and render clickable paragraphs dynamically; render uploaded transcript verbatim
         transcriptData.forEach((item, index) => {
-            const cleanedText = cleanTranscriptText(item.text);
-            if (!cleanedText) return;
+            let text = '';
+            let time = null;
+
+            if (typeof item === 'string') {
+                text = item;
+            } else if (item && typeof item === 'object') {
+                text = item.text || item.content || JSON.stringify(item);
+                if (typeof item.time === 'number') time = item.time;
+            } else {
+                text = String(item);
+            }
+
+            // Skip empty entries
+            if (!text || !text.trim()) return;
+
+            const cleanedText = cleanTranscriptText(text);
+            if (!cleanedText || !cleanedText.trim()) return;
 
             const paragraph = document.createElement('p');
             paragraph.className = 'transcript-line';
-            paragraph.setAttribute('data-time', item.time);
             paragraph.setAttribute('data-index', index);
-            paragraph.innerText = cleanedText;
+            if (time !== null) paragraph.setAttribute('data-time', time);
 
-            // Media control feature: user clicks line -> video jumps to frame with smooth seeking
+            const textNode = document.createElement('span');
+            textNode.className = 'text';
+            textNode.innerText = cleanedText;
+
+            paragraph.appendChild(textNode);
+
+            // If the item includes a time field, clicking seeks; otherwise only scrolls
             paragraph.addEventListener('click', () => {
-                smoothSeek(item.time);
-                video.play();
-                // Scroll to clicked line
+                if (time !== null) {
+                    smoothSeek(time);
+                    video.play();
+                }
                 paragraph.scrollIntoView({ behavior: 'smooth', block: 'center' });
             });
 
@@ -48,7 +145,16 @@ async function loadTranscript(videoName = 'part1') {
         });
     } catch (err) {
         console.error("System error loading transcript stream:", err);
+        transcriptData = [];
+        showTranscriptMessage(`Could not load transcript for "${videoName}". Check that ${videoName}.docx exists and restart the server.`);
     }
+}
+
+function formatTime(seconds) {
+    const s = Math.max(0, Math.floor(seconds || 0));
+    const m = Math.floor(s / 60);
+    const sec = s % 60;
+    return `${m}:${sec.toString().padStart(2, '0')}`;
 }
 
 // Switch video function
@@ -227,5 +333,115 @@ searchInput.addEventListener('input', () => {
     }
 });
 
+const adminLoginForm = document.getElementById('admin-login-form');
+const adminLoginStatus = document.getElementById('admin-login-status');
+const adminUploadForm = document.getElementById('admin-upload-form');
+const adminUploadStatus = document.getElementById('admin-upload-status');
+const adminLoginSection = document.getElementById('admin-login-section');
+const adminUploadSection = document.getElementById('admin-upload-section');
+const adminLogoutBtn = document.getElementById('admin-logout-btn');
+
+function showAdminPanel(authenticated) {
+    if (authenticated) {
+        adminLoginSection.style.display = 'none';
+        adminUploadSection.style.display = 'block';
+    } else {
+        adminLoginSection.style.display = 'block';
+        adminUploadSection.style.display = 'none';
+    }
+}
+
+async function refreshAuthState() {
+    try {
+        const response = await fetch('/api/auth/status');
+        const data = await response.json();
+        showAdminPanel(data.authenticated);
+    } catch (error) {
+        console.error('Auth status check failed:', error);
+        showAdminPanel(false);
+    }
+}
+
+if (adminLoginForm) {
+    adminLoginForm.addEventListener('submit', async(e) => {
+        e.preventDefault();
+
+        const username = document.getElementById('admin-username').value;
+        const password = document.getElementById('admin-password').value;
+
+        adminLoginStatus.textContent = 'Logging in...';
+        try {
+            const response = await fetch('/api/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, password }),
+                credentials: 'include'
+            });
+            const data = await response.json();
+            if (!response.ok) {
+                adminLoginStatus.textContent = data.error || 'Login failed.';
+                return;
+            }
+            adminLoginStatus.textContent = 'Logged in successfully.';
+            showAdminPanel(true);
+        } catch (error) {
+            adminLoginStatus.textContent = `Login error: ${error.message}`;
+        }
+    });
+}
+
+if (adminUploadForm) {
+    adminUploadForm.addEventListener('submit', async(e) => {
+        e.preventDefault();
+
+        const formData = new FormData(adminUploadForm);
+        adminUploadStatus.textContent = 'Uploading content...';
+
+        try {
+            const response = await fetch('/api/admin/upload', {
+                method: 'POST',
+                body: formData,
+                credentials: 'include'
+            });
+
+            const data = await response.json();
+            if (!response.ok) {
+                adminUploadStatus.textContent = data.error || 'Upload failed. Please try again.';
+                return;
+            }
+
+            adminUploadStatus.textContent = `Upload successful: ${data.uploaded.join(', ')}`;
+            const partName = formData.get('partName');
+            if (partName) {
+                await populateVideoSelect();
+                videoSelect.value = partName;
+            }
+            if (partName) {
+                videoSelect.value = partName;
+                switchVideo(partName);
+            }
+        } catch (error) {
+            adminUploadStatus.textContent = `Upload error: ${error.message}`;
+        }
+    });
+}
+
+if (adminLogoutBtn) {
+    adminLogoutBtn.addEventListener('click', async() => {
+        try {
+            await fetch('/api/logout', { method: 'POST', credentials: 'include' });
+            showAdminPanel(false);
+        } catch (error) {
+            console.error('Logout failed:', error);
+        }
+    });
+}
+
 // Boot script immediately upon document ready state
-loadTranscript('part1');
+(async() => {
+    await refreshAuthState();
+    await populateVideoSelect();
+    loadTranscript(currentVideo);
+})();
