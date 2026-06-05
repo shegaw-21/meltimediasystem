@@ -23,7 +23,6 @@
 
 <body class="min-h-full bg-surface-700 text-slate-100">
 
-    <!-- Nav -->
     <nav class="bg-surface-600 border-b border-white/5 sticky top-0 z-10">
         <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
             <a href="/index.html"
@@ -48,38 +47,30 @@
         </div>
     </nav>
 
-    <!-- Auth checking -->
     <div id="auth-checking" class="text-center py-24 text-slate-500 text-sm">Verifying session…</div>
 
-    <!-- Main panel -->
     <main id="main-panel" class="hidden max-w-6xl mx-auto px-4 py-8 space-y-10">
 
-        <!-- ═══ UPLOAD SECTION ═══ -->
         <section>
             <h1 class="text-2xl font-bold text-slate-50 mb-1">Upload New Content</h1>
             <p class="text-slate-400 text-sm mb-6">Add a new part or replace files for an existing one.</p>
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <!-- Form -->
                 <div class="lg:col-span-2 space-y-5">
 
-                    <!-- Part name -->
                     <div class="bg-surface-600 border border-white/5 rounded-2xl p-5">
                         <label class="block text-sm font-semibold text-amber-300 mb-3">Part Name <span
                                 class="text-red-400">*</span></label>
                         <input type="text" id="part-name" placeholder="e.g. part16"
-                            class="w-full bg-surface-800 border border-surface-300 text-slate-100 placeholder-slate-500
-                               rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-colors">
+                            class="w-full bg-surface-800 border border-surface-300 text-slate-100 placeholder-slate-500 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-colors">
                         <p class="mt-1.5 text-xs text-slate-500">Lowercase letters, numbers, dash or underscore only.
                         </p>
                     </div>
 
-                    <!-- File pickers -->
                     <div class="bg-surface-600 border border-white/5 rounded-2xl p-5 space-y-5">
                         <p class="text-sm font-semibold text-amber-300">Choose Files (all optional — upload only what
                             you need)</p>
 
-                        <!-- Video -->
                         <div>
                             <p class="text-sm text-slate-300 mb-1.5">Video <span class="text-slate-500">(.mp4)</span>
                             </p>
@@ -97,7 +88,6 @@
                             </label>
                         </div>
 
-                        <!-- Audio -->
                         <div>
                             <p class="text-sm text-slate-300 mb-1.5">Audio Summary <span
                                     class="text-slate-500">(.mp3)</span></p>
@@ -115,7 +105,6 @@
                             </label>
                         </div>
 
-                        <!-- Transcript -->
                         <div>
                             <p class="text-sm text-slate-300 mb-1.5">Transcript <span class="text-slate-500">(.docx,
                                     .doc, .json)</span></p>
@@ -135,7 +124,6 @@
                         </div>
                     </div>
 
-                    <!-- Progress + submit -->
                     <div class="bg-surface-600 border border-white/5 rounded-2xl p-5">
                         <div id="progress-wrap" class="hidden mb-4">
                             <div class="flex justify-between text-xs text-slate-400 mb-1">
@@ -148,8 +136,8 @@
                             </div>
                         </div>
                         <div id="upload-status" class="hidden mb-4 px-4 py-3 rounded-lg text-sm font-medium"></div>
-                        <button id="upload-btn" class="w-full bg-brand-500 hover:bg-brand-600 text-white font-semibold rounded-lg px-4 py-3 transition-colors
-                               flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed">
+                        <button id="upload-btn"
+                            class="w-full bg-brand-500 hover:bg-brand-600 text-white font-semibold rounded-lg px-4 py-3 transition-colors flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
@@ -165,7 +153,6 @@
                     </div>
                 </div>
 
-                <!-- Sidebar tips -->
                 <aside class="space-y-4">
                     <div class="bg-surface-600 border border-white/5 rounded-2xl p-5">
                         <h3 class="text-sm font-semibold text-slate-200 mb-3">File Rules</h3>
@@ -181,25 +168,38 @@
             </div>
         </section>
 
-        <!-- ═══ CONTENT MANAGER ═══ -->
         <section>
-            <div class="flex items-center justify-between mb-4">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
                 <div>
                     <h2 class="text-xl font-bold text-slate-50">Manage Existing Content</h2>
                     <p class="text-slate-400 text-sm mt-0.5">View, replace individual files, or delete a part entirely.
                     </p>
                 </div>
-                <button id="refresh-btn" onclick="loadContentTable()"
-                    class="text-xs bg-surface-400 hover:bg-surface-300 text-slate-200 font-medium rounded-lg px-3 py-2 transition-colors flex items-center gap-1.5">
-                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                    </svg>
-                    Refresh
-                </button>
+
+                <div class="flex items-center gap-3 w-full md:w-auto">
+                    <div class="relative flex-1 md:w-64">
+                        <span
+                            class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                        </span>
+                        <input type="text" id="table-search" oninput="filterContentTable()"
+                            placeholder="Search content parts..."
+                            class="w-full bg-surface-800 border border-surface-300 text-slate-100 placeholder-slate-500 rounded-lg pl-9 pr-4 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-brand-500 transition-colors">
+                    </div>
+                    <button id="refresh-btn" onclick="loadContentTable()"
+                        class="text-xs bg-surface-400 hover:bg-surface-300 text-slate-200 font-medium rounded-lg px-3 py-2 transition-colors flex items-center gap-1.5 whitespace-nowrap">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                        </svg>
+                        Refresh
+                    </button>
+                </div>
             </div>
 
-            <!-- Table -->
             <div class="bg-surface-600 border border-white/5 rounded-2xl overflow-hidden">
                 <div id="content-table-wrap">
                     <div class="text-center py-12 text-slate-500 text-sm">Loading parts…</div>
@@ -209,7 +209,60 @@
 
     </main>
 
-    <!-- ═══ EDIT MODAL ═══ -->
+    <div id="play-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 px-4">
+        <div
+            class="bg-surface-600 border border-white/10 rounded-2xl w-full max-w-4xl max-h-[90vh] flex flex-col shadow-2xl overflow-hidden">
+            <div class="flex items-center justify-between p-5 border-b border-white/5">
+                <div class="flex items-center gap-2">
+                    <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+                    <h3 class="text-lg font-bold text-slate-50">All-In-One Player Panel — <span id="play-modal-part"
+                            class="text-brand-400 font-mono"></span></h3>
+                </div>
+                <button onclick="closePlayModal()" class="text-slate-400 hover:text-slate-200 transition-colors p-1">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+
+            <div class="p-6 overflow-y-auto space-y-6 flex-1 grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+                <div class="space-y-6">
+                    <div id="player-video-box" class="space-y-2">
+                        <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Video Content Preview</h4>
+                        <div
+                            class="bg-black/40 rounded-xl overflow-hidden aspect-video border border-white/5 flex items-center justify-center">
+                            <video id="preview-video" controls class="w-full h-full object-contain hidden"></video>
+                            <p id="no-video-msg" class="text-sm text-slate-500 italic">No video content uploaded</p>
+                        </div>
+                    </div>
+
+                    <div id="player-audio-box" class="space-y-2">
+                        <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Audio Summary Playback
+                        </h4>
+                        <div
+                            class="bg-surface-800 p-4 rounded-xl border border-white/5 flex flex-col items-stretch justify-center">
+                            <audio id="preview-audio" controls class="w-full hidden"></audio>
+                            <p id="no-audio-msg" class="text-sm text-slate-500 italic text-center py-2">No audio preview
+                                summary uploaded</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-2 h-full flex flex-col">
+                    <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Integrated Transcript Stream
+                    </h4>
+                    <div
+                        class="bg-surface-800 border border-white/5 rounded-xl p-4 flex-1 overflow-y-auto min-h-[300px] max-h-[450px]">
+                        <div id="preview-transcript"
+                            class="text-sm text-slate-300 space-y-3 whitespace-pre-wrap leading-relaxed">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div id="edit-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 px-4">
         <div class="bg-surface-600 border border-white/10 rounded-2xl w-full max-w-md p-6 shadow-2xl">
             <div class="flex items-center justify-between mb-5">
@@ -244,8 +297,8 @@
             <div class="flex gap-3">
                 <button onclick="closeEditModal()"
                     class="flex-1 bg-surface-400 hover:bg-surface-300 text-slate-200 font-medium rounded-lg px-4 py-2.5 transition-colors text-sm">Cancel</button>
-                <button id="modal-upload-btn" onclick="submitReplacement()" class="flex-1 bg-brand-500 hover:bg-brand-600 text-white font-semibold rounded-lg px-4 py-2.5 transition-colors text-sm
-                       flex items-center justify-center gap-2 disabled:opacity-60">
+                <button id="modal-upload-btn" onclick="submitReplacement()"
+                    class="flex-1 bg-brand-500 hover:bg-brand-600 text-white font-semibold rounded-lg px-4 py-2.5 transition-colors text-sm flex items-center justify-center gap-2 disabled:opacity-60">
                     <span id="modal-upload-text">Replace File</span>
                     <svg id="modal-spinner" class="hidden w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
@@ -257,7 +310,6 @@
         </div>
     </div>
 
-    <!-- ═══ DELETE CONFIRM MODAL ═══ -->
     <div id="delete-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 px-4">
         <div class="bg-surface-600 border border-white/10 rounded-2xl w-full max-w-sm p-6 shadow-2xl">
             <div class="flex items-center gap-3 mb-4">
@@ -278,8 +330,8 @@
             <div class="flex gap-3">
                 <button onclick="closeDeleteModal()"
                     class="flex-1 bg-surface-400 hover:bg-surface-300 text-slate-200 font-medium rounded-lg px-4 py-2.5 transition-colors text-sm">Cancel</button>
-                <button id="confirm-delete-btn" class="flex-1 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg px-4 py-2.5 transition-colors text-sm
-                       flex items-center justify-center gap-2">
+                <button id="confirm-delete-btn"
+                    class="flex-1 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg px-4 py-2.5 transition-colors text-sm flex items-center justify-center gap-2">
                     <span id="delete-btn-text">Delete</span>
                     <svg id="delete-spinner" class="hidden w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
@@ -397,6 +449,7 @@
         async function loadContentTable() {
             const wrap = document.getElementById('content-table-wrap');
             wrap.innerHTML = '<div class="text-center py-12 text-slate-500 text-sm">Loading…</div>';
+            document.getElementById('table-search').value = '';
 
             try {
                 const res = await fetch(`${BASE}/api/parts`, { credentials: 'include' });
@@ -407,7 +460,6 @@
                     return;
                 }
 
-                // Build table
                 let html = `
         <div class="overflow-x-auto">
         <table class="w-full text-sm">
@@ -420,7 +472,7 @@
                     <th class="text-right px-5 py-3">Actions</th>
                 </tr>
             </thead>
-            <tbody>`;
+            <tbody id="table-body-content">`;
 
                 for (const part of parts) {
                     let info = { video: null, audio: null, transcripts: [] };
@@ -432,14 +484,14 @@
                     const fileTag = (name, type) => name
                         ? `<span class="inline-flex items-center gap-1.5 bg-surface-400 text-slate-200 text-xs px-2 py-0.5 rounded">
                     <span class="w-1.5 h-1.5 bg-green-400 rounded-full"></span>${name}
-                    <button onclick="openEditModal('${part}','${name}','${type}')" title="Replace"
+                    <button onclick="openEditModal('${part}','${name}','${type}')" title="Replace file"
                         class="ml-1 text-brand-400 hover:text-brand-300 transition-colors">
                         <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M15.232 5.232l3.536 3.536M9 13l6.586-6.586a2 2 0 112.828 2.828L11.828 15.828a2 2 0 01-1.414.586H9v-2a2 2 0 01.586-1.414z"/>
                         </svg>
                     </button>
-                    <button onclick="deleteSingleFile('${part}','${name}','${type}')" title="Delete this file"
+                    <button onclick="deleteSingleFile('${part}','${name}','${type}')" title="Delete file"
                         class="text-red-400 hover:text-red-300 transition-colors">
                         <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
@@ -448,18 +500,18 @@
                    </span>`
                         : `<span class="text-slate-600 text-xs">—</span>`;
 
-                    const transcriptNames = info.transcripts.length
+                    const transcriptNames = info.transcripts && info.transcripts.length
                         ? info.transcripts.map(t =>
                             `<span class="inline-flex items-center gap-1.5 bg-surface-400 text-slate-200 text-xs px-2 py-0.5 rounded mr-1 mb-1">
                         <span class="w-1.5 h-1.5 bg-green-400 rounded-full"></span>${t}
-                        <button onclick="openEditModal('${part}','${t}','transcript')" title="Replace"
+                        <button onclick="openEditModal('${part}','${t}','transcript')" title="Replace transcript"
                             class="ml-1 text-brand-400 hover:text-brand-300 transition-colors">
                             <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M15.232 5.232l3.536 3.536M9 13l6.586-6.586a2 2 0 112.828 2.828L11.828 15.828a2 2 0 01-1.414.586H9v-2a2 2 0 01.586-1.414z"/>
                             </svg>
                         </button>
-                        <button onclick="deleteSingleFile('${part}','${t}','transcript')" title="Delete"
+                        <button onclick="deleteSingleFile('${part}','${t}','transcript')" title="Delete transcript"
                             class="text-red-400 hover:text-red-300 transition-colors">
                             <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
@@ -470,19 +522,28 @@
                         : `<span class="text-slate-600 text-xs">—</span>`;
 
                     html += `
-            <tr class="border-b border-white/5 hover:bg-white/2 transition-colors">
-                <td class="px-5 py-4 font-mono font-semibold text-brand-400">${part}</td>
+            <tr class="data-row border-b border-white/5 hover:bg-white/2 transition-colors">
+                <td class="px-5 py-4 font-mono font-semibold text-brand-400 part-id-cell">${part}</td>
                 <td class="px-5 py-4">${fileTag(info.video, 'video')}</td>
                 <td class="px-5 py-4">${fileTag(info.audio, 'audio')}</td>
                 <td class="px-5 py-4"><div class="flex flex-wrap gap-1">${transcriptNames}</div></td>
                 <td class="px-5 py-4 text-right">
-                    <button onclick="openDeleteModal('${part}')"
-                        class="inline-flex items-center gap-1.5 bg-red-900/30 hover:bg-red-900/60 text-red-400 text-xs font-semibold px-3 py-1.5 rounded-lg transition-colors border border-red-800/40">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                        </svg>
-                        Delete Part
-                    </button>
+                    <div class="inline-flex items-center justify-end gap-2 w-full">
+                        <button onclick="openPlayModal('${part}')"
+                            class="inline-flex items-center gap-1 bg-brand-600/20 hover:bg-brand-600/40 text-brand-400 text-xs font-semibold px-2.5 py-1.5 rounded-lg transition-colors border border-brand-500/30">
+                            <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" />
+                            </svg>
+                            Play Part
+                        </button>
+                        <button onclick="openDeleteModal('${part}')"
+                            class="inline-flex items-center gap-1.5 bg-red-900/30 hover:bg-red-900/60 text-red-400 text-xs font-semibold px-2.5 py-1.5 rounded-lg transition-colors border border-red-800/40">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                            </svg>
+                            Delete
+                        </button>
+                    </div>
                 </td>
             </tr>`;
                 }
@@ -492,6 +553,128 @@
             } catch (err) {
                 wrap.innerHTML = `<div class="text-center py-12 text-red-400 text-sm">Failed to load content: ${err.message}</div>`;
             }
+        }
+
+        // ── Search Filtering Engine ───────────────────────────────────────────────
+        function filterContentTable() {
+            const query = document.getElementById('table-search').value.toLowerCase().trim();
+            const rows = document.querySelectorAll('#table-body-content .data-row');
+
+            rows.forEach(row => {
+                const partName = row.querySelector('.part-id-cell').textContent.toLowerCase();
+                if (partName.includes(query)) {
+                    row.classList.remove('hidden');
+                } else {
+                    row.classList.add('hidden');
+                }
+            });
+        }
+
+        // ── Play Panel Modal Actions (MATCHES APP.JS LOGIC PERFECTLY) ──
+        async function openPlayModal(part) {
+            document.getElementById('play-modal-part').textContent = part;
+
+            const videoEl = document.getElementById('preview-video');
+            const audioEl = document.getElementById('preview-audio');
+            const transcriptEl = document.getElementById('preview-transcript');
+
+            // Wipe current source nodes to dump active network stream buffers instantly
+            videoEl.removeAttribute('src'); videoEl.load(); videoEl.classList.add('hidden');
+            audioEl.removeAttribute('src'); audioEl.load(); audioEl.classList.add('hidden');
+            document.getElementById('no-video-msg').classList.remove('hidden');
+            document.getElementById('no-audio-msg').classList.remove('hidden');
+            transcriptEl.innerHTML = '<span class="text-slate-500 italic">Loading transcript content…</span>';
+
+            const modal = document.getElementById('play-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+
+            try {
+                // Use the correct admin endpoint
+                const res = await fetch(`${BASE}/api/admin/part/${part}`, { credentials: 'include' });
+                if (!res.ok) throw new Error(`Server returned status ${res.status}`);
+
+                const info = await res.json();
+
+                // 1. Mount Video
+                if (info.video) {
+                    videoEl.src = `${BASE}/api/video?video=${part}`;
+                    videoEl.classList.remove('hidden');
+                    document.getElementById('no-video-msg').classList.add('hidden');
+                    videoEl.load();
+                }
+
+                // 2. Mount Audio
+                if (info.audio) {
+                    audioEl.src = `${BASE}/api/audio/stream?video=${part}`;
+                    audioEl.classList.remove('hidden');
+                    document.getElementById('no-audio-msg').classList.add('hidden');
+                    audioEl.load();
+                }
+
+                // 3. Render Transcript - fetch from transcript endpoint
+                if (info.transcripts && info.transcripts.length > 0) {
+                    try {
+                        const tRes = await fetch(`${BASE}/api/transcript?video=${part}`);
+                        if (tRes.ok) {
+                            const tData = await tRes.json();
+
+                            if (Array.isArray(tData)) {
+                                if (tData.length === 0) {
+                                    transcriptEl.innerHTML = '<span class="text-slate-500 italic">Transcript data layout is empty.</span>';
+                                } else {
+                                    transcriptEl.innerHTML = tData.map(line => {
+                                        let textContent = '';
+                                        let timeLabel = '';
+
+                                        if (typeof line === 'object' && line !== null) {
+                                            textContent = line.text || '';
+                                            if (line.time !== undefined) {
+                                                const mins = Math.floor(line.time / 60);
+                                                const secs = Math.floor(line.time % 60);
+                                                timeLabel = `${mins}:${secs.toString().padStart(2, '0')}`;
+                                            }
+                                        } else {
+                                            textContent = String(line);
+                                        }
+
+                                        // Apply Regex filter matching app.js sanitation layer
+                                        textContent = textContent.replace(/^\s*\d{1,2}:\d{2}\s*[-–]\s*\d{1,2}:\d{2}\s*/u, '').trim();
+
+                                        return `
+                                            <div class="border-l-2 border-brand-500/40 pl-3 py-1 my-1">
+                                                ${timeLabel ? `<span class="text-brand-400 text-xs font-mono block">${timeLabel}</span>` : ''}
+                                                <p class="text-slate-200 text-xs md:text-sm font-sans">${textContent}</p>
+                                            </div>
+                                        `;
+                                    }).join('');
+                                }
+                            } else {
+                                transcriptEl.innerHTML = '<span class="text-slate-500 italic">Transcript format not supported.</span>';
+                            }
+                        } else {
+                            transcriptEl.innerHTML = '<span class="text-slate-500 italic">Failed to load transcript data.</span>';
+                        }
+                    } catch (tErr) {
+                        console.error("Transcript fetch error:", tErr);
+                        transcriptEl.innerHTML = '<span class="text-red-400 italic">Error loading transcript.</span>';
+                    }
+                } else {
+                    transcriptEl.innerHTML = '<span class="text-slate-500 italic">No transcript streaming blocks mapped to this item.</span>';
+                }
+            } catch (err) {
+                console.error("Preview panel sync error details:", err);
+                transcriptEl.innerHTML = `<span class="text-red-400 italic font-medium">Error loading preview panel stream: ${err.message}</span>`;
+            }
+        }
+
+        function closePlayModal() {
+            document.getElementById('preview-video').pause();
+            document.getElementById('preview-audio').pause();
+
+            const modal = document.getElementById('play-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
         }
 
         // ── Edit Modal ─────────────────────────────────────────────────────────────
@@ -625,6 +808,7 @@
         // Close modals on backdrop click
         document.getElementById('edit-modal').addEventListener('click', e => { if (e.target === e.currentTarget) closeEditModal(); });
         document.getElementById('delete-modal').addEventListener('click', e => { if (e.target === e.currentTarget) closeDeleteModal(); });
+        document.getElementById('play-modal').addEventListener('click', e => { if (e.target === e.currentTarget) closePlayModal(); });
     </script>
 </body>
 
