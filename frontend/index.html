@@ -1,343 +1,127 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Multimedia Learning System</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        brand: {
-                            400: '#26cde8', 500: '#00b4d8', 600: '#0096c7', 700: '#0077b6',
-                        },
-                        surface: {
-                            900: '#0f1013', 800: '#161620', 700: '#1e1e2e',
-                            600: '#23232f', 500: '#252538', 400: '#2a2a40', 300: '#3a3a50', 200: '#4a4a60',
-                        },
-                    },
-                    keyframes: {
-                        'slide-in': { from: { opacity: '0', transform: 'translateY(-6px)' }, to: { opacity: '1', transform: 'translateY(0)' } },
-                    },
-                    animation: { 'slide-in': 'slide-in 0.2s ease-out' },
-                },
-            },
-        }
-    </script>
-    <style>
-        /* Thin custom scrollbar for transcript */
-        #transcript-container::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        #transcript-container::-webkit-scrollbar-track {
-            background: #1e1e2e;
-            border-radius: 4px;
-        }
-
-        #transcript-container::-webkit-scrollbar-thumb {
-            background: #3a3a50;
-            border-radius: 4px;
-        }
-
-        #transcript-container::-webkit-scrollbar-thumb:hover {
-            background: #4a4a60;
-        }
-
-        .transcript-line {
-            padding: 10px 12px;
-            margin: 5px 0;
-            cursor: pointer;
-            border-radius: 6px;
-            transition: all 0.2s;
-            border-left: 3px solid transparent;
-            font-size: 0.875rem;
-            color: #cbd5e1;
-            line-height: 1.55;
-        }
-
-        .transcript-line:hover {
-            background: #3a3a50;
-            border-left-color: #00b4d8;
-        }
-
-        .transcript-line.highlight {
-            background: linear-gradient(135deg, #00b4d8, #0096c7);
-            color: #1e1e2e;
-            font-weight: 600;
-            border-left-color: #fff;
-            transform: translateX(4px);
-        }
-
-        .transcript-line.search-match {
-            background: #ffd700;
-            color: #1e1e2e;
-            font-weight: 600;
-        }
-
-        .transcript-message {
-            padding: 12px;
-            margin: 8px 0;
-            border-radius: 6px;
-            background: #2a2a3d;
-            border-left: 4px solid #00b4d8;
-            color: #d8e8f0;
-            line-height: 1.5;
-            font-size: 0.875rem;
-        }
-
-        video {
-            width: 100%;
-            border-radius: 8px;
-            background: #000;
-        }
-
-        audio {
-            width: 100%;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="min-h-full bg-surface-700 text-slate-100">
-
-    <!-- ===== NAV / HEADER ===== -->
-    <header class="bg-surface-600 border-b border-white/5 sticky top-0 z-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 py-3">
-
-                <!-- Brand -->
-                <div class="flex-1 min-w-0">
-                    <div class="flex items-center gap-2">
-                        <svg class="w-7 h-7 text-brand-500 flex-shrink-0" fill="none" stroke="currentColor"
-                            viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        <h1 class="text-xl font-bold text-slate-50 truncate">Multimedia Learning System</h1>
-                    </div>
-                    <p class="text-xs text-slate-500 mt-0.5 ml-9">Interactive Sync · Resource-Optimized Delivery ·
-                        Multi-Modal Access</p>
+<body>
+    <header>
+        <div class="header-left">
+            <h1>Multimedia Learning System</h1>
+            <p>Interactive Synchronization &bull; Resource-Optimized Delivery &bull; Multi-Modal Access</p>
+        </div>
+        <div class="header-login" id="header-login">
+            <form id="admin-login-form">
+                <div class="upload-row header-row">
+                    <input type="text" id="admin-username" name="username" placeholder="Username" required>
                 </div>
-
-                <!-- Compact login form (hidden when authenticated) -->
-                <div id="header-login" class="w-full sm:w-auto">
-                    <form id="admin-login-form" class="flex flex-wrap items-center gap-2 bg-surface-800 border border-surface-300
-                           rounded-xl px-3 py-2">
-                        <input type="text" id="admin-username" name="username" placeholder="Username"
-                            autocomplete="username" required
-                            class="w-28 bg-surface-700 border border-surface-300 text-slate-100 placeholder-slate-500
-                               rounded-md px-2.5 py-1.5 text-xs
-                               focus:outline-none focus:ring-1 focus:ring-brand-500 focus:border-transparent transition-colors">
-                        <input type="password" id="admin-password" name="password" placeholder="Password"
-                            autocomplete="current-password" required
-                            class="w-28 bg-surface-700 border border-surface-300 text-slate-100 placeholder-slate-500
-                               rounded-md px-2.5 py-1.5 text-xs
-                               focus:outline-none focus:ring-1 focus:ring-brand-500 focus:border-transparent transition-colors">
-                        <button type="submit" class="bg-brand-500 hover:bg-brand-600 text-white text-xs font-semibold
-                               rounded-md px-3 py-1.5 transition-colors whitespace-nowrap">
-                            Log In
-                        </button>
-                        <a href="/admin-login.html"
-                            class="text-xs text-slate-500 hover:text-brand-400 transition-colors whitespace-nowrap">
-                            Full page →
-                        </a>
-                    </form>
-                    <p id="admin-login-status" class="text-xs mt-1 text-green-400 min-h-[1rem] pl-1"></p>
+                <div class="upload-row header-row">
+                    <input type="password" id="admin-password" name="password" placeholder="Password" required>
                 </div>
-
-                <!-- Logged-in state (hidden by default) -->
-                <div id="header-admin-bar" class="hidden items-center gap-3">
-                    <span class="flex items-center gap-1.5 bg-brand-700/30 text-brand-400 border border-brand-700/50
-                             text-xs font-semibold px-2.5 py-1 rounded-full">
-                        <span class="w-1.5 h-1.5 bg-brand-400 rounded-full animate-pulse"></span>
-                        Admin
-                    </span>
-                    <a href="/admin-upload.html" class="text-xs bg-surface-400 hover:bg-surface-300 text-slate-200 font-medium
-                           rounded-lg px-3 py-1.5 transition-colors">
-                        Upload Content
-                    </a>
-                    <button id="admin-logout-btn"
-                        class="text-xs text-slate-500 hover:text-red-400 transition-colors font-medium">
-                        Sign Out
-                    </button>
-                </div>
-
-            </div>
+                <button type="submit" class="btn-download">Log In</button>
+            </form>
+            <div id="admin-login-status"></div>
+        </div>
+        <div id="header-admin-bar" style="display:none; align-items:center; gap:12px;">
+            <span
+                style="background:#00b4d820; color:#00b4d8; border:1px solid #00b4d840; border-radius:20px; padding:4px 12px; font-size:0.8em; font-weight:600;">&#9679;
+                Admin</span>
+            <a href="/admin-upload.html" class="btn-download btn-small">Upload Content</a>
+            <button id="admin-logout-btn" class="btn-download btn-small" style="background:#3a3a50;">Sign Out</button>
         </div>
     </header>
 
-    <!-- ===== MAIN CONTENT ===== -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <div class="dashboard-container">
+        <main class="video-section">
+            <div class="video-selector">
+                <label for="video-select">&#127909; Select Video:</label>
+                <input type="search" id="video-search" placeholder="Search videos...">
+                <select id="video-select">
+                    <option value="part1">Part 1</option>
+                </select>
+            </div>
+            <div class="video-wrapper">
+                <video id="video-player" controls>
+                    <source src="/api/video" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <div class="video-progress">
+                    <div id="progress-bar" class="progress-bar"></div>
+                </div>
+                <div class="time-display">
+                    <span id="current-time">0:00</span> / <span id="duration">0:00</span>
+                </div>
+            </div>
 
-            <!-- LEFT/MAIN: Video and Audio section -->
-            <main class="lg:col-span-2 space-y-5">
-
-                <!-- Video card -->
-                <section class="bg-surface-600 border border-white/5 rounded-2xl p-5 shadow-xl">
-
-                    <!-- Video selector -->
-                    <div class="flex flex-wrap items-center gap-3 mb-4 pb-4 border-b border-white/5">
-                        <label for="video-select"
-                            class="text-sm font-semibold text-brand-500 flex items-center gap-1.5">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M15 10l4.553-2.069A1 1 0 0121 8.87v6.263a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                            </svg>
-                            Select Video
-                        </label>
-                        <input type="search" id="video-search" placeholder="Search videos…"
-                            class="flex-1 min-w-[140px] bg-surface-800 border border-surface-300 text-slate-100 placeholder-slate-500
-                               rounded-lg px-3 py-1.5 text-sm
-                               focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-colors">
-                        <select id="video-select"
-                            class="flex-1 min-w-[160px] bg-surface-800 border border-surface-300 text-slate-100
-                               rounded-lg px-3 py-1.5 text-sm cursor-pointer
-                               focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-colors">
-                            <option value="part1">Part 1</option>
-                            <!-- Dynamically populated -->
-                        </select>
-                    </div>
-
-                    <!-- Video player -->
-                    <div class="relative rounded-xl overflow-hidden bg-black mb-3">
-                        <video id="video-player" controls class="w-full">
-                            <source src="/api/video" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
-                    </div>
-
-                    <!-- Progress bar -->
-                    <div class="mb-2 bg-surface-400 h-2 rounded-full overflow-hidden">
-                        <div id="progress-bar"
-                            class="h-full bg-gradient-to-r from-brand-500 to-brand-600 transition-all" style="width:0%">
-                        </div>
-                    </div>
-
-                    <!-- Time display -->
-                    <div class="text-center text-sm text-slate-400">
-                        <span id="current-time">0:00</span> / <span id="duration">0:00</span>
-                    </div>
-
-                </section>
-
-                <!-- Audio card -->
-                <section class="bg-surface-600 border border-white/5 rounded-2xl p-5 shadow-xl">
-                    <h2 class="text-sm font-semibold text-brand-500 flex items-center gap-1.5 mb-3">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
-                        </svg>
-                        Audio Summary
-                    </h2>
-                    <audio id="audio-player" controls class="w-full mb-3">
-                        <source src="/api/audio/stream" type="audio/mpeg">
-                        Your browser does not support the audio element.
-                    </audio>
-                    <a href="/api/audio/download" id="audio-download-link" class="inline-flex items-center gap-2 bg-brand-500 hover:bg-brand-600 active:bg-brand-700
-                           text-white text-sm font-semibold rounded-lg px-4 py-2 transition-colors">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                        </svg>
-                        Download Audio (.MP3)
+            <div class="audio-section">
+                <h3>&#127911; Audio Summary</h3>
+                <audio id="audio-player" controls>
+                    <source src="/api/audio/stream" type="audio/mpeg">
+                    Your browser does not support the audio tag.
+                </audio>
+                <div class="audio-controls">
+                    <a href="/api/audio/download" id="audio-download-link" class="btn-download">
+                        &#128229; Download Audio (.MP3)
                     </a>
-                </section>
+                </div>
+            </div>
+        </main>
 
-            </main><!-- /main -->
+        <aside class="transcript-section">
+            <h2>Interactive Transcript</h2>
+            <div class="search-container">
+                <input type="text" id="search-input" placeholder="Search transcript..." class="search-input">
+                <button id="search-btn" class="search-btn">&#128269;</button>
+            </div>
+            <div id="transcript-container"></div>
+            <div class="transcript-stats">
+                <span id="match-count"></span>
+            </div>
+            <div class="transcript-downloads">
+                <h3>&#128196; Download Transcript</h3>
+                <div class="download-buttons">
+                    <a href="/api/transcript/download/json" class="btn-download btn-small" id="download-json">
+                        &#128229; JSON
+                    </a>
+                    <a href="/api/transcript/download/pdf" class="btn-download btn-small" id="download-pdf">
+                        &#128229; PDF
+                    </a>
+                </div>
+            </div>
 
-            <!-- RIGHT: Transcript section -->
-            <aside class="lg:col-span-1 flex flex-col gap-5">
-
-                <!-- Transcript card -->
-                <section class="bg-surface-600 border border-white/5 rounded-2xl p-5 shadow-xl flex flex-col"
-                    style="max-height:640px">
-                    <h2 class="text-sm font-semibold text-brand-500 flex items-center gap-1.5 mb-3 flex-shrink-0">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                        </svg>
-                        Interactive Transcript
-                    </h2>
-
-                    <!-- Search -->
-                    <div class="flex gap-2 mb-3 flex-shrink-0">
-                        <input type="text" id="search-input" placeholder="Search transcript…"
-                            class="flex-1 bg-surface-800 border border-surface-300 text-slate-100 placeholder-slate-500
-                               rounded-lg px-3 py-1.5 text-sm
-                               focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-colors">
-                        <button id="search-btn"
-                            class="bg-brand-500 hover:bg-brand-600 text-white rounded-lg px-3 py-1.5 text-sm transition-colors">
-                            🔍
-                        </button>
-                    </div>
-
-                    <!-- Match count -->
-                    <p id="match-count" class="text-xs text-slate-500 mb-2 flex-shrink-0 min-h-[1rem]"></p>
-
-                    <!-- Transcript lines -->
-                    <div id="transcript-container" class="flex-1 overflow-y-auto pr-1 min-h-0"></div>
-
-                    <!-- Stats -->
-                    <div class="pt-3 mt-3 border-t border-white/5 flex-shrink-0">
-                        <!-- Downloads -->
-                        <h3 class="text-xs font-semibold text-slate-400 mb-2">Download Transcript</h3>
-                        <div class="flex gap-2">
-                            <a href="/api/transcript/download/json" id="download-json" class="flex-1 text-center bg-surface-400 hover:bg-surface-300 text-slate-200 text-xs
-                                   font-semibold rounded-lg px-3 py-2 transition-colors">
-                                📥 JSON
-                            </a>
-                            <a href="/api/transcript/download/pdf" id="download-pdf" class="flex-1 text-center bg-surface-400 hover:bg-surface-300 text-slate-200 text-xs
-                                   font-semibold rounded-lg px-3 py-2 transition-colors">
-                                📥 PDF
-                            </a>
-                        </div>
-                    </div>
-                </section>
-
-            </aside>
-
-        </div><!-- /grid -->
-    </div><!-- /max-w -->
+            <!-- kept for app.js compatibility, hidden -->
+            <div class="admin-login-section" id="admin-login-section" style="display:none;"></div>
+            <div class="admin-upload-section" id="admin-upload-section" style="display:none;"></div>
+        </aside>
+    </div>
 
     <script src="config.js"></script>
     <script src="app.js"></script>
     <script>
-        // ---- Auth state wiring for the header ----
-        const headerLoginEl = document.getElementById('header-login');
-        const headerAdminBar = document.getElementById('header-admin-bar');
+        // Wire up the header admin bar toggle
+        const _headerLogin = document.getElementById('header-login');
+        const _headerAdminBar = document.getElementById('header-admin-bar');
 
-        function applyAuthUI(authenticated) {
-            if (authenticated) {
-                headerLoginEl.classList.add('hidden');
-                headerAdminBar.classList.remove('hidden');
-                headerAdminBar.classList.add('flex');
-            } else {
-                headerLoginEl.classList.remove('hidden');
-                headerAdminBar.classList.add('hidden');
-                headerAdminBar.classList.remove('flex');
-            }
-        }
-
-        // Override the app.js showAdminPanel so we update our new header too
         const _origShow = window.showAdminPanel;
         window.showAdminPanel = function (authenticated) {
-            applyAuthUI(authenticated);
-            // Keep the hidden upload panel in sync if app.js still uses it
-            const adminUploadSection = document.getElementById('admin-upload-section');
-            if (adminUploadSection) {
-                adminUploadSection.style.display = authenticated ? 'block' : 'none';
+            if (authenticated) {
+                _headerLogin.style.display = 'none';
+                _headerAdminBar.style.display = 'flex';
+            } else {
+                _headerLogin.style.display = '';
+                _headerAdminBar.style.display = 'none';
             }
+            const up = document.getElementById('admin-upload-section');
+            if (up) up.style.display = authenticated ? 'block' : 'none';
         };
 
         document.getElementById('admin-logout-btn').addEventListener('click', async () => {
-            await fetch('/api/logout', { method: 'POST', credentials: 'include' });
-            applyAuthUI(false);
+            await fetch((window.API_BASE || '') + '/api/logout', { method: 'POST', credentials: 'include' });
+            window.showAdminPanel(false);
         });
     </script>
 </body>

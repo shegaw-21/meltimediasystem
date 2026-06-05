@@ -1,0 +1,1078 @@
+[
+  {
+    "time": 0,
+    "text": "DEBRE BIRHAN UNIVERSITY                                    COLLEGE OF COMPUTING SCIENCE                  DEPARTMENT OF INFORMATION SYSTEMS"
+  },
+  {
+    "time": 5,
+    "text": "PROJECT TITLE"
+  },
+  {
+    "time": 10,
+    "text": "Design and Implementation of an Integrated Multimedia Information System for Educational and Entertainment Content Delivery Research project"
+  },
+  {
+    "time": 15,
+    "text": "Course title Multimedia information system and applications"
+  },
+  {
+    "time": 20,
+    "text": "NAME"
+  },
+  {
+    "time": 25,
+    "text": "ID"
+  },
+  {
+    "time": 30,
+    "text": "Tesfu H/wold"
+  },
+  {
+    "time": 35,
+    "text": "1501501"
+  },
+  {
+    "time": 40,
+    "text": "Yonas Tilahun"
+  },
+  {
+    "time": 45,
+    "text": "1501577"
+  },
+  {
+    "time": 50,
+    "text": "Shegaw Afele"
+  },
+  {
+    "time": 55,
+    "text": "1501469"
+  },
+  {
+    "time": 60,
+    "text": "Eden Sebsbe"
+  },
+  {
+    "time": 65,
+    "text": "1600029"
+  },
+  {
+    "time": 70,
+    "text": "Samrawit Gebretensay"
+  },
+  {
+    "time": 75,
+    "text": "1501442"
+  },
+  {
+    "time": 80,
+    "text": "Course  code  InSy4025"
+  },
+  {
+    "time": 85,
+    "text": "Group members"
+  },
+  {
+    "time": 90,
+    "text": "ABSTRACT"
+  },
+  {
+    "time": 95,
+    "text": "This paper presents the design and implementation of a web-based multimedia information system . The system delivers educational and entertainment content by combining video playback, audio summaries, and interactive synchronized transcripts in a single browser interface. The backend is built using Node.js and Express, while the frontend uses HTML, Tailwind CSS, and JavaScript. An administrative panel allows authorized users to upload new content. The system supports both local file storage and Microsoft Azure Blob Storage. Key features include HTTP range-based video streaming, realtime transcript highlighting synchronized with video playback, and automatic conversion of Word documents (.docx) to structured JSON for transcript delivery._"
+  },
+  {
+    "time": 100,
+    "text": "Catalog"
+  },
+  {
+    "time": 105,
+    "text": "1. INTRODUCTION\t4"
+  },
+  {
+    "time": 110,
+    "text": "OBJECTIVES\t5"
+  },
+  {
+    "time": 115,
+    "text": "2. Literature Review\t5"
+  },
+  {
+    "time": 120,
+    "text": "3. SYSTEM DESIGN\t6"
+  },
+  {
+    "time": 125,
+    "text": "3.1 Architecture\t6"
+  },
+  {
+    "time": 130,
+    "text": "3.2 Main Components\t6"
+  },
+  {
+    "time": 135,
+    "text": "Components\t6"
+  },
+  {
+    "time": 140,
+    "text": "Technology \t6"
+  },
+  {
+    "time": 145,
+    "text": "Role \t6"
+  },
+  {
+    "time": 150,
+    "text": "Backend Server\t6"
+  },
+  {
+    "time": 155,
+    "text": "Node.js + Express\t6"
+  },
+  {
+    "time": 160,
+    "text": "API routing, streaming, authentication\t6"
+  },
+  {
+    "time": 165,
+    "text": "File Upload\t6"
+  },
+  {
+    "time": 170,
+    "text": "Multer \t6"
+  },
+  {
+    "time": 175,
+    "text": "Handle multipart form uploads\t6"
+  },
+  {
+    "time": 180,
+    "text": "Document Conversion \t6"
+  },
+  {
+    "time": 185,
+    "text": "Mammoth.js \t6"
+  },
+  {
+    "time": 190,
+    "text": "Extract text from .docx files\t6"
+  },
+  {
+    "time": 195,
+    "text": "Cloud Storage\t6"
+  },
+  {
+    "time": 200,
+    "text": "Azure Blob Storage SDK\t6"
+  },
+  {
+    "time": 205,
+    "text": "Store and serve media file\t6"
+  },
+  {
+    "time": 210,
+    "text": "Frontend \t6"
+  },
+  {
+    "time": 215,
+    "text": "HTML + Tailwind CSS + JavaScript\t6"
+  },
+  {
+    "time": 220,
+    "text": "User interface\t6"
+  },
+  {
+    "time": 225,
+    "text": "Authentication \t6"
+  },
+  {
+    "time": 230,
+    "text": "Node.js crypto\t6"
+  },
+  {
+    "time": 235,
+    "text": "Admin session tokens \t6"
+  },
+  {
+    "time": 240,
+    "text": "3.3 Transcript Data Format\t7"
+  },
+  {
+    "time": 245,
+    "text": "4.IMPLEMENTATION\t8"
+  },
+  {
+    "time": 250,
+    "text": "4.1 Technology Stack\t8"
+  },
+  {
+    "time": 255,
+    "text": "4.2 Key Features Implemented\t8"
+  },
+  {
+    "time": 260,
+    "text": "4.3 Frontend Design\t9"
+  },
+  {
+    "time": 265,
+    "text": "4.4 Transcript Synchronization Design\t9"
+  },
+  {
+    "time": 270,
+    "text": "4.5 Data Model\t10"
+  },
+  {
+    "time": 275,
+    "text": "5. SYSTEM FEATURES\t11"
+  },
+  {
+    "time": 280,
+    "text": "5.1 Viewer Interface\t11"
+  },
+  {
+    "time": 285,
+    "text": "5.2 Admin Panel\t12"
+  },
+  {
+    "time": 290,
+    "text": "6. TESTING AND EVALUATION\t13"
+  },
+  {
+    "time": 295,
+    "text": "7.1 Functional Testing\t13"
+  },
+  {
+    "time": 300,
+    "text": "7.2 Performance Observations\t14"
+  },
+  {
+    "time": 305,
+    "text": "7.3 Limitations Identified\t14"
+  },
+  {
+    "time": 310,
+    "text": "7. CONCLUSION\t15"
+  },
+  {
+    "time": 315,
+    "text": "REFERENCES\t16"
+  },
+  {
+    "time": 320,
+    "text": "Table 1 :technology used with its role\t7"
+  },
+  {
+    "time": 325,
+    "text": "Table 2 : All data is stored as files\t11"
+  },
+  {
+    "time": 330,
+    "text": "Table 3 :Functional Testing\t14"
+  },
+  {
+    "time": 335,
+    "text": "INTRODUCTION"
+  },
+  {
+    "time": 340,
+    "text": "The integration of multiple media formats - video, audio, and text - in a single platform significantly improves how learners engage with educational content. Research shows that learners retain information better when it is presented through more than one channel simultaneously (Mayer, 2001). However, building such a system from scratch requires solving several technical challenges: efficient video streaming, real-time synchronization between media and text, and secure content management."
+  },
+  {
+    "time": 345,
+    "text": "This project designs and implements a complete multimedia information system that addresses these challenges using modern, open-source web technologies. The system is intended for educational institutions that need a self-hosted, customizable, and maintainable solution."
+  },
+  {
+    "time": 350,
+    "text": "OBJECTIVES"
+  },
+  {
+    "time": 355,
+    "text": "-    Deliver video, audio, and synchronized transcript content through a single web interface"
+  },
+  {
+    "time": 360,
+    "text": "-    Implement efficient HTTP-based media streaming"
+  },
+  {
+    "time": 365,
+    "text": "-    Provide a secure admin panel for content upload and management"
+  },
+  {
+    "time": 370,
+    "text": "-    Support both local and cloud-based file storage."
+  },
+  {
+    "time": 375,
+    "text": "Literature Review"
+  },
+  {
+    "time": 380,
+    "text": "Mayer's Cognitive Theory of Multimedia Learning (2001) establishes that presenting information through both visual and auditory channels simultaneously produces better learning outcomes than either channel alone. This directly motivates the design of a system that presents video, audio summary, and text transcript together."
+  },
+  {
+    "time": 385,
+    "text": "HTTP range requests (RFC 7233) are the standard mechanism for streaming video over the web. They allow browsers to request specific segments of a file, enabling seeking and buffering without downloading the entire video. Node.js, introduced by Ryan Dahl in 2009, provides a nonblocking I/O model that makes it well suited for building media streaming servers that serve many clients concurrently."
+  },
+  {
+    "time": 390,
+    "text": "Existing platforms like YouTube or Moodle are either too general-purpose or too complex for small educational institutions. A lightweight custom system offers more flexibility and lower operational cost."
+  },
+  {
+    "time": 395,
+    "text": "3. SYSTEM DESIGN"
+  },
+  {
+    "time": 400,
+    "text": "3.1 Architecture"
+  },
+  {
+    "time": 405,
+    "text": "The system follows a three-tier architecture:"
+  },
+  {
+    "time": 410,
+    "text": "Browser: HTML + CSS + JavaScript  t HTTP"
+  },
+  {
+    "time": 415,
+    "text": "Node.js + Express: API Server  t"
+  },
+  {
+    "time": 420,
+    "text": "Storage: Local Filesystem OR Azure Blob Storage"
+  },
+  {
+    "time": 425,
+    "text": "The backend serves both the API endpoints and the static frontend files from the same server process. When cloud storage is enabled, media requests are redirected to Azure Blob Storage URLs."
+  },
+  {
+    "time": 430,
+    "text": "3.2 Main Components"
+  },
+  {
+    "time": 435,
+    "text": "Components"
+  },
+  {
+    "time": 440,
+    "text": "Technology"
+  },
+  {
+    "time": 445,
+    "text": "Role"
+  },
+  {
+    "time": 450,
+    "text": "Backend Server"
+  },
+  {
+    "time": 455,
+    "text": "Node.js + Express"
+  },
+  {
+    "time": 460,
+    "text": "API routing, streaming, authentication"
+  },
+  {
+    "time": 465,
+    "text": "File Upload"
+  },
+  {
+    "time": 470,
+    "text": "Multer"
+  },
+  {
+    "time": 475,
+    "text": "Handle multipart form uploads"
+  },
+  {
+    "time": 480,
+    "text": "Document Conversion"
+  },
+  {
+    "time": 485,
+    "text": "Mammoth.js"
+  },
+  {
+    "time": 490,
+    "text": "Extract text from .docx files"
+  },
+  {
+    "time": 495,
+    "text": "Cloud Storage"
+  },
+  {
+    "time": 500,
+    "text": "Azure Blob Storage SDK"
+  },
+  {
+    "time": 505,
+    "text": "Store and serve media file"
+  },
+  {
+    "time": 510,
+    "text": "Frontend"
+  },
+  {
+    "time": 515,
+    "text": "HTML + Tailwind CSS + JavaScript"
+  },
+  {
+    "time": 520,
+    "text": "User interface"
+  },
+  {
+    "time": 525,
+    "text": "Authentication"
+  },
+  {
+    "time": 530,
+    "text": "Node.js crypto"
+  },
+  {
+    "time": 535,
+    "text": "Admin session tokens"
+  },
+  {
+    "time": 540,
+    "text": "Table 1:technology used with its role"
+  },
+  {
+    "time": 545,
+    "text": "3.3 Transcript Data Format"
+  },
+  {
+    "time": 550,
+    "text": "Each transcript is stored as a JSON array where each item contains a timestamp and the spoken text:_"
+  },
+  {
+    "time": 555,
+    "text": "Json:"
+  },
+  {
+    "time": 560,
+    "text": "{ \"time\":"
+  },
+  {
+    "time": 565,
+    "text": "0,"
+  },
+  {
+    "time": 570,
+    "text": "\"text\":"
+  },
+  {
+    "time": 575,
+    "text": "\"Welcome to this lesson.\" },"
+  },
+  {
+    "time": 580,
+    "text": "{ \"time\":"
+  },
+  {
+    "time": 585,
+    "text": "5,"
+  },
+  {
+    "time": 590,
+    "text": "\"text\":"
+  },
+  {
+    "time": 595,
+    "text": "\"Today we will cover arrays.\" },"
+  },
+  {
+    "time": 600,
+    "text": "{ \"time\":"
+  },
+  {
+    "time": 605,
+    "text": "12,"
+  },
+  {
+    "time": 610,
+    "text": "\"text\":"
+  },
+  {
+    "time": 615,
+    "text": "\"An array is a contiguous block of memory"
+  },
+  {
+    "time": 620,
+    "text": "4.IMPLEMENTATION"
+  },
+  {
+    "time": 625,
+    "text": "4.1 Technology Stack"
+  },
+  {
+    "time": 630,
+    "text": "-    Runtime: Node.js (v18+)"
+  },
+  {
+    "time": 635,
+    "text": "-    Framework:Express.js 4.21"
+  },
+  {
+    "time": 640,
+    "text": "-    Document Processing: Mammoth.js 1.4"
+  },
+  {
+    "time": 645,
+    "text": "4.2 Key Features Implemented"
+  },
+  {
+    "time": 650,
+    "text": "4.2.1 Video and Audio Streaming"
+  },
+  {
+    "time": 655,
+    "text": "The server reads the HTTP 'Range' header from the browser and responds with HTTP 206 Partial Content, streaming only the requested byte range. This allows the browser to seek and buffer video efficiently without downloading the entire file."
+  },
+  {
+    "time": 660,
+    "text": "4.2.2 Transcript Synchronization"
+  },
+  {
+    "time": 665,
+    "text": "The HTML5 video element fires a 'timeupdate' event continuously during playback. The frontend listens to this event, compares the current playback time against each transcript line's timestamp, and applies a highlight style to the active line. The transcript panel also autoscrolls to keep the active line visible."
+  },
+  {
+    "time": 670,
+    "text": "4.2.3 Automatic .docx Conversion"
+  },
+  {
+    "time": 675,
+    "text": "When a transcript '.docx' file is uploaded or detected, the server uses Mammoth.js to extract the plain text, splits it into lines, and assigns estimated timestamps at five-second intervals. The result is saved as a '.json' file. If the source '.docx' is later updated, the JSON is automatically regenerated on the next request."
+  },
+  {
+    "time": 680,
+    "text": "4.2.4  Admin Authentication"
+  },
+  {
+    "time": 685,
+    "text": "The admin login endpoint verifies credentials against environment variables ('ADMIN_USER', 'ADMIN_PASS') and issues a session token. The token is an HMAC-SHA256 signature over a JSON payload containing the username and expiry time, encoded as Base64 and stored in an 'httpOnly cookie. Tokens expire after two hours."
+  },
+  {
+    "time": 690,
+    "text": "4.3 Frontend Design"
+  },
+  {
+    "time": 695,
+    "text": "The frontend follows a single-page application pattern without any JavaScript framework. All state is managed in plain JavaScript variables. The UI is divided into three main panels:"
+  },
+  {
+    "time": 700,
+    "text": "-    Header: Branding, inline login form (compact), and authenticated admin bar"
+  },
+  {
+    "time": 705,
+    "text": "-    Main content (2/3 width on large screens): Video player card and audio player card"
+  },
+  {
+    "time": 710,
+    "text": "-    Transcript sidebar (1/3 width): Interactive synchronized"
+  },
+  {
+    "time": 715,
+    "text": "transcript with search."
+  },
+  {
+    "time": 720,
+    "text": "4.4 Transcript Synchronization Design"
+  },
+  {
+    "time": 725,
+    "text": "The synchronization between video playback and transcript display is driven by the 'timeupdate' event fired by the HTML5 video element. Each rendered transcript paragraph stores its start timestamp in a 'data-time' attribute. On every 'timeupdate' event:"
+  },
+  {
+    "time": 730,
+    "text": "1.    Iterate all transcript lines"
+  },
+  {
+    "time": 735,
+    "text": "2.    For each line, check if 'currentTime >= line.time AND currentTime < nextLine.time'"
+  },
+  {
+    "time": 740,
+    "text": "3.    Apply or remove the 'highlight' CSS class accordingly"
+  },
+  {
+    "time": 745,
+    "text": "4.    If the highlighted line is outside the visible scroll area of the transcript container, call 'scrollIntoView()' with smooth behavior."
+  },
+  {
+    "time": 750,
+    "text": "This produces continuous automatic scrolling synchronized to speech without requiring server-side processing."
+  },
+  {
+    "time": 755,
+    "text": "4.5 Data Model"
+  },
+  {
+    "time": 760,
+    "text": "The system uses no relational or document database. All data is stored as files:"
+  },
+  {
+    "time": 765,
+    "text": "File Pattern"
+  },
+  {
+    "time": 770,
+    "text": "Purpose"
+  },
+  {
+    "time": 775,
+    "text": "assets/videos/{name}.mp4"
+  },
+  {
+    "time": 780,
+    "text": "Video content for each part"
+  },
+  {
+    "time": 785,
+    "text": "assets/audio/{name}.mp3"
+  },
+  {
+    "time": 790,
+    "text": "Audio summary for each part"
+  },
+  {
+    "time": 795,
+    "text": "assets/transcripts/{name}.docx"
+  },
+  {
+    "time": 800,
+    "text": "Source transcript document"
+  },
+  {
+    "time": 805,
+    "text": "assets/transcripts/{name}.json"
+  },
+  {
+    "time": 810,
+    "text": "Derived structured transcript"
+  },
+  {
+    "time": 815,
+    "text": "Table 2: All data is stored as files"
+  },
+  {
+    "time": 820,
+    "text": "The transcript JSON schema is an array of time-indexed text objects:"
+  },
+  {
+    "time": 825,
+    "text": "json"
+  },
+  {
+    "time": 830,
+    "text": "["
+  },
+  {
+    "time": 835,
+    "text": "{ \"time\":"
+  },
+  {
+    "time": 840,
+    "text": "0,"
+  },
+  {
+    "time": 845,
+    "text": "\"text\":"
+  },
+  {
+    "time": 850,
+    "text": "\"Welcome t"
+  },
+  {
+    "time": 855,
+    "text": "to this lesson on data"
+  },
+  {
+    "time": 860,
+    "text": "structures.\" },"
+  },
+  {
+    "time": 865,
+    "text": "{ \"time\": lists.\" },"
+  },
+  {
+    "time": 870,
+    "text": "5,"
+  },
+  {
+    "time": 875,
+    "text": "\"text\":"
+  },
+  {
+    "time": 880,
+    "text": "\"Today we"
+  },
+  {
+    "time": 885,
+    "text": "will cover arrays and"
+  },
+  {
+    "time": 890,
+    "text": "linked"
+  },
+  {
+    "time": 895,
+    "text": "{ \"time\":"
+  },
+  {
+    "time": 900,
+    "text": "]"
+  },
+  {
+    "time": 905,
+    "text": "12,"
+  },
+  {
+    "time": 910,
+    "text": "\"text\":"
+  },
+  {
+    "time": 915,
+    "text": "\"An array"
+  },
+  {
+    "time": 920,
+    "text": "is a contiguous block"
+  },
+  {
+    "time": 925,
+    "text": "of memory...\" }"
+  },
+  {
+    "time": 930,
+    "text": "Where 'time' is the offset in seconds from the start of the video and 'text' is the spoken content for that segment."
+  },
+  {
+    "time": 935,
+    "text": "SYSTEM FEATURES"
+  },
+  {
+    "time": 940,
+    "text": "5.1 Viewer Interface"
+  },
+  {
+    "time": 945,
+    "text": "-    Video player with part selector and search filter"
+  },
+  {
+    "time": 950,
+    "text": "-    Audio summary player with download option"
+  },
+  {
+    "time": 955,
+    "text": "-    Synchronized interactive transcript panel"
+  },
+  {
+    "time": 960,
+    "text": "-    Full-text search within transcript"
+  },
+  {
+    "time": 965,
+    "text": "-    Download transcript as JSON or HTML"
+  },
+  {
+    "time": 970,
+    "text": "Video Player Section:"
+  },
+  {
+    "time": 975,
+    "text": "A dynamically populated dropdown allows users to select any available content part. A search filter above the dropdown enables filtering by part name. The HTML5 video element supports all native browser controls. Below the player, a custom progress bar reflects playback position and a time display shows 'current / total' duration."
+  },
+  {
+    "time": 980,
+    "text": "Audio Summary Section:"
+  },
+  {
+    "time": 985,
+    "text": "An HTML5 audio player presents the audio summary corresponding to the selected video part. A download button allows saving the audio file locally."
+  },
+  {
+    "time": 990,
+    "text": "Interactive Transcript Section:"
+  },
+  {
+    "time": 995,
+    "text": "The transcript panel displays all transcript lines as clickable paragraphs. As the video plays, the currently active line is highlighted with a gradient background and scrolls into view automatically. Clicking any line seeks the video to that line's timestamp and resumes playback. A search field at the top of the panel highlights all matching lines and scrolls to the first match. Download buttons for JSON and HTML transcript formats are provided at the bottom of the panel."
+  },
+  {
+    "time": 1000,
+    "text": "5.2 Admin Panel"
+  },
+  {
+    "time": 1005,
+    "text": "-    Dedicated login page with password show/hide toggle"
+  },
+  {
+    "time": 1010,
+    "text": "A three-step guided upload interface:"
+  },
+  {
+    "time": 1015,
+    "text": "- step i: Enter the content identifier (e.g., 'part16')"
+  },
+  {
+    "time": 1020,
+    "text": "- step 2: Select files using styled drag-zone inputs for video (.mp4), audio (.mp3), and transcript (.docx/.doc/.json)"
+  },
+  {
+    "time": 1025,
+    "text": "-    step 3: Submit with real-time upload progress bar showing"
+  },
+  {
+    "time": 1030,
+    "text": "percentage completion."
+  },
+  {
+    "time": 1035,
+    "text": "A sidebar shows file format guidelines, naming conventions, and a live list of all currently available parts fetched from the '/api/parts' endpoint. An upload that succeeds updates the parts list immediately without page reload."
+  },
+  {
+    "time": 1040,
+    "text": "TESTING AND EVALUATION"
+  },
+  {
+    "time": 1045,
+    "text": "7.1 Functional Testing"
+  },
+  {
+    "time": 1050,
+    "text": "Manual black-box testing was performed for each functional requirement. The following test cases were executed:"
+  },
+  {
+    "time": 1055,
+    "text": "Test Case"
+  },
+  {
+    "time": 1060,
+    "text": "Expected Result"
+  },
+  {
+    "time": 1065,
+    "text": "Actual Result"
+  },
+  {
+    "time": 1070,
+    "text": "Status"
+  },
+  {
+    "time": 1075,
+    "text": "Load index page"
+  },
+  {
+    "time": 1080,
+    "text": "Video player, audio player, and transcript panel visible"
+  },
+  {
+    "time": 1085,
+    "text": "All panels rendered correctly"
+  },
+  {
+    "time": 1090,
+    "text": "Pass"
+  },
+  {
+    "time": 1095,
+    "text": "Select different video part"
+  },
+  {
+    "time": 1100,
+    "text": "Video, audio, and transcript all update to selected part"
+  },
+  {
+    "time": 1105,
+    "text": "All three updated simultaneously"
+  },
+  {
+    "time": 1110,
+    "text": "Pass"
+  },
+  {
+    "time": 1115,
+    "text": "Play video"
+  },
+  {
+    "time": 1120,
+    "text": "Transcript auto-scrolls and highlights active line"
+  },
+  {
+    "time": 1125,
+    "text": "Smooth auto-scroll observed"
+  },
+  {
+    "time": 1130,
+    "text": "Pass"
+  },
+  {
+    "time": 1135,
+    "text": "Click transcript line"
+  },
+  {
+    "time": 1140,
+    "text": "Video seeks to that timestamp"
+  },
+  {
+    "time": 1145,
+    "text": "Video seeked and played from correct position"
+  },
+  {
+    "time": 1150,
+    "text": "Pass"
+  },
+  {
+    "time": 1155,
+    "text": "Search transcript"
+  },
+  {
+    "time": 1160,
+    "text": "Matching lines highlighted, scroll to first match"
+  },
+  {
+    "time": 1165,
+    "text": "Correct matching behavior"
+  },
+  {
+    "time": 1170,
+    "text": "Pass"
+  },
+  {
+    "time": 1175,
+    "text": "Download JSON transcript"
+  },
+  {
+    "time": 1180,
+    "text": "JSON file downloaded with correct structure"
+  },
+  {
+    "time": 1185,
+    "text": "File downloaded, valid JSON"
+  },
+  {
+    "time": 1190,
+    "text": "Pass"
+  },
+  {
+    "time": 1195,
+    "text": "Download audio"
+  },
+  {
+    "time": 1200,
+    "text": "mp3 file downloaded"
+  },
+  {
+    "time": 1205,
+    "text": "File downloaded correctly"
+  },
+  {
+    "time": 1210,
+    "text": "Pass"
+  },
+  {
+    "time": 1215,
+    "text": "Admin login with correct credentials"
+  },
+  {
+    "time": 1220,
+    "text": "Redirect to upload page"
+  },
+  {
+    "time": 1225,
+    "text": "Redirect occurred"
+  },
+  {
+    "time": 1230,
+    "text": "Pass"
+  },
+  {
+    "time": 1235,
+    "text": "Admin login with wrong credentials"
+  },
+  {
+    "time": 1240,
+    "text": "Error message displayed"
+  },
+  {
+    "time": 1245,
+    "text": "\"Invalid credentials\" shown"
+  },
+  {
+    "time": 1250,
+    "text": "Pass"
+  },
+  {
+    "time": 1255,
+    "text": "Table 3:Functional Testing"
+  },
+  {
+    "time": 1260,
+    "text": "7.2 Performance Observations"
+  },
+  {
+    "time": 1265,
+    "text": "Video streaming was tested with files ranging from 50MB to 500MB. In all cases, initial playback began within two to four seconds on a local network connection, as the browser only buffers a small initial segment before beginning playback. Seeking to arbitrary positions produced HTTP 206 responses with appropriate byte ranges and resumed playback within one second. No out-of-memory errors were observed during concurrent streaming of multiple video files, as each stream uses Node.js readable streams that deliver data in chunks rather than loading files into memory."
+  },
+  {
+    "time": 1270,
+    "text": "7.3 Limitations Identified"
+  },
+  {
+    "time": 1275,
+    "text": "1.    Timestamp estimation: When converting .docx transcripts, timestamps are estimated at fixed five-second intervals per paragraph rather than derived from actual speech timing. Accurate timestamps require manual editing of the generated JSON."
+  },
+  {
+    "time": 1280,
+    "text": "2.    Single administrator account: The system supports only one admin user defined via environment variables. Multi-user admin management is not implemented."
+  },
+  {
+    "time": 1285,
+    "text": "3.    No learner tracking: The system does not record which users watched which content, completion rates, or engagement metrics."
+  },
+  {
+    "time": 1290,
+    "text": "4.    Ephemeral uploads on free hosting: When deployed to services without persistent disk storage, files uploaded through the admin panel are lost on server restart."
+  },
+  {
+    "time": 1295,
+    "text": "CONCLUSION"
+  },
+  {
+    "time": 1300,
+    "text": "This research project successfully designed and implemented an integrated multimedia information system for educational and entertainment content delivery. The system demonstrates that a full-featured, production-ready web application for multi-modal content delivery can be built using fundamental web technologies - Node.js, Express, HTML5, JavaScript, and CSS - without reliance on heavyweight frameworks or database infrastructure."
+  },
+  {
+    "time": 1305,
+    "text": "The key technical contributions are: (1) a lazy transcript resolution pipeline that automatically converts and caches Word documents to structured JSON; (2) a real-time transcript synchronization mechanism that highlights and scrolls to the active spoken text during video playback; (3) RFC 7233-compliant HTTP range streaming for smooth video and audio delivery; and (4) a stateless HMAC-signed authentication system implemented without external cryptographic libraries."
+  },
+  {
+    "time": 1310,
+    "text": "The system is functional, tested, and deployable to cloud hosting platforms. It addresses a genuine need in educational institutions for self-hosted, customizable multimedia content delivery that can be maintained by local technical staff."
+  },
+  {
+    "time": 1315,
+    "text": "REFERENCES"
+  },
+  {
+    "time": 1320,
+    "text": "- Mayer, R. E. (2001). MuLtimedia Learning. Cambridge University Press."
+  },
+  {
+    "time": 1325,
+    "text": "- Dahl, R. (2009). Node.js: Evented I/O for V8 JavaScript. JSConf Berlin."
+  },
+  {
+    "time": 1330,
+    "text": "- Microsoft. (2023). Azure Blob Storage Documentation."
+  },
+  {
+    "time": 1335,
+    "text": "- Slaughter, M. (2014). Mammoth.js."
+  },
+  {
+    "time": 1340,
+    "text": "- Debre Berhan University - Department of Information Systems - 4th Year Group Project - 2025/2026"
+  }
+]
