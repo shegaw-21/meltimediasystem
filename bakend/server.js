@@ -876,7 +876,113 @@ app.post('/api/admin/upload', upload.fields([
     res.json({ message: 'Upload completed successfully.', uploaded: result, part: safePart });
 });
 
-// Serve frontend static assets after API routes
+// 7. Admin — get details of a single part (which files exist)
+app.get('/api/admin/part/:name', requireAdminAuth, (req, res) => {
+    const safePart = makeSafePartName(req.params.name);
+    if (!safePart) return res.status(400).json({ error: 'Invalid part name.' });
+
+    const videoDir = path.join(__dirname, 'assets', 'videos');
+    const audioDir = path.join(__dirname, 'assets', 'audio');
+    const transcriptDir = path.join(__dirname, 'assets', 'transcripts');
+
+    // Find which files exist for this part
+    const videoExts = ['.mp4'];
+    const audioExts = ['.mp3', '.mp4', ''];
+    const transcriptExts = ['.json', '.docx', '.doc'];
+
+    let videoFile = null;
+    for (const ext of videoExts) {
+        const p = path.join(videoDir, `${safePart}${ext}`);
+        if (fs.existsSync(p)) { videoFile = `${safePart}${ext}`; break; }
+    }
+
+    let audioFile = null;
+    for (const ext of audioExts) {
+        const p = path.join(audioDir, `${safePart}${ext}`);
+        if (fs.existsSync(p)) { audioFile = `${safePart}${ext}`; break; }
+    }
+
+    const transcriptFiles = [];
+    for (const ext of transcriptExts) {
+        const p = path.join(transcriptDir, `${safePart}${ext}`);
+        if (fs.existsSync(p)) transcriptFiles.push(`${safePart}${ext}`);
+    }
+
+    res.json({
+        part: safePart,
+        video: videoFile,
+        audio: audioFile,
+        transcripts: transcriptFiles,
+    });
+});
+
+// 8. Admin — delete a part (all its files)
+app.delete('/api/admin/part/:name', requireAdminAuth, (req, res) => {
+    const safePart = makeSafePartName(req.params.name);
+    if (!safePart) return res.status(400).json({ error: 'Invalid part name.' });
+
+    const dirs = [
+        path.join(__dirname, 'assets', 'videos'),
+        path.join(__dirname, 'assets', 'audio'),
+        path.join(__dirname, 'assets', 'transcripts'),
+    ];
+
+    const deleted = [];
+    for (const dir of dirs) {
+        if (!fs.existsSync(dir)) continue;
+        const files = fs.readdirSync(dir).filter(f =>
+            path.basename(f, path.extname(f)).toLowerCase() === safePart
+        );
+        for (const file of files) {
+            try {
+                fs.unlinkSync(path.join(dir, file));
+                deleted.push(file);
+            } catch (err) {
+                console.error(`Failed to delete ${file}:`, err.message);
+            }
+        }
+    }
+
+    if (deleted.length === 0) {
+        return res.status(404).json({ error: `No files found for part '${safePart}'.` });
+    }
+
+    res.json({ message: `Deleted ${deleted.length} file(s) for '${safePart}'.`, deleted });
+});
+
+// 9. Admin — delete a single file from a part
+app.delete('/api/admin/part/:name/file', requireAdminAuth, (req, res) => {
+    const safePart = makeSafePartName(req.params.name);
+    const fileType = req.query.type; // 'video' | 'audio' | 'transcript'
+    const fileName = req.query.filename;
+
+    if (!safePart || !fileType || !fileName) {
+        return res.status(400).json({ error: 'part name, type, and filename are required.' });
+    }
+
+    // Security: filename must belong to this part and only contain safe chars
+    const safeFileName = path.basename(fileName);
+    const baseName = path.basename(safeFileName, path.extname(safeFileName)).toLowerCase();
+    if (baseName !== safePart) {
+        return res.status(400).json({ error: 'Filename does not match part name.' });
+    }
+
+    const dirMap = { video: 'videos', audio: 'audio', transcript: 'transcripts' };
+    const subDir = dirMap[fileType];
+    if (!subDir) return res.status(400).json({ error: 'Invalid file type.' });
+
+    const filePath = path.join(__dirname, 'assets', subDir, safeFileName);
+    if (!fs.existsSync(filePath)) {
+        return res.status(404).json({ error: `File '${safeFileName}' not found.` });
+    }
+
+    try {
+        fs.unlinkSync(filePath);
+        res.json({ message: `Deleted '${safeFileName}'.` });
+    } catch (err) {
+        res.status(500).json({ error: `Could not delete file: ${err.message}` });
+    }
+});
 // Support both local layout (bakend/../frontend) and flat deploy layout (./frontend)
 const frontendPath = fs.existsSync(path.join(__dirname, '../frontend'))
     ? path.join(__dirname, '../frontend')

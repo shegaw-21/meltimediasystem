@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Upload — Meltimedia</title>
+    <title>Admin Panel — Meltimedia</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="config.js"></script>
     <script>
@@ -12,13 +12,8 @@
             theme: {
                 extend: {
                     colors: {
-                        brand: {
-                            400: '#26cde8', 500: '#00b4d8', 600: '#0096c7', 700: '#0077b6',
-                        },
-                        surface: {
-                            900: '#0f1013', 800: '#161620', 700: '#1e1e2e',
-                            600: '#23232f', 500: '#252538', 400: '#2a2a40', 300: '#3a3a50',
-                        },
+                        brand: { 400: '#26cde8', 500: '#00b4d8', 600: '#0096c7', 700: '#0077b6' },
+                        surface: { 900: '#0f1013', 800: '#161620', 700: '#1e1e2e', 600: '#23232f', 500: '#252538', 400: '#2a2a40', 300: '#3a3a50' },
                     },
                 },
             },
@@ -28,360 +23,317 @@
 
 <body class="min-h-full bg-surface-700 text-slate-100">
 
-    <!-- Nav bar -->
+    <!-- Nav -->
     <nav class="bg-surface-600 border-b border-white/5 sticky top-0 z-10">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            <a href="/index.html" class="flex items-center gap-2 text-brand-500 hover:text-brand-400 transition-colors">
-                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+            <a href="/index.html"
+                class="flex items-center gap-2 text-brand-500 hover:text-brand-400 transition-colors font-bold text-lg">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                <span class="font-bold text-lg tracking-tight">Meltimedia</span>
+                Meltimedia
             </a>
             <div class="flex items-center gap-3">
-                <span id="admin-badge" class="hidden items-center gap-1.5 bg-brand-700/30 text-brand-400 border border-brand-700/50
-                       text-xs font-semibold px-2.5 py-1 rounded-full">
-                    <span class="w-1.5 h-1.5 bg-brand-400 rounded-full animate-pulse"></span>
-                    Admin
+                <span id="admin-badge"
+                    class="hidden items-center gap-1.5 bg-brand-700/30 text-brand-400 border border-brand-700/50 text-xs font-semibold px-2.5 py-1 rounded-full">
+                    <span class="w-1.5 h-1.5 bg-brand-400 rounded-full animate-pulse"></span>Admin
                 </span>
                 <button id="logout-btn"
-                    class="hidden text-sm text-slate-400 hover:text-red-400 transition-colors font-medium">
-                    Sign Out
-                </button>
+                    class="hidden text-sm text-slate-400 hover:text-red-400 transition-colors font-medium">Sign
+                    Out</button>
             </div>
         </div>
     </nav>
 
-    <!-- Page content -->
-    <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <!-- Auth checking -->
+    <div id="auth-checking" class="text-center py-24 text-slate-500 text-sm">Verifying session…</div>
 
-        <!-- Page header -->
-        <div class="mb-8">
-            <h1 class="text-3xl font-bold text-slate-50">Content Upload</h1>
-            <p class="mt-1 text-slate-400">Add or replace video, audio, and transcript files for a lesson part.</p>
-        </div>
+    <!-- Main panel -->
+    <main id="main-panel" class="hidden max-w-6xl mx-auto px-4 py-8 space-y-10">
 
-        <!-- Auth guard message (shown while checking) -->
-        <div id="auth-checking" class="text-center py-20 text-slate-500 text-sm">
-            Verifying session…
-        </div>
+        <!-- ═══ UPLOAD SECTION ═══ -->
+        <section>
+            <h1 class="text-2xl font-bold text-slate-50 mb-1">Upload New Content</h1>
+            <p class="text-slate-400 text-sm mb-6">Add a new part or replace files for an existing one.</p>
 
-        <!-- Upload form (hidden until auth confirmed) -->
-        <div id="upload-panel" class="hidden grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Form -->
+                <div class="lg:col-span-2 space-y-5">
 
-            <!-- Left: upload form -->
-            <div class="lg:col-span-2 space-y-6">
-
-                <!-- Part name card -->
-                <div class="bg-surface-600 border border-white/5 rounded-2xl p-6">
-                    <h2 class="text-base font-semibold text-amber-300 mb-4 flex items-center gap-2">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
-                        </svg>
-                        Step 1 — Name the Part
-                    </h2>
-                    <label for="part-name" class="block text-sm text-slate-300 mb-1.5">
-                        Part identifier <span class="text-red-400">*</span>
-                    </label>
-                    <input type="text" id="part-name" name="partName" placeholder="e.g. part16"
-                        class="w-full bg-surface-800 border border-surface-300 text-slate-100 placeholder-slate-500
-                           rounded-lg px-4 py-2.5 text-sm
-                           focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-colors">
-                    <p class="mt-1.5 text-xs text-slate-500">Lowercase letters, numbers, dash or underscore only.</p>
-                </div>
-
-                <!-- File uploads card -->
-                <div class="bg-surface-600 border border-white/5 rounded-2xl p-6 space-y-6">
-                    <h2 class="text-base font-semibold text-amber-300 flex items-center gap-2">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-                        </svg>
-                        Step 2 — Choose Files
-                    </h2>
-
-                    <!-- Video -->
-                    <div>
-                        <label class="block text-sm font-medium text-slate-300 mb-1.5">
-                            Video file <span class="text-slate-500 font-normal">(.mp4)</span>
-                        </label>
-                        <label for="video-file" class="flex flex-col items-center justify-center w-full h-28 border-2 border-dashed
-                               border-surface-300 hover:border-brand-600 rounded-xl cursor-pointer
-                               bg-surface-800 hover:bg-surface-700 transition-colors group">
-                            <svg class="w-8 h-8 text-slate-500 group-hover:text-brand-500 mb-2 transition-colors"
-                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                    d="M15 10l4.553-2.069A1 1 0 0121 8.87v6.263a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                            </svg>
-                            <span id="video-label"
-                                class="text-sm text-slate-400 group-hover:text-slate-300 transition-colors">
-                                Click to select .mp4 file
-                            </span>
-                            <input type="file" id="video-file" name="videoFile" accept=".mp4" class="hidden">
-                        </label>
+                    <!-- Part name -->
+                    <div class="bg-surface-600 border border-white/5 rounded-2xl p-5">
+                        <label class="block text-sm font-semibold text-amber-300 mb-3">Part Name <span
+                                class="text-red-400">*</span></label>
+                        <input type="text" id="part-name" placeholder="e.g. part16"
+                            class="w-full bg-surface-800 border border-surface-300 text-slate-100 placeholder-slate-500
+                               rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-colors">
+                        <p class="mt-1.5 text-xs text-slate-500">Lowercase letters, numbers, dash or underscore only.
+                        </p>
                     </div>
 
-                    <!-- Audio -->
-                    <div>
-                        <label class="block text-sm font-medium text-slate-300 mb-1.5">
-                            Audio summary <span class="text-slate-500 font-normal">(.mp3)</span>
-                        </label>
-                        <label for="audio-file" class="flex flex-col items-center justify-center w-full h-28 border-2 border-dashed
-                               border-surface-300 hover:border-brand-600 rounded-xl cursor-pointer
-                               bg-surface-800 hover:bg-surface-700 transition-colors group">
-                            <svg class="w-8 h-8 text-slate-500 group-hover:text-brand-500 mb-2 transition-colors"
-                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                    d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
-                            </svg>
-                            <span id="audio-label"
-                                class="text-sm text-slate-400 group-hover:text-slate-300 transition-colors">
-                                Click to select .mp3 file
-                            </span>
-                            <input type="file" id="audio-file" name="audioFile" accept=".mp3" class="hidden">
-                        </label>
-                    </div>
+                    <!-- File pickers -->
+                    <div class="bg-surface-600 border border-white/5 rounded-2xl p-5 space-y-5">
+                        <p class="text-sm font-semibold text-amber-300">Choose Files (all optional — upload only what
+                            you need)</p>
 
-                    <!-- Transcript -->
-                    <div>
-                        <label class="block text-sm font-medium text-slate-300 mb-1.5">
-                            Transcript <span class="text-slate-500 font-normal">(.docx, .doc, or .json)</span>
-                        </label>
-                        <label for="transcript-file" class="flex flex-col items-center justify-center w-full h-28 border-2 border-dashed
-                               border-surface-300 hover:border-brand-600 rounded-xl cursor-pointer
-                               bg-surface-800 hover:bg-surface-700 transition-colors group">
-                            <svg class="w-8 h-8 text-slate-500 group-hover:text-brand-500 mb-2 transition-colors"
-                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                            </svg>
-                            <span id="transcript-label"
-                                class="text-sm text-slate-400 group-hover:text-slate-300 transition-colors">
-                                Click to select transcript file
-                            </span>
-                            <input type="file" id="transcript-file" name="transcriptFile" accept=".json,.docx,.doc"
-                                class="hidden">
-                        </label>
-                    </div>
-                </div>
-
-                <!-- Progress + submit -->
-                <div class="bg-surface-600 border border-white/5 rounded-2xl p-6">
-                    <h2 class="text-base font-semibold text-amber-300 mb-4 flex items-center gap-2">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        Step 3 — Upload
-                    </h2>
-
-                    <!-- Upload progress bar (hidden by default) -->
-                    <div id="progress-wrap" class="hidden mb-4">
-                        <div class="flex justify-between text-xs text-slate-400 mb-1">
-                            <span>Uploading…</span>
-                            <span id="progress-pct">0%</span>
+                        <!-- Video -->
+                        <div>
+                            <p class="text-sm text-slate-300 mb-1.5">Video <span class="text-slate-500">(.mp4)</span>
+                            </p>
+                            <label for="video-file"
+                                class="flex flex-col items-center justify-center w-full h-24 border-2 border-dashed border-surface-300 hover:border-brand-600 rounded-xl cursor-pointer bg-surface-800 hover:bg-surface-700 transition-colors group">
+                                <svg class="w-7 h-7 text-slate-500 group-hover:text-brand-500 mb-1 transition-colors"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                        d="M15 10l4.553-2.069A1 1 0 0121 8.87v6.263a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                                </svg>
+                                <span id="video-label"
+                                    class="text-xs text-slate-400 group-hover:text-slate-300 transition-colors">Click to
+                                    select .mp4</span>
+                                <input type="file" id="video-file" name="videoFile" accept=".mp4" class="hidden">
+                            </label>
                         </div>
-                        <div class="w-full h-2 bg-surface-400 rounded-full overflow-hidden">
-                            <div id="progress-bar"
-                                class="h-full bg-gradient-to-r from-brand-500 to-brand-600 rounded-full transition-all duration-300"
-                                style="width:0%"></div>
+
+                        <!-- Audio -->
+                        <div>
+                            <p class="text-sm text-slate-300 mb-1.5">Audio Summary <span
+                                    class="text-slate-500">(.mp3)</span></p>
+                            <label for="audio-file"
+                                class="flex flex-col items-center justify-center w-full h-24 border-2 border-dashed border-surface-300 hover:border-brand-600 rounded-xl cursor-pointer bg-surface-800 hover:bg-surface-700 transition-colors group">
+                                <svg class="w-7 h-7 text-slate-500 group-hover:text-brand-500 mb-1 transition-colors"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                        d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
+                                </svg>
+                                <span id="audio-label"
+                                    class="text-xs text-slate-400 group-hover:text-slate-300 transition-colors">Click to
+                                    select .mp3</span>
+                                <input type="file" id="audio-file" name="audioFile" accept=".mp3" class="hidden">
+                            </label>
+                        </div>
+
+                        <!-- Transcript -->
+                        <div>
+                            <p class="text-sm text-slate-300 mb-1.5">Transcript <span class="text-slate-500">(.docx,
+                                    .doc, .json)</span></p>
+                            <label for="transcript-file"
+                                class="flex flex-col items-center justify-center w-full h-24 border-2 border-dashed border-surface-300 hover:border-brand-600 rounded-xl cursor-pointer bg-surface-800 hover:bg-surface-700 transition-colors group">
+                                <svg class="w-7 h-7 text-slate-500 group-hover:text-brand-500 mb-1 transition-colors"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                </svg>
+                                <span id="transcript-label"
+                                    class="text-xs text-slate-400 group-hover:text-slate-300 transition-colors">Click to
+                                    select transcript</span>
+                                <input type="file" id="transcript-file" name="transcriptFile" accept=".json,.docx,.doc"
+                                    class="hidden">
+                            </label>
                         </div>
                     </div>
 
-                    <!-- Status message -->
-                    <div id="upload-status" role="alert" aria-live="polite"
-                        class="hidden mb-4 px-4 py-3 rounded-lg text-sm font-medium"></div>
-
-                    <button id="upload-btn" class="w-full bg-brand-500 hover:bg-brand-600 active:bg-brand-700
-                           text-white font-semibold rounded-lg px-4 py-3
-                           transition-colors focus:outline-none focus:ring-2 focus:ring-brand-400
-                           focus:ring-offset-2 focus:ring-offset-surface-600
-                           flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-                        </svg>
-                        <span id="upload-btn-text">Upload Content</span>
-                        <svg id="upload-spinner" class="hidden w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
-                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
-                            </circle>
-                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
-                        </svg>
-                    </button>
+                    <!-- Progress + submit -->
+                    <div class="bg-surface-600 border border-white/5 rounded-2xl p-5">
+                        <div id="progress-wrap" class="hidden mb-4">
+                            <div class="flex justify-between text-xs text-slate-400 mb-1">
+                                <span>Uploading…</span><span id="progress-pct">0%</span>
+                            </div>
+                            <div class="w-full h-2 bg-surface-400 rounded-full overflow-hidden">
+                                <div id="progress-bar"
+                                    class="h-full bg-gradient-to-r from-brand-500 to-brand-600 rounded-full transition-all"
+                                    style="width:0%"></div>
+                            </div>
+                        </div>
+                        <div id="upload-status" class="hidden mb-4 px-4 py-3 rounded-lg text-sm font-medium"></div>
+                        <button id="upload-btn" class="w-full bg-brand-500 hover:bg-brand-600 text-white font-semibold rounded-lg px-4 py-3 transition-colors
+                               flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                            </svg>
+                            <span id="upload-btn-text">Upload Content</span>
+                            <svg id="upload-spinner" class="hidden w-4 h-4 animate-spin" fill="none"
+                                viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                                    stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+                            </svg>
+                        </button>
+                    </div>
                 </div>
+
+                <!-- Sidebar tips -->
+                <aside class="space-y-4">
+                    <div class="bg-surface-600 border border-white/5 rounded-2xl p-5">
+                        <h3 class="text-sm font-semibold text-slate-200 mb-3">File Rules</h3>
+                        <ul class="space-y-2 text-xs text-slate-400">
+                            <li>🎬 <strong class="text-slate-300">Video:</strong> MP4 only</li>
+                            <li>🎵 <strong class="text-slate-300">Audio:</strong> MP3 only</li>
+                            <li>📄 <strong class="text-slate-300">Transcript:</strong> .docx auto-converted to JSON</li>
+                            <li>⚠️ Uploading an existing part name <strong class="text-slate-300">replaces</strong> that
+                                file</li>
+                        </ul>
+                    </div>
+                </aside>
             </div>
+        </section>
 
-            <!-- Right: info sidebar -->
-            <aside class="space-y-5">
-
-                <!-- Guidelines -->
-                <div class="bg-surface-600 border border-white/5 rounded-2xl p-5">
-                    <h3 class="text-sm font-semibold text-slate-200 mb-3 flex items-center gap-2">
-                        <svg class="w-4 h-4 text-brand-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        File Guidelines
-                    </h3>
-                    <ul class="space-y-2 text-xs text-slate-400">
-                        <li class="flex items-start gap-2">
-                            <span class="mt-0.5 w-4 h-4 text-brand-500 flex-shrink-0">🎬</span>
-                            <span><strong class="text-slate-300">Video:</strong> MP4 format only. H.264 encoding
-                                recommended for best browser compatibility.</span>
-                        </li>
-                        <li class="flex items-start gap-2">
-                            <span class="mt-0.5 w-4 h-4 text-brand-500 flex-shrink-0">🎵</span>
-                            <span><strong class="text-slate-300">Audio:</strong> MP3 format only. This is the summary
-                                audio displayed alongside the video.</span>
-                        </li>
-                        <li class="flex items-start gap-2">
-                            <span class="mt-0.5 w-4 h-4 text-brand-500 flex-shrink-0">📄</span>
-                            <span><strong class="text-slate-300">Transcript:</strong> Upload a .docx for best results.
-                                The server auto-converts it with estimated timestamps. JSON is also accepted.</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <!-- Part name tips -->
-                <div class="bg-surface-600 border border-white/5 rounded-2xl p-5">
-                    <h3 class="text-sm font-semibold text-slate-200 mb-3 flex items-center gap-2">
-                        <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                        </svg>
-                        Part Naming
-                    </h3>
-                    <p class="text-xs text-slate-400 leading-relaxed">
-                        Use a consistent scheme like <code
-                            class="bg-surface-400 text-brand-400 px-1 rounded">part16</code>,
-                        <code class="bg-surface-400 text-brand-400 px-1 rounded">part17</code>, etc.
-                        Uploading a file with an existing part name will <strong class="text-slate-300">replace</strong>
-                        that content.
+        <!-- ═══ CONTENT MANAGER ═══ -->
+        <section>
+            <div class="flex items-center justify-between mb-4">
+                <div>
+                    <h2 class="text-xl font-bold text-slate-50">Manage Existing Content</h2>
+                    <p class="text-slate-400 text-sm mt-0.5">View, replace individual files, or delete a part entirely.
                     </p>
                 </div>
+                <button id="refresh-btn" onclick="loadContentTable()"
+                    class="text-xs bg-surface-400 hover:bg-surface-300 text-slate-200 font-medium rounded-lg px-3 py-2 transition-colors flex items-center gap-1.5">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                    </svg>
+                    Refresh
+                </button>
+            </div>
 
-                <!-- Uploaded parts list -->
-                <div class="bg-surface-600 border border-white/5 rounded-2xl p-5">
-                    <h3 class="text-sm font-semibold text-slate-200 mb-3 flex items-center gap-2">
-                        <svg class="w-4 h-4 text-brand-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M4 6h16M4 10h16M4 14h16M4 18h16" />
-                        </svg>
-                        Available Parts
-                    </h3>
-                    <div id="parts-list" class="flex flex-wrap gap-1.5">
-                        <span class="text-xs text-slate-500">Loading…</span>
-                    </div>
+            <!-- Table -->
+            <div class="bg-surface-600 border border-white/5 rounded-2xl overflow-hidden">
+                <div id="content-table-wrap">
+                    <div class="text-center py-12 text-slate-500 text-sm">Loading parts…</div>
                 </div>
-
-            </aside>
-        </div><!-- /#upload-panel -->
+            </div>
+        </section>
 
     </main>
 
-    <script>
-        // ---- Auth guard ----
-        const authChecking = document.getElementById('auth-checking');
-        const uploadPanel = document.getElementById('upload-panel');
-        const adminBadge = document.getElementById('admin-badge');
-        const logoutBtn = document.getElementById('logout-btn');
+    <!-- ═══ EDIT MODAL ═══ -->
+    <div id="edit-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 px-4">
+        <div class="bg-surface-600 border border-white/10 rounded-2xl w-full max-w-md p-6 shadow-2xl">
+            <div class="flex items-center justify-between mb-5">
+                <h3 class="text-lg font-bold text-slate-50">Replace File — <span id="modal-part-name"
+                        class="text-brand-400"></span></h3>
+                <button onclick="closeEditModal()" class="text-slate-400 hover:text-slate-200 transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
 
+            <p class="text-sm text-slate-400 mb-4">Select a new file to replace <span id="modal-file-name"
+                    class="text-slate-200 font-mono"></span></p>
+
+            <label
+                class="flex flex-col items-center justify-center w-full h-24 border-2 border-dashed border-surface-300 hover:border-brand-600 rounded-xl cursor-pointer bg-surface-800 mb-4 transition-colors group">
+                <svg class="w-6 h-6 text-slate-500 group-hover:text-brand-500 mb-1 transition-colors" fill="none"
+                    stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                        d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                </svg>
+                <span id="modal-file-label"
+                    class="text-xs text-slate-400 group-hover:text-slate-300 transition-colors">Click to choose
+                    replacement file</span>
+                <input type="file" id="modal-file-input" class="hidden">
+            </label>
+
+            <div id="modal-status" class="hidden mb-4 px-4 py-3 rounded-lg text-sm font-medium"></div>
+
+            <div class="flex gap-3">
+                <button onclick="closeEditModal()"
+                    class="flex-1 bg-surface-400 hover:bg-surface-300 text-slate-200 font-medium rounded-lg px-4 py-2.5 transition-colors text-sm">Cancel</button>
+                <button id="modal-upload-btn" onclick="submitReplacement()" class="flex-1 bg-brand-500 hover:bg-brand-600 text-white font-semibold rounded-lg px-4 py-2.5 transition-colors text-sm
+                       flex items-center justify-center gap-2 disabled:opacity-60">
+                    <span id="modal-upload-text">Replace File</span>
+                    <svg id="modal-spinner" class="hidden w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
+                        </circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══ DELETE CONFIRM MODAL ═══ -->
+    <div id="delete-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 px-4">
+        <div class="bg-surface-600 border border-white/10 rounded-2xl w-full max-w-sm p-6 shadow-2xl">
+            <div class="flex items-center gap-3 mb-4">
+                <div class="w-10 h-10 bg-red-900/40 rounded-full flex items-center justify-center flex-shrink-0">
+                    <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="font-bold text-slate-50">Delete Part</h3>
+                    <p class="text-sm text-slate-400">This will delete all files for <strong id="delete-part-name"
+                            class="text-red-400"></strong></p>
+                </div>
+            </div>
+            <p class="text-xs text-slate-500 mb-5">This action cannot be undone. The video, audio, and transcript files
+                will be permanently removed.</p>
+            <div class="flex gap-3">
+                <button onclick="closeDeleteModal()"
+                    class="flex-1 bg-surface-400 hover:bg-surface-300 text-slate-200 font-medium rounded-lg px-4 py-2.5 transition-colors text-sm">Cancel</button>
+                <button id="confirm-delete-btn" class="flex-1 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg px-4 py-2.5 transition-colors text-sm
+                       flex items-center justify-center gap-2">
+                    <span id="delete-btn-text">Delete</span>
+                    <svg id="delete-spinner" class="hidden w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
+                        </circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const BASE = window.API_BASE || '';
+
+        // ── Auth guard ─────────────────────────────────────────────────────────────
         async function checkAuth() {
             try {
-                const res = await fetch(`${window.API_BASE || ''}/api/auth/status`);
+                const res = await fetch(`${BASE}/api/auth/status`, { credentials: 'include' });
                 const data = await res.json();
-                if (!data.authenticated) {
-                    window.location.href = '/admin-login.html';
-                    return;
-                }
-            } catch (_) {
-                window.location.href = '/admin-login.html';
-                return;
-            }
-            authChecking.classList.add('hidden');
-            uploadPanel.classList.remove('hidden');
-            uploadPanel.classList.add('grid');
-            adminBadge.classList.remove('hidden');
-            adminBadge.classList.add('flex');
-            logoutBtn.classList.remove('hidden');
-            loadParts();
-        }
+                if (!data.authenticated) { window.location.href = '/admin-login.html'; return; }
+            } catch { window.location.href = '/admin-login.html'; return; }
 
+            document.getElementById('auth-checking').classList.add('hidden');
+            document.getElementById('main-panel').classList.remove('hidden');
+            document.getElementById('admin-badge').classList.remove('hidden');
+            document.getElementById('admin-badge').classList.add('flex');
+            document.getElementById('logout-btn').classList.remove('hidden');
+            loadContentTable();
+        }
         checkAuth();
 
-        logoutBtn.addEventListener('click', async () => {
-            await fetch(`${window.API_BASE || ''}/api/logout`, { method: 'POST', credentials: 'include' });
+        document.getElementById('logout-btn').addEventListener('click', async () => {
+            await fetch(`${BASE}/api/logout`, { method: 'POST', credentials: 'include' });
             window.location.href = '/admin-login.html';
         });
 
-        // ---- Load available parts ----
-        async function loadParts() {
-            try {
-                const res = await fetch(`${window.API_BASE || ''}/api/parts`);
-                const parts = await res.json();
-                const container = document.getElementById('parts-list');
-                if (!parts.length) {
-                    container.innerHTML = '<span class="text-xs text-slate-500">No parts found.</span>';
-                    return;
-                }
-                container.innerHTML = parts.map(p =>
-                    `<span class="bg-surface-400 text-brand-400 text-xs font-mono px-2 py-0.5 rounded">${p}</span>`
-                ).join('');
-            } catch (_) { }
-        }
-
-        // ---- File input labels ----
-        function bindFileLabel(inputId, labelId) {
-            document.getElementById(inputId).addEventListener('change', (e) => {
-                const file = e.target.files[0];
-                document.getElementById(labelId).textContent = file ? file.name : `Click to select file`;
+        // ── File label preview ─────────────────────────────────────────────────────
+        ['video-file', 'audio-file', 'transcript-file'].forEach(id => {
+            document.getElementById(id).addEventListener('change', e => {
+                const labelId = id.replace('-file', '-label');
+                document.getElementById(labelId).textContent = e.target.files[0]?.name || 'Click to select file';
             });
-        }
-        bindFileLabel('video-file', 'video-label');
-        bindFileLabel('audio-file', 'audio-label');
-        bindFileLabel('transcript-file', 'transcript-label');
+        });
 
-        // ---- Upload ----
-        const uploadBtn = document.getElementById('upload-btn');
-        const uploadBtnText = document.getElementById('upload-btn-text');
-        const uploadSpinner = document.getElementById('upload-spinner');
-        const statusEl = document.getElementById('upload-status');
-        const progressWrap = document.getElementById('progress-wrap');
-        const progressBar = document.getElementById('progress-bar');
-        const progressPct = document.getElementById('progress-pct');
-
-        function setStatus(message, type) {
-            // type: 'success' | 'error' | 'info'
-            const classes = {
-                success: 'bg-green-900/40 border border-green-700/50 text-green-300',
-                error: 'bg-red-900/40 border border-red-700/50 text-red-300',
-                info: 'bg-blue-900/40 border border-blue-700/50 text-blue-300',
-            };
-            statusEl.textContent = message;
-            statusEl.className = `mb-4 px-4 py-3 rounded-lg text-sm font-medium ${classes[type]}`;
-            statusEl.classList.remove('hidden');
-        }
-
-        function setLoading(loading) {
-            uploadBtn.disabled = loading;
-            uploadBtnText.textContent = loading ? 'Uploading…' : 'Upload Content';
-            uploadSpinner.classList.toggle('hidden', !loading);
-            progressWrap.classList.toggle('hidden', !loading);
-        }
-
-        uploadBtn.addEventListener('click', async () => {
+        // ── Upload ─────────────────────────────────────────────────────────────────
+        document.getElementById('upload-btn').addEventListener('click', () => {
             const partName = document.getElementById('part-name').value.trim();
             const videoFile = document.getElementById('video-file').files[0];
             const audioFile = document.getElementById('audio-file').files[0];
             const transcriptFile = document.getElementById('transcript-file').files[0];
 
-            if (!partName) { setStatus('Part name is required.', 'error'); return; }
+            if (!partName) { showUploadStatus('Part name is required.', 'error'); return; }
             if (!videoFile && !audioFile && !transcriptFile) {
-                setStatus('Select at least one file to upload.', 'error');
-                return;
+                showUploadStatus('Select at least one file.', 'error'); return;
             }
 
             const formData = new FormData();
@@ -390,44 +342,289 @@
             if (audioFile) formData.append('audioFile', audioFile);
             if (transcriptFile) formData.append('transcriptFile', transcriptFile);
 
-            setLoading(true);
-            statusEl.classList.add('hidden');
+            setUploadLoading(true);
+            document.getElementById('upload-status').classList.add('hidden');
 
-            // XHR for upload progress
             const xhr = new XMLHttpRequest();
-            xhr.open('POST', `${window.API_BASE || ''}/api/admin/upload`);
+            xhr.open('POST', `${BASE}/api/admin/upload`);
             xhr.withCredentials = true;
 
-            xhr.upload.addEventListener('progress', (e) => {
+            xhr.upload.addEventListener('progress', e => {
                 if (e.lengthComputable) {
                     const pct = Math.round((e.loaded / e.total) * 100);
-                    progressBar.style.width = `${pct}%`;
-                    progressPct.textContent = `${pct}%`;
+                    document.getElementById('progress-bar').style.width = `${pct}%`;
+                    document.getElementById('progress-pct').textContent = `${pct}%`;
                 }
             });
 
             xhr.addEventListener('load', () => {
-                setLoading(false);
+                setUploadLoading(false);
                 try {
                     const data = JSON.parse(xhr.responseText);
                     if (xhr.status >= 200 && xhr.status < 300) {
-                        setStatus(`✓ Upload successful: ${data.uploaded.join(', ')} for "${data.part}".`, 'success');
-                        loadParts();
+                        showUploadStatus(`✓ Uploaded: ${data.uploaded.join(', ')} for "${data.part}"`, 'success');
+                        loadContentTable();
                     } else {
-                        setStatus(data.error || 'Upload failed.', 'error');
+                        showUploadStatus(data.error || 'Upload failed.', 'error');
                     }
-                } catch (_) {
-                    setStatus('Unexpected server response.', 'error');
-                }
+                } catch { showUploadStatus('Unexpected server response.', 'error'); }
             });
 
-            xhr.addEventListener('error', () => {
-                setLoading(false);
-                setStatus('Network error. Check your connection and try again.', 'error');
-            });
-
+            xhr.addEventListener('error', () => { setUploadLoading(false); showUploadStatus('Network error.', 'error'); });
             xhr.send(formData);
         });
+
+        function setUploadLoading(on) {
+            document.getElementById('upload-btn').disabled = on;
+            document.getElementById('upload-btn-text').textContent = on ? 'Uploading…' : 'Upload Content';
+            document.getElementById('upload-spinner').classList.toggle('hidden', !on);
+            document.getElementById('progress-wrap').classList.toggle('hidden', !on);
+        }
+
+        function showUploadStatus(msg, type) {
+            const el = document.getElementById('upload-status');
+            const cls = {
+                success: 'bg-green-900/40 border border-green-700/50 text-green-300',
+                error: 'bg-red-900/40 border border-red-700/50 text-red-300',
+                info: 'bg-blue-900/40 border border-blue-700/50 text-blue-300'
+            };
+            el.textContent = msg;
+            el.className = `mb-4 px-4 py-3 rounded-lg text-sm font-medium ${cls[type]}`;
+            el.classList.remove('hidden');
+        }
+
+        // ── Content Table ──────────────────────────────────────────────────────────
+        async function loadContentTable() {
+            const wrap = document.getElementById('content-table-wrap');
+            wrap.innerHTML = '<div class="text-center py-12 text-slate-500 text-sm">Loading…</div>';
+
+            try {
+                const res = await fetch(`${BASE}/api/parts`, { credentials: 'include' });
+                const parts = await res.json();
+
+                if (!parts.length) {
+                    wrap.innerHTML = '<div class="text-center py-12 text-slate-500 text-sm">No content parts found.</div>';
+                    return;
+                }
+
+                // Build table
+                let html = `
+        <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+            <thead>
+                <tr class="border-b border-white/5 text-xs text-slate-400 uppercase tracking-wide">
+                    <th class="text-left px-5 py-3">Part</th>
+                    <th class="text-left px-5 py-3">Video</th>
+                    <th class="text-left px-5 py-3">Audio</th>
+                    <th class="text-left px-5 py-3">Transcript</th>
+                    <th class="text-right px-5 py-3">Actions</th>
+                </tr>
+            </thead>
+            <tbody>`;
+
+                for (const part of parts) {
+                    let info = { video: null, audio: null, transcripts: [] };
+                    try {
+                        const r = await fetch(`${BASE}/api/admin/part/${part}`, { credentials: 'include' });
+                        if (r.ok) info = await r.json();
+                    } catch { }
+
+                    const fileTag = (name, type) => name
+                        ? `<span class="inline-flex items-center gap-1.5 bg-surface-400 text-slate-200 text-xs px-2 py-0.5 rounded">
+                    <span class="w-1.5 h-1.5 bg-green-400 rounded-full"></span>${name}
+                    <button onclick="openEditModal('${part}','${name}','${type}')" title="Replace"
+                        class="ml-1 text-brand-400 hover:text-brand-300 transition-colors">
+                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M15.232 5.232l3.536 3.536M9 13l6.586-6.586a2 2 0 112.828 2.828L11.828 15.828a2 2 0 01-1.414.586H9v-2a2 2 0 01.586-1.414z"/>
+                        </svg>
+                    </button>
+                    <button onclick="deleteSingleFile('${part}','${name}','${type}')" title="Delete this file"
+                        class="text-red-400 hover:text-red-300 transition-colors">
+                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                   </span>`
+                        : `<span class="text-slate-600 text-xs">—</span>`;
+
+                    const transcriptNames = info.transcripts.length
+                        ? info.transcripts.map(t =>
+                            `<span class="inline-flex items-center gap-1.5 bg-surface-400 text-slate-200 text-xs px-2 py-0.5 rounded mr-1 mb-1">
+                        <span class="w-1.5 h-1.5 bg-green-400 rounded-full"></span>${t}
+                        <button onclick="openEditModal('${part}','${t}','transcript')" title="Replace"
+                            class="ml-1 text-brand-400 hover:text-brand-300 transition-colors">
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15.232 5.232l3.536 3.536M9 13l6.586-6.586a2 2 0 112.828 2.828L11.828 15.828a2 2 0 01-1.414.586H9v-2a2 2 0 01.586-1.414z"/>
+                            </svg>
+                        </button>
+                        <button onclick="deleteSingleFile('${part}','${t}','transcript')" title="Delete"
+                            class="text-red-400 hover:text-red-300 transition-colors">
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                            </svg>
+                        </button>
+                     </span>`
+                        ).join('')
+                        : `<span class="text-slate-600 text-xs">—</span>`;
+
+                    html += `
+            <tr class="border-b border-white/5 hover:bg-white/2 transition-colors">
+                <td class="px-5 py-4 font-mono font-semibold text-brand-400">${part}</td>
+                <td class="px-5 py-4">${fileTag(info.video, 'video')}</td>
+                <td class="px-5 py-4">${fileTag(info.audio, 'audio')}</td>
+                <td class="px-5 py-4"><div class="flex flex-wrap gap-1">${transcriptNames}</div></td>
+                <td class="px-5 py-4 text-right">
+                    <button onclick="openDeleteModal('${part}')"
+                        class="inline-flex items-center gap-1.5 bg-red-900/30 hover:bg-red-900/60 text-red-400 text-xs font-semibold px-3 py-1.5 rounded-lg transition-colors border border-red-800/40">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                        </svg>
+                        Delete Part
+                    </button>
+                </td>
+            </tr>`;
+                }
+
+                html += '</tbody></table></div>';
+                wrap.innerHTML = html;
+            } catch (err) {
+                wrap.innerHTML = `<div class="text-center py-12 text-red-400 text-sm">Failed to load content: ${err.message}</div>`;
+            }
+        }
+
+        // ── Edit Modal ─────────────────────────────────────────────────────────────
+        let _editPart, _editFile, _editType, _editAccept;
+
+        function openEditModal(part, filename, type) {
+            _editPart = part; _editFile = filename; _editType = type;
+            _editAccept = type === 'video' ? '.mp4' : type === 'audio' ? '.mp3' : '.docx,.doc,.json';
+
+            document.getElementById('modal-part-name').textContent = part;
+            document.getElementById('modal-file-name').textContent = filename;
+            document.getElementById('modal-file-input').value = '';
+            document.getElementById('modal-file-input').accept = _editAccept;
+            document.getElementById('modal-file-label').textContent = `Click to choose replacement file`;
+            document.getElementById('modal-status').classList.add('hidden');
+            document.getElementById('modal-upload-btn').disabled = false;
+            document.getElementById('modal-upload-text').textContent = 'Replace File';
+            document.getElementById('modal-spinner').classList.add('hidden');
+
+            document.getElementById('modal-file-input').onchange = e => {
+                document.getElementById('modal-file-label').textContent = e.target.files[0]?.name || 'Click to choose';
+            };
+
+            const modal = document.getElementById('edit-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeEditModal() {
+            const modal = document.getElementById('edit-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        async function submitReplacement() {
+            const file = document.getElementById('modal-file-input').files[0];
+            if (!file) { showModalStatus('Please select a file first.', 'error'); return; }
+
+            const formData = new FormData();
+            formData.append('partName', _editPart);
+
+            const fieldMap = { video: 'videoFile', audio: 'audioFile', transcript: 'transcriptFile' };
+            formData.append(fieldMap[_editType], file);
+
+            document.getElementById('modal-upload-btn').disabled = true;
+            document.getElementById('modal-upload-text').textContent = 'Replacing…';
+            document.getElementById('modal-spinner').classList.remove('hidden');
+
+            try {
+                const res = await fetch(`${BASE}/api/admin/upload`, { method: 'POST', body: formData, credentials: 'include' });
+                const data = await res.json();
+
+                if (res.ok) {
+                    showModalStatus(`✓ Replaced successfully.`, 'success');
+                    setTimeout(() => { closeEditModal(); loadContentTable(); }, 1000);
+                } else {
+                    showModalStatus(data.error || 'Replace failed.', 'error');
+                    document.getElementById('modal-upload-btn').disabled = false;
+                    document.getElementById('modal-upload-text').textContent = 'Replace File';
+                    document.getElementById('modal-spinner').classList.add('hidden');
+                }
+            } catch (err) {
+                showModalStatus(`Network error: ${err.message}`, 'error');
+                document.getElementById('modal-upload-btn').disabled = false;
+                document.getElementById('modal-upload-text').textContent = 'Replace File';
+                document.getElementById('modal-spinner').classList.add('hidden');
+            }
+        }
+
+        function showModalStatus(msg, type) {
+            const el = document.getElementById('modal-status');
+            const cls = {
+                success: 'bg-green-900/40 border border-green-700/50 text-green-300',
+                error: 'bg-red-900/40 border border-red-700/50 text-red-300'
+            };
+            el.textContent = msg;
+            el.className = `mb-4 px-4 py-3 rounded-lg text-sm font-medium ${cls[type]}`;
+            el.classList.remove('hidden');
+        }
+
+        // ── Delete single file ─────────────────────────────────────────────────────
+        async function deleteSingleFile(part, filename, type) {
+            if (!confirm(`Delete "${filename}"? This cannot be undone.`)) return;
+
+            try {
+                const res = await fetch(
+                    `${BASE}/api/admin/part/${part}/file?type=${type}&filename=${encodeURIComponent(filename)}`,
+                    { method: 'DELETE', credentials: 'include' }
+                );
+                const data = await res.json();
+                if (res.ok) { loadContentTable(); }
+                else { alert(data.error || 'Delete failed.'); }
+            } catch (err) { alert(`Network error: ${err.message}`); }
+        }
+
+        // ── Delete whole part modal ────────────────────────────────────────────────
+        let _deletePart;
+
+        function openDeleteModal(part) {
+            _deletePart = part;
+            document.getElementById('delete-part-name').textContent = part;
+            document.getElementById('delete-btn-text').textContent = 'Delete';
+            document.getElementById('delete-spinner').classList.add('hidden');
+            document.getElementById('confirm-delete-btn').disabled = false;
+
+            const modal = document.getElementById('delete-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeDeleteModal() {
+            const modal = document.getElementById('delete-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        document.getElementById('confirm-delete-btn').addEventListener('click', async () => {
+            document.getElementById('confirm-delete-btn').disabled = true;
+            document.getElementById('delete-btn-text').textContent = 'Deleting…';
+            document.getElementById('delete-spinner').classList.remove('hidden');
+
+            try {
+                const res = await fetch(`${BASE}/api/admin/part/${_deletePart}`, { method: 'DELETE', credentials: 'include' });
+                const data = await res.json();
+
+                if (res.ok) { closeDeleteModal(); loadContentTable(); }
+                else { alert(data.error || 'Delete failed.'); closeDeleteModal(); }
+            } catch (err) { alert(`Network error: ${err.message}`); closeDeleteModal(); }
+        });
+
+        // Close modals on backdrop click
+        document.getElementById('edit-modal').addEventListener('click', e => { if (e.target === e.currentTarget) closeEditModal(); });
+        document.getElementById('delete-modal').addEventListener('click', e => { if (e.target === e.currentTarget) closeDeleteModal(); });
     </script>
 </body>
 
