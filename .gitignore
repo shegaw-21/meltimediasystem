@@ -1,0 +1,15 @@
+# Dependencies
+node_modules/
+.venv/
+
+# Environment secrets — NEVER commit real credentials
+.env
+bakend/.env
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.qodo/
